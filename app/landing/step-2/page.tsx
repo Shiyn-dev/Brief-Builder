@@ -11,7 +11,9 @@ export default function LandingStep2() {
   const router = useRouter()
   const [formData, setFormData] = useState({
     usp: "",
+    customUsp: "",
     goal: "",
+    customGoal: "",
     currentLandingLink: "",
   })
 
@@ -32,7 +34,7 @@ export default function LandingStep2() {
   }
 
   return (
-    <BriefLayout currentStep={2} totalSteps={6} title="Brief for the Landing:" onNext={handleNext} onPrev={handlePrev}>
+    <BriefLayout currentStep={2} totalSteps={6} onNext={handleNext} onPrev={handlePrev}>
       <div className="space-y-8">
         <h1 className="text-2xl font-semibold text-center text-gray-900 mb-8">Brief for the Landing:</h1>
 
@@ -60,9 +62,12 @@ export default function LandingStep2() {
             </RadioGroup>
             <Input
               placeholder="Your option"
+              value={formData.customUsp}
+              onChange={(e) => setFormData({ ...formData, customUsp: e.target.value.slice(0, 300) })}
               className="w-full mt-2"
-              onChange={(e) => setFormData({ ...formData, usp: e.target.value })}
+              maxLength={300}
             />
+            <div className="text-xs text-gray-500 text-right">{formData.customUsp.length}/300</div>
           </div>
 
           {/* Goal */}
@@ -84,9 +89,12 @@ export default function LandingStep2() {
             </RadioGroup>
             <Input
               placeholder="Your option"
+              value={formData.customGoal}
+              onChange={(e) => setFormData({ ...formData, customGoal: e.target.value.slice(0, 300) })}
               className="w-full mt-2"
-              onChange={(e) => setFormData({ ...formData, goal: e.target.value })}
+              maxLength={300}
             />
+            <div className="text-xs text-gray-500 text-right">{formData.customGoal.length}/300</div>
           </div>
 
           {/* Current Landing Link */}
@@ -97,10 +105,12 @@ export default function LandingStep2() {
             <Input
               id="currentLandingLink"
               value={formData.currentLandingLink}
-              onChange={(e) => setFormData({ ...formData, currentLandingLink: e.target.value })}
+              onChange={(e) => setFormData({ ...formData, currentLandingLink: e.target.value.slice(0, 300) })}
               className="w-full"
               placeholder="Your option"
+              maxLength={300}
             />
+            <div className="text-xs text-gray-500 text-right">{formData.currentLandingLink.length}/300</div>
           </div>
         </div>
       </div>

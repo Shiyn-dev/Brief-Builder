@@ -14,6 +14,7 @@ export default function LandingStep5() {
     dislikedWebsites: "",
     colorScheme: "",
     landingBlocks: [] as string[],
+    customBlocks: "",
   })
 
   const handleNext = () => {
@@ -58,7 +59,7 @@ export default function LandingStep5() {
   ]
 
   return (
-    <BriefLayout currentStep={5} totalSteps={6} title="Brief for the Landing:" onNext={handleNext} onPrev={handlePrev}>
+    <BriefLayout currentStep={5} totalSteps={6} onNext={handleNext} onPrev={handlePrev}>
       <div className="space-y-8">
         <h1 className="text-2xl font-semibold text-center text-gray-900 mb-8">Brief for the Landing:</h1>
 
@@ -71,10 +72,12 @@ export default function LandingStep5() {
             <Textarea
               id="dislikedWebsites"
               value={formData.dislikedWebsites}
-              onChange={(e) => setFormData({ ...formData, dislikedWebsites: e.target.value })}
+              onChange={(e) => setFormData({ ...formData, dislikedWebsites: e.target.value.slice(0, 300) })}
               className="w-full min-h-[100px]"
               placeholder="Your option"
+              maxLength={300}
             />
+            <div className="text-xs text-gray-500 text-right">{formData.dislikedWebsites.length}/300</div>
           </div>
 
           {/* Color Scheme */}
@@ -85,10 +88,12 @@ export default function LandingStep5() {
             <Input
               id="colorScheme"
               value={formData.colorScheme}
-              onChange={(e) => setFormData({ ...formData, colorScheme: e.target.value })}
+              onChange={(e) => setFormData({ ...formData, colorScheme: e.target.value.slice(0, 300) })}
               className="w-full"
               placeholder="Your option"
+              maxLength={300}
             />
+            <div className="text-xs text-gray-500 text-right">{formData.colorScheme.length}/300</div>
           </div>
 
           {/* Landing Blocks */}
@@ -110,16 +115,12 @@ export default function LandingStep5() {
             </div>
             <Input
               placeholder="Your option"
+              value={formData.customBlocks}
+              onChange={(e) => setFormData({ ...formData, customBlocks: e.target.value.slice(0, 300) })}
               className="w-full mt-2"
-              onChange={(e) => {
-                if (e.target.value) {
-                  setFormData({
-                    ...formData,
-                    landingBlocks: [...formData.landingBlocks, e.target.value],
-                  })
-                }
-              }}
+              maxLength={300}
             />
+            <div className="text-xs text-gray-500 text-right">{formData.customBlocks.length}/300</div>
           </div>
         </div>
       </div>

@@ -53,7 +53,6 @@ export default function LogoStep4() {
     <BriefLayout
       currentStep={4}
       totalSteps={4}
-      title="Brief for the Logo:"
       onNext={handleComplete}
       onPrev={handlePrev}
       nextText="Complete the Brief"
@@ -102,11 +101,13 @@ export default function LogoStep4() {
               id="email"
               type="email"
               value={formData.email}
-              onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+              onChange={(e) => setFormData({ ...formData, email: e.target.value.slice(0, 300) })}
               className="w-full"
               placeholder="Your email"
               required
+              maxLength={300}
             />
+            <div className="text-xs text-gray-500 text-right">{formData.email.length}/300</div>
           </div>
 
           <div className="text-center pt-4">

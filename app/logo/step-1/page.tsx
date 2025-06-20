@@ -84,9 +84,11 @@ export default function LogoStep1() {
             <Input
               placeholder="Your option"
               value={formData.customCompanyName}
-              onChange={(e) => setFormData({ ...formData, customCompanyName: e.target.value })}
+              onChange={(e) => setFormData({ ...formData, customCompanyName: e.target.value.slice(0, 300) })}
               className="w-full"
+              maxLength={300}
             />
+            <div className="text-xs text-gray-500 text-right">{formData.customCompanyName.length}/300</div>
           </div>
 
           {/* Company Area */}
@@ -109,9 +111,11 @@ export default function LogoStep1() {
             <Input
               placeholder="Your option"
               value={formData.customArea}
-              onChange={(e) => setFormData({ ...formData, customArea: e.target.value })}
+              onChange={(e) => setFormData({ ...formData, customArea: e.target.value.slice(0, 300) })}
               className="w-full"
+              maxLength={300}
             />
+            <div className="text-xs text-gray-500 text-right">{formData.customArea.length}/300</div>
           </div>
 
           {/* Logo Usage */}

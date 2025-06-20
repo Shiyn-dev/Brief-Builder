@@ -64,7 +64,7 @@ export default function LogoStep3() {
   const unacceptableItems = ["Bright colors", "Dark colors", "Cartoonishness", "Sophistication"]
 
   return (
-    <BriefLayout currentStep={3} totalSteps={4} title="Brief for the Logo:" onNext={handleNext} onPrev={handlePrev}>
+    <BriefLayout currentStep={3} totalSteps={4} onNext={handleNext} onPrev={handlePrev}>
       <div className="space-y-8">
         <h1 className="text-2xl font-semibold text-center text-gray-900 mb-8">Brief for the Logo:</h1>
 
@@ -89,9 +89,11 @@ export default function LogoStep3() {
             <Input
               placeholder="Your option"
               value={formData.customColor}
-              onChange={(e) => setFormData({ ...formData, customColor: e.target.value })}
+              onChange={(e) => setFormData({ ...formData, customColor: e.target.value.slice(0, 300) })}
               className="w-full"
+              maxLength={300}
             />
+            <div className="text-xs text-gray-500 text-right">{formData.customColor.length}/300</div>
           </div>
 
           {/* Unacceptable Images */}
@@ -114,9 +116,11 @@ export default function LogoStep3() {
             <Input
               placeholder="Your option"
               value={formData.customUnacceptable}
-              onChange={(e) => setFormData({ ...formData, customUnacceptable: e.target.value })}
+              onChange={(e) => setFormData({ ...formData, customUnacceptable: e.target.value.slice(0, 300) })}
               className="w-full"
+              maxLength={300}
             />
+            <div className="text-xs text-gray-500 text-right">{formData.customUnacceptable.length}/300</div>
           </div>
         </div>
       </div>

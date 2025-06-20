@@ -41,12 +41,12 @@ export default function HomePage() {
           {/* Landing Page Card */}
           <Card className="bg-white border border-gray-200 hover:shadow-lg transition-shadow">
             <CardContent className="p-6 text-center">
-              <div className="bg-gray-100 rounded-lg p-8 mb-6">
+              <div className="bg-gray-100 rounded-lg p-6 mb-6">
                 <Image
-                  src="/placeholder.svg?height=120&width=160"
+                  src="/images/landing-illustration.png"
                   alt="Landing Page illustration"
-                  width={160}
-                  height={120}
+                  width={240}
+                  height={180}
                   className="mx-auto"
                 />
               </div>
@@ -59,12 +59,12 @@ export default function HomePage() {
           {/* Logo Card */}
           <Card className="bg-white border border-gray-200 hover:shadow-lg transition-shadow">
             <CardContent className="p-6 text-center">
-              <div className="bg-gray-100 rounded-lg p-8 mb-6">
+              <div className="bg-gray-100 rounded-lg p-6 mb-6">
                 <Image
-                  src="/placeholder.svg?height=120&width=160"
+                  src="/images/logo-illustration.png"
                   alt="Logo illustration"
-                  width={160}
-                  height={120}
+                  width={240}
+                  height={180}
                   className="mx-auto"
                 />
               </div>
@@ -77,12 +77,12 @@ export default function HomePage() {
           {/* Presentation Card */}
           <Card className="bg-white border border-gray-200 hover:shadow-lg transition-shadow">
             <CardContent className="p-6 text-center">
-              <div className="bg-gray-100 rounded-lg p-8 mb-6">
+              <div className="bg-gray-100 rounded-lg p-6 mb-6">
                 <Image
-                  src="/placeholder.svg?height=120&width=160"
+                  src="/images/presentation-illustration.png"
                   alt="Presentation illustration"
-                  width={160}
-                  height={120}
+                  width={240}
+                  height={180}
                   className="mx-auto"
                 />
               </div>

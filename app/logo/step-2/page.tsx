@@ -77,7 +77,7 @@ export default function LogoStep2() {
   ]
 
   return (
-    <BriefLayout currentStep={2} totalSteps={4} title="Brief for the Logo:" onNext={handleNext} onPrev={handlePrev}>
+    <BriefLayout currentStep={2} totalSteps={4} onNext={handleNext} onPrev={handlePrev}>
       <div className="space-y-8">
         <h1 className="text-2xl font-semibold text-center text-gray-900 mb-8">Brief for the Logo:</h1>
 
@@ -102,9 +102,11 @@ export default function LogoStep2() {
             <Input
               placeholder="Your option"
               value={formData.customEmotion}
-              onChange={(e) => setFormData({ ...formData, customEmotion: e.target.value })}
+              onChange={(e) => setFormData({ ...formData, customEmotion: e.target.value.slice(0, 300) })}
               className="w-full"
+              maxLength={300}
             />
+            <div className="text-xs text-gray-500 text-right">{formData.customEmotion.length}/300</div>
           </div>
 
           {/* Sensations */}
@@ -127,9 +129,11 @@ export default function LogoStep2() {
             <Input
               placeholder="Your option"
               value={formData.customSensation}
-              onChange={(e) => setFormData({ ...formData, customSensation: e.target.value })}
+              onChange={(e) => setFormData({ ...formData, customSensation: e.target.value.slice(0, 300) })}
               className="w-full"
+              maxLength={300}
             />
+            <div className="text-xs text-gray-500 text-right">{formData.customSensation.length}/300</div>
           </div>
 
           {/* Geometric Figure */}
@@ -159,9 +163,11 @@ export default function LogoStep2() {
             <Input
               placeholder="Your option"
               value={formData.customFigure}
-              onChange={(e) => setFormData({ ...formData, customFigure: e.target.value })}
+              onChange={(e) => setFormData({ ...formData, customFigure: e.target.value.slice(0, 300) })}
               className="w-full"
+              maxLength={300}
             />
+            <div className="text-xs text-gray-500 text-right">{formData.customFigure.length}/300</div>
           </div>
         </div>
       </div>

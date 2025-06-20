@@ -32,7 +32,7 @@ export default function LandingStep3() {
   }
 
   return (
-    <BriefLayout currentStep={3} totalSteps={6} title="Brief for the Landing:" onNext={handleNext} onPrev={handlePrev}>
+    <BriefLayout currentStep={3} totalSteps={6} onNext={handleNext} onPrev={handlePrev}>
       <div className="space-y-8">
         <h1 className="text-2xl font-semibold text-center text-gray-900 mb-8">Brief for the Landing:</h1>
 
@@ -45,10 +45,12 @@ export default function LandingStep3() {
             <Textarea
               id="currentDesignLikes"
               value={formData.currentDesignLikes}
-              onChange={(e) => setFormData({ ...formData, currentDesignLikes: e.target.value })}
+              onChange={(e) => setFormData({ ...formData, currentDesignLikes: e.target.value.slice(0, 300) })}
               className="w-full min-h-[100px]"
               placeholder="Your option"
+              maxLength={300}
             />
+            <div className="text-xs text-gray-500 text-right">{formData.currentDesignLikes.length}/300</div>
           </div>
 
           {/* Purpose */}
@@ -81,10 +83,12 @@ export default function LandingStep3() {
             <Textarea
               id="whyBuyFromYou"
               value={formData.whyBuyFromYou}
-              onChange={(e) => setFormData({ ...formData, whyBuyFromYou: e.target.value })}
+              onChange={(e) => setFormData({ ...formData, whyBuyFromYou: e.target.value.slice(0, 300) })}
               className="w-full min-h-[100px]"
               placeholder="Your option"
+              maxLength={300}
             />
+            <div className="text-xs text-gray-500 text-right">{formData.whyBuyFromYou.length}/300</div>
           </div>
         </div>
       </div>

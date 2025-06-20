@@ -8,30 +8,29 @@ import { Label } from "@/components/ui/label"
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 import { Textarea } from "@/components/ui/textarea"
 
-export default function LandingStep1() {
+export default function PresentationStep1() {
   const router = useRouter()
   const [formData, setFormData] = useState({
     companyName: "",
-    activityField: "",
-    companyMission: "",
-    customActivityField: "", // добавить это поле
+    companyActivity: "",
+    companyValue: "",
   })
 
   const handleNext = () => {
     localStorage.setItem(
-      "landingBrief",
+      "presentationBrief",
       JSON.stringify({
-        ...JSON.parse(localStorage.getItem("landingBrief") || "{}"),
+        ...JSON.parse(localStorage.getItem("presentationBrief") || "{}"),
         ...formData,
       }),
     )
-    router.push("/landing/step-2")
+    router.push("/presentation/step-2")
   }
 
   return (
-    <BriefLayout currentStep={1} totalSteps={6} onNext={handleNext} showPrev={false}>
+    <BriefLayout currentStep={1} totalSteps={9} onNext={handleNext} showPrev={false}>
       <div className="space-y-8">
-        <h1 className="text-2xl font-semibold text-center text-gray-900 mb-8">Brief for the Landing:</h1>
+        <h1 className="text-2xl font-semibold text-center text-gray-900 mb-8">Brief for the Presentation:</h1>
 
         <div className="space-y-6">
           {/* Company Name */}
@@ -50,48 +49,49 @@ export default function LandingStep1() {
             <div className="text-xs text-gray-500 text-right">{formData.companyName.length}/300</div>
           </div>
 
-          {/* Activity Field */}
+          {/* Company Activity */}
           <div className="space-y-3">
-            <Label className="text-base font-medium">The company's field of activity?</Label>
+            <Label className="text-base font-medium">What does your company do?</Label>
             <RadioGroup
-              value={formData.activityField}
-              onValueChange={(value) => setFormData({ ...formData, activityField: value })}
+              value={formData.companyActivity}
+              onValueChange={(value) => setFormData({ ...formData, companyActivity: value })}
             >
               <div className="flex items-center space-x-2">
-                <RadioGroupItem value="info-services" id="info-services" />
-                <Label htmlFor="info-services">Info services</Label>
+                <RadioGroupItem value="manufacturing" id="manufacturing" />
+                <Label htmlFor="manufacturing">Manufacturing</Label>
               </div>
               <div className="flex items-center space-x-2">
-                <RadioGroupItem value="physical-services" id="physical-services" />
-                <Label htmlFor="physical-services">Physical services</Label>
+                <RadioGroupItem value="services" id="services" />
+                <Label htmlFor="services">Services</Label>
+              </div>
+              <div className="flex items-center space-x-2">
+                <RadioGroupItem value="retail" id="retail" />
+                <Label htmlFor="retail">Retail</Label>
               </div>
             </RadioGroup>
             <Input
               placeholder="Your option"
-              value={formData.customActivityField}
-              onChange={(e) => setFormData({ ...formData, customActivityField: e.target.value.slice(0, 300) })}
               className="w-full mt-2"
+              onChange={(e) => setFormData({ ...formData, companyActivity: e.target.value.slice(0, 300) })}
               maxLength={300}
             />
-            <div className="text-xs text-gray-500 text-right">
-              {formData.activityField.length > 50 ? formData.customActivityField.length : 0}/300
-            </div>
           </div>
 
-          {/* Company Mission */}
+          {/* Company Value */}
           <div className="space-y-2">
-            <Label htmlFor="companyMission" className="text-base font-medium">
-              What is the idea and mission of your Company?
+            <Label htmlFor="companyValue" className="text-base font-medium">
+              What is your company's value?
             </Label>
+            <p className="text-sm text-gray-600">Briefly formulate your company's mission and values.</p>
             <Textarea
-              id="companyMission"
-              value={formData.companyMission}
-              onChange={(e) => setFormData({ ...formData, companyMission: e.target.value.slice(0, 300) })}
+              id="companyValue"
+              value={formData.companyValue}
+              onChange={(e) => setFormData({ ...formData, companyValue: e.target.value.slice(0, 300) })}
               className="w-full min-h-[100px]"
               placeholder="Your option"
               maxLength={300}
             />
-            <div className="text-xs text-gray-500 text-right">{formData.companyMission.length}/300</div>
+            <div className="text-xs text-gray-500 text-right">{formData.companyValue.length}/300</div>
           </div>
         </div>
       </div>

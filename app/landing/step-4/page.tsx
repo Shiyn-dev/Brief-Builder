@@ -12,6 +12,7 @@ export default function LandingStep4() {
   const router = useRouter()
   const [formData, setFormData] = useState({
     audience: "",
+    customAudience: "",
     mainCompetitor: "",
     successfulCompetitors: "",
   })
@@ -33,7 +34,7 @@ export default function LandingStep4() {
   }
 
   return (
-    <BriefLayout currentStep={4} totalSteps={6} title="Brief for the Landing:" onNext={handleNext} onPrev={handlePrev}>
+    <BriefLayout currentStep={4} totalSteps={6} onNext={handleNext} onPrev={handlePrev}>
       <div className="space-y-8">
         <h1 className="text-2xl font-semibold text-center text-gray-900 mb-8">Brief for the Landing:</h1>
 
@@ -56,9 +57,12 @@ export default function LandingStep4() {
             </RadioGroup>
             <Input
               placeholder="Your option"
+              value={formData.customAudience}
+              onChange={(e) => setFormData({ ...formData, customAudience: e.target.value.slice(0, 300) })}
               className="w-full mt-2"
-              onChange={(e) => setFormData({ ...formData, audience: e.target.value })}
+              maxLength={300}
             />
+            <div className="text-xs text-gray-500 text-right">{formData.customAudience.length}/300</div>
           </div>
 
           {/* Main Competitor */}
@@ -69,10 +73,12 @@ export default function LandingStep4() {
             <Input
               id="mainCompetitor"
               value={formData.mainCompetitor}
-              onChange={(e) => setFormData({ ...formData, mainCompetitor: e.target.value })}
+              onChange={(e) => setFormData({ ...formData, mainCompetitor: e.target.value.slice(0, 300) })}
               className="w-full"
               placeholder="Your option"
+              maxLength={300}
             />
+            <div className="text-xs text-gray-500 text-right">{formData.mainCompetitor.length}/300</div>
           </div>
 
           {/* Successful Competitors */}
@@ -83,10 +89,12 @@ export default function LandingStep4() {
             <Textarea
               id="successfulCompetitors"
               value={formData.successfulCompetitors}
-              onChange={(e) => setFormData({ ...formData, successfulCompetitors: e.target.value })}
+              onChange={(e) => setFormData({ ...formData, successfulCompetitors: e.target.value.slice(0, 300) })}
               className="w-full min-h-[100px]"
               placeholder="Your option"
+              maxLength={300}
             />
+            <div className="text-xs text-gray-500 text-right">{formData.successfulCompetitors.length}/300</div>
           </div>
         </div>
       </div>

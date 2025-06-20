@@ -12,6 +12,7 @@ export default function LandingStep6() {
   const router = useRouter()
   const [formData, setFormData] = useState({
     style: "",
+    customStyle: "",
     content: "",
     email: "",
   })
@@ -34,7 +35,6 @@ export default function LandingStep6() {
     <BriefLayout
       currentStep={6}
       totalSteps={6}
-      title="Brief for the Landing:"
       onNext={handleComplete}
       onPrev={handlePrev}
       nextText="Complete the Brief"
@@ -74,9 +74,12 @@ export default function LandingStep6() {
             </RadioGroup>
             <Input
               placeholder="Your option"
+              value={formData.customStyle}
+              onChange={(e) => setFormData({ ...formData, customStyle: e.target.value.slice(0, 300) })}
               className="w-full mt-2"
-              onChange={(e) => setFormData({ ...formData, style: e.target.value })}
+              maxLength={300}
             />
+            <div className="text-xs text-gray-500 text-right">{formData.customStyle.length}/300</div>
           </div>
 
           {/* Content */}
@@ -87,10 +90,12 @@ export default function LandingStep6() {
             <Textarea
               id="content"
               value={formData.content}
-              onChange={(e) => setFormData({ ...formData, content: e.target.value })}
+              onChange={(e) => setFormData({ ...formData, content: e.target.value.slice(0, 300) })}
               className="w-full min-h-[100px]"
               placeholder="Your option"
+              maxLength={300}
             />
+            <div className="text-xs text-gray-500 text-right">{formData.content.length}/300</div>
             <div className="text-sm text-gray-500 mt-1">Возможность прикрепить файл с контентом</div>
           </div>
 
@@ -103,11 +108,13 @@ export default function LandingStep6() {
               id="email"
               type="email"
               value={formData.email}
-              onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+              onChange={(e) => setFormData({ ...formData, email: e.target.value.slice(0, 300) })}
               className="w-full"
               placeholder="Your email"
               required
+              maxLength={300}
             />
+            <div className="text-xs text-gray-500 text-right">{formData.email.length}/300</div>
           </div>
 
           <div className="text-center pt-4">
