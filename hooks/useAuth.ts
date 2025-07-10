@@ -10,9 +10,16 @@ export function useAuth() {
   const [isAdmin, setIsAdmin] = useState(false)
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
+    const unsubscribe = onAuthStateChanged(auth, async (user) => {
       setUser(user)
-      setIsAdmin(user ? isAdminEmail(user.email || "") : false)
+
+      if (user) {
+        const adminStatus = await isAdminEmail(user.email || "")
+        setIsAdmin(adminStatus)
+      } else {
+        setIsAdmin(false)
+      }
+
       setLoading(false)
     })
 
