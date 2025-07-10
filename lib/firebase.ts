@@ -8,7 +8,7 @@ const firebaseConfig = {
   projectId: "brief-builder",
   storageBucket: "brief-builder.appspot.com",
   messagingSenderId: "743757028708",
-  appId: "1:743757028708:web:your-app-id",
+  appId: "1:743757028708:web:AIzaSyDRBkz7iyJ-BAR-pqQuO4oV67rSOBrm3ss",
 }
 
 const app = initializeApp(firebaseConfig)
