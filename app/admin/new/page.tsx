@@ -88,110 +88,110 @@ function NewTemplatePageContent() {
   }
 
   return (
-      <div className="min-h-screen" style={{ backgroundColor: "#F0F9FA" }}>
-        {/* Header */}
-        <header className="bg-white border-b border-gray-200 px-6 py-4">
-          <div className="max-w-7xl mx-auto flex items-center justify-between">
-            <Link href="/" className="text-2xl font-bold text-teal-600">
-              BRIEF BUILDER
-            </Link>
-            <GoogleLogin />
-          </div>
-        </header>
+    <div className="min-h-screen" style={{ backgroundColor: "#F0F9FA" }}>
+      {/* Header */}
+      <header className="bg-white border-b border-gray-200 px-6 py-4">
+        <div className="max-w-7xl mx-auto flex items-center justify-between">
+          <Link href="/" className="text-2xl font-bold text-teal-600">
+            BRIEF BUILDER
+          </Link>
+          <GoogleLogin />
+        </div>
+      </header>
 
-        {/* Main Content */}
-        <main className="max-w-4xl mx-auto px-6 py-16">
-          <div className="text-center mb-12">
-            <h1 className="text-2xl font-semibold text-gray-900">New template:</h1>
-          </div>
+      {/* Main Content */}
+      <main className="max-w-4xl mx-auto px-6 py-16">
+        <div className="text-center mb-12">
+          <h1 className="text-2xl font-semibold text-gray-900">New template:</h1>
+        </div>
 
-          <div className="space-y-6">
-            {questions.map((question, index) => (
-                <Card
-                    key={question.id}
-                    className="bg-white border border-gray-200 cursor-move"
-                    draggable
-                    onDragStart={(e) => handleDragStart(e, question.id)}
-                    onDragOver={handleDragOver}
-                    onDrop={(e) => handleDrop(e, question.id)}
-                >
-                  <CardContent className="p-6">
-                    <div className="flex items-start space-x-4">
-                      <div className="flex-shrink-0 mt-2">
-                        <GripVertical className="w-5 h-5 text-gray-400 cursor-grab" />
-                      </div>
+        <div className="space-y-6">
+          {questions.map((question, index) => (
+            <Card
+              key={question.id}
+              className="bg-white border border-gray-200 cursor-move"
+              draggable
+              onDragStart={(e) => handleDragStart(e, question.id)}
+              onDragOver={handleDragOver}
+              onDrop={(e) => handleDrop(e, question.id)}
+            >
+              <CardContent className="p-6">
+                <div className="flex items-start space-x-4">
+                  <div className="flex-shrink-0 mt-2">
+                    <GripVertical className="w-5 h-5 text-gray-400 cursor-grab" />
+                  </div>
 
-                      <div className="flex-1">
-                        <div className="flex items-center justify-between mb-4">
+                  <div className="flex-1">
+                    <div className="flex items-center justify-between mb-4">
+                      <Input
+                        value={question.title}
+                        onChange={(e) => {
+                          const newQuestions = [...questions]
+                          newQuestions[index].title = e.target.value
+                          setQuestions(newQuestions)
+                        }}
+                        className="text-lg font-medium border-none p-0 focus:ring-0 flex-1"
+                        placeholder="Your question"
+                      />
+                      <select className="border border-gray-300 rounded px-3 py-1 text-sm ml-4">
+                        <option>Answer choice</option>
+                        <option>Text</option>
+                        <option>Multiple choice</option>
+                      </select>
+                    </div>
+
+                    <div className="space-y-2">
+                      {question.options.map((option, optionIndex) => (
+                        <div key={optionIndex} className="flex items-center space-x-3">
+                          <div className="w-4 h-4 border-2 border-gray-300 rounded-full"></div>
                           <Input
-                              value={question.title}
-                              onChange={(e) => {
-                                const newQuestions = [...questions]
-                                newQuestions[index].title = e.target.value
-                                setQuestions(newQuestions)
-                              }}
-                              className="text-lg font-medium border-none p-0 focus:ring-0 flex-1"
-                              placeholder="Your question"
+                            value={option}
+                            onChange={(e) => {
+                              const newQuestions = [...questions]
+                              newQuestions[index].options[optionIndex] = e.target.value
+                              setQuestions(newQuestions)
+                            }}
+                            placeholder={optionIndex === 0 ? "Variant 1" : "Add variant"}
+                            className="flex-1 border-none border-b border-gray-300 rounded-none p-0 focus:ring-0"
                           />
-                          <select className="border border-gray-300 rounded px-3 py-1 text-sm ml-4">
-                            <option>Answer choice</option>
-                            <option>Text</option>
-                            <option>Multiple choice</option>
-                          </select>
                         </div>
+                      ))}
+                    </div>
 
-                        <div className="space-y-2">
-                          {question.options.map((option, optionIndex) => (
-                              <div key={optionIndex} className="flex items-center space-x-3">
-                                <div className="w-4 h-4 border-2 border-gray-300 rounded-full"></div>
-                                <Input
-                                    value={option}
-                                    onChange={(e) => {
-                                      const newQuestions = [...questions]
-                                      newQuestions[index].options[optionIndex] = e.target.value
-                                      setQuestions(newQuestions)
-                                    }}
-                                    placeholder={optionIndex === 0 ? "Variant 1" : "Add variant"}
-                                    className="flex-1 border-none border-b border-gray-300 rounded-none p-0 focus:ring-0"
-                                />
-                              </div>
-                          ))}
-                        </div>
-
-                        <div className="flex justify-between items-center mt-4">
-                          <div className="flex space-x-2">
-                            <Copy
-                                className="w-5 h-5 text-gray-400 cursor-pointer hover:text-gray-600"
-                                onClick={() => duplicateQuestion(question.id)}
-                            />
-                            <Trash2
-                                className="w-5 h-5 text-gray-400 cursor-pointer hover:text-red-500"
-                                onClick={() => deleteQuestion(question.id)}
-                            />
-                          </div>
-                        </div>
+                    <div className="flex justify-between items-center mt-4">
+                      <div className="flex space-x-2">
+                        <Copy
+                          className="w-5 h-5 text-gray-400 cursor-pointer hover:text-gray-600"
+                          onClick={() => duplicateQuestion(question.id)}
+                        />
+                        <Trash2
+                          className="w-5 h-5 text-gray-400 cursor-pointer hover:text-red-500"
+                          onClick={() => deleteQuestion(question.id)}
+                        />
                       </div>
                     </div>
-                  </CardContent>
-                </Card>
-            ))}
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          ))}
 
-            <div className="text-center">
-              <Button onClick={addQuestion} variant="outline" className="text-teal-600 border-teal-600 bg-transparent">
-                <Plus className="w-4 h-4 mr-2" />
-                Add a question
-              </Button>
-            </div>
+          <div className="text-center">
+            <Button onClick={addQuestion} variant="outline" className="text-teal-600 border-teal-600 bg-transparent">
+              <Plus className="w-4 h-4 mr-2" />
+              Add a question
+            </Button>
           </div>
-        </main>
-      </div>
+        </div>
+      </main>
+    </div>
   )
 }
 
 export default function NewTemplatePage() {
   return (
-      <AdminGuard>
-        <NewTemplatePageContent />
-      </AdminGuard>
+    <AdminGuard>
+      <NewTemplatePageContent />
+    </AdminGuard>
   )
 }

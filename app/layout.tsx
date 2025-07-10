@@ -4,9 +4,9 @@ import "./globals.css"
 import { ThemeProvider } from "@/components/theme-provider"
 
 export const metadata: Metadata = {
-  title: "Brief Builder",
-  description: "Created with WebShtorm by Nurgissa",
-  generator: "Nurgissa",
+  title: "v0 App",
+  description: "Created with v0",
+  generator: "v0.dev",
 }
 
 export default function RootLayout({
