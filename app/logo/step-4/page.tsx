@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { useRouter } from "next/navigation"
 import BriefLayout from "@/components/brief-layout"
 import { Input } from "@/components/ui/input"
@@ -14,6 +14,17 @@ export default function LogoStep4() {
     email: "",
   })
 
+  // Load existing data on component mount
+  useEffect(() => {
+    const existingData = JSON.parse(localStorage.getItem("logoBrief") || "{}")
+    if (existingData) {
+      setFormData({
+        logoTypes: existingData.logoTypes || [],
+        email: existingData.email || "",
+      })
+    }
+  }, [])
+
   const handleComplete = () => {
     const existingData = JSON.parse(localStorage.getItem("logoBrief") || "{}")
     const finalData = {
@@ -25,6 +36,14 @@ export default function LogoStep4() {
   }
 
   const handlePrev = () => {
+    const existingData = JSON.parse(localStorage.getItem("logoBrief") || "{}")
+    localStorage.setItem(
+      "logoBrief",
+      JSON.stringify({
+        ...existingData,
+        ...formData,
+      }),
+    )
     router.push("/logo/step-3")
   }
 
@@ -58,7 +77,9 @@ export default function LogoStep4() {
       nextText="Complete the Brief"
     >
       <div className="space-y-8">
-        <h1 className="text-2xl font-semibold text-center text-gray-900 mb-8">Brief for the Logo:</h1>
+        <h1 className="text-xl font-semibold text-gray-900 border-b border-dotted border-gray-400 pb-2">
+          Brief for the Logo:
+        </h1>
 
         <div className="space-y-6">
           {/* Logo Types */}
