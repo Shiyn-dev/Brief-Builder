@@ -1,6 +1,6 @@
 import { initializeApp } from "firebase/app"
 import { getAuth, GoogleAuthProvider } from "firebase/auth"
-import { getFirestore, doc, getDoc } from "firebase/firestore"
+import { getFirestore, doc, getDoc, setDoc } from "firebase/firestore"
 
 const firebaseConfig = {
   apiKey: "AIzaSyDRBkz7iyJ-BAR-pqQuO4oV67rSOBrm3ss",
@@ -24,5 +24,17 @@ export const isAdminEmail = async (email: string): Promise<boolean> => {
   } catch (error) {
     console.error("Error checking admin status:", error)
     return false
+  }
+}
+
+// Function to add an email to the admin whitelist in Firestore
+export const addAdminToWhitelist = async (email: string): Promise<void> => {
+  try {
+    await setDoc(doc(db, "admins", email.toLowerCase()), {
+      addedAt: new Date(),
+    })
+    console.log(`Email ${email} added to admin whitelist.`)
+  } catch (error) {
+    console.error("Error adding admin to whitelist:", error)
   }
 }
