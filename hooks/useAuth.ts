@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react"
 import { type User, signInWithRedirect, signOut, onAuthStateChanged, getRedirectResult } from "firebase/auth"
-import { auth, googleProvider, isAdminEmail, addAdminToWhitelist } from "@/lib/firebase"
+import { getFirebaseAuth, googleProvider, isAdminEmail, addAdminToWhitelist } from "@/lib/firebase" // Обновляем импорт getFirebaseAuth
 
 export function useAuth() {
   const [user, setUser] = useState<User | null>(null)
@@ -10,6 +10,12 @@ export function useAuth() {
   const [isAdmin, setIsAdmin] = useState(false)
 
   useEffect(() => {
+    const auth = getFirebaseAuth()
+    if (!auth) {
+      setLoading(false)
+      return
+    }
+
     const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
       setUser(currentUser)
 
@@ -51,6 +57,11 @@ export function useAuth() {
   }, []) // Пустой массив зависимостей, чтобы эффект запускался только один раз при монтировании
 
   const signInWithGoogle = async () => {
+    const auth = getFirebaseAuth()
+    if (!auth) {
+      console.error("Firebase Auth not initialized.")
+      return
+    }
     try {
       setLoading(true) // Начинаем загрузку перед перенаправлением
       await signInWithRedirect(auth, googleProvider) // Используем signInWithRedirect
@@ -63,6 +74,11 @@ export function useAuth() {
   }
 
   const logout = async () => {
+    const auth = getFirebaseAuth()
+    if (!auth) {
+      console.error("Firebase Auth not initialized.")
+      return
+    }
     try {
       await signOut(auth)
     } catch (error) {
