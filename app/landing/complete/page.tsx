@@ -20,8 +20,11 @@ export default function LandingComplete() {
 
   useEffect(() => {
     const data = localStorage.getItem("landingBrief")
+    console.log("Complete: Raw localStorage data:", data)
     if (data) {
-      setBriefData(JSON.parse(data))
+      const parsedData = JSON.parse(data)
+      console.log("Complete: Parsed data:", parsedData)
+      setBriefData(parsedData)
     }
   }, [])
 
@@ -64,28 +67,112 @@ export default function LandingComplete() {
                 </div>
 
                 <div>
-                  <strong>Activity field:</strong>
-                  <div className="text-gray-600">{briefData.activityField || "Not specified"}</div>
+                  <strong>Field of activity:</strong>
+                  <div className="text-gray-600">
+                    {briefData.fieldOfActivity && briefData.fieldOfActivity !== "" 
+                      ? briefData.fieldOfActivity 
+                      : briefData.customFieldOfActivity || "Not specified"}
+                  </div>
                 </div>
 
                 <div>
-                  <strong>Company mission:</strong>
-                  <div className="text-gray-600">{briefData.companyMission || "Not specified"}</div>
+                  <strong>Idea and mission:</strong>
+                  <div className="text-gray-600">{briefData.ideaAndMission || "Not specified"}</div>
                 </div>
 
                 <div>
                   <strong>USP:</strong>
-                  <div className="text-gray-600">{briefData.usp || "Not specified"}</div>
+                  <div className="text-gray-600">
+                    {Array.isArray(briefData.usp) && briefData.usp.length > 0 
+                      ? briefData.usp.join(", ") 
+                      : briefData.customUsp || "Not specified"}
+                  </div>
                 </div>
 
                 <div>
                   <strong>Goal:</strong>
-                  <div className="text-gray-600">{briefData.goal || "Not specified"}</div>
+                  <div className="text-gray-600">
+                    {Array.isArray(briefData.goal) && briefData.goal.length > 0 
+                      ? briefData.goal.join(", ") 
+                      : briefData.customGoal || "Not specified"}
+                  </div>
+                </div>
+
+                <div>
+                  <strong>Current landing link:</strong>
+                  <div className="text-gray-600">{briefData.currentLandingLink || "Not specified"}</div>
+                </div>
+
+                <div>
+                  <strong>Design likes:</strong>
+                  <div className="text-gray-600">{briefData.currentDesignLikes || "Not specified"}</div>
+                </div>
+
+                <div>
+                  <strong>Purpose:</strong>
+                  <div className="text-gray-600">{briefData.purpose || "Not specified"}</div>
+                </div>
+
+                <div>
+                  <strong>Why buy from you:</strong>
+                  <div className="text-gray-600">{briefData.whyBuyFromYou || "Not specified"}</div>
+                </div>
+
+                <div>
+                  <strong>Target audience:</strong>
+                  <div className="text-gray-600">
+                    {briefData.audience && briefData.audience !== "" 
+                      ? briefData.audience 
+                      : briefData.customAudience || "Not specified"}
+                  </div>
+                </div>
+
+                <div>
+                  <strong>Main competitor:</strong>
+                  <div className="text-gray-600">{briefData.mainCompetitor || "Not specified"}</div>
+                </div>
+
+                <div>
+                  <strong>Successful competitors:</strong>
+                  <div className="text-gray-600">{briefData.successfulCompetitors || "Not specified"}</div>
+                </div>
+
+                <div>
+                  <strong>Disliked websites:</strong>
+                  <div className="text-gray-600">{briefData.dislikedWebsites || "Not specified"}</div>
+                </div>
+
+                <div>
+                  <strong>Color scheme:</strong>
+                  <div className="text-gray-600">{briefData.colorScheme || "Not specified"}</div>
+                </div>
+
+                <div>
+                  <strong>Landing blocks:</strong>
+                  <div className="text-gray-600">
+                    {Array.isArray(briefData.landingBlocks) && briefData.landingBlocks.length > 0 
+                      ? briefData.landingBlocks.join(", ") 
+                      : briefData.customBlocks || "Not specified"}
+                  </div>
                 </div>
 
                 <div>
                   <strong>Style:</strong>
-                  <div className="text-gray-600">{briefData.style || "Not specified"}</div>
+                  <div className="text-gray-600">
+                    {briefData.style && briefData.style !== "" 
+                      ? briefData.style 
+                      : briefData.customStyle || "Not specified"}
+                  </div>
+                </div>
+
+                <div>
+                  <strong>Content:</strong>
+                  <div className="text-gray-600">{briefData.content || "Not specified"}</div>
+                </div>
+
+                <div>
+                  <strong>Email:</strong>
+                  <div className="text-gray-600">{briefData.email || "Not specified"}</div>
                 </div>
               </div>
 
