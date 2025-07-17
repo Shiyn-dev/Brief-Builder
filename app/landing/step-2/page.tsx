@@ -21,6 +21,7 @@ export default function LandingStep2() {
   // Load existing data on component mount
   useEffect(() => {
     const existingData = JSON.parse(localStorage.getItem("landingBrief") || "{}")
+    console.log("Step-2: Loading existing data:", existingData)
     if (existingData) {
       setFormData({
         usp: existingData.usp || [],
@@ -45,25 +46,23 @@ export default function LandingStep2() {
     if (!isFormValid()) return
 
     const existingData = JSON.parse(localStorage.getItem("landingBrief") || "{}")
-    localStorage.setItem(
-      "landingBrief",
-      JSON.stringify({
-        ...existingData,
-        ...formData,
-      }),
-    )
+    const updatedData = {
+      ...existingData,
+      ...formData,
+    }
+    console.log("Step-2: Saving data:", updatedData)
+    localStorage.setItem("landingBrief", JSON.stringify(updatedData))
     router.push("/landing/step-3")
   }
 
   const handlePrev = () => {
     const existingData = JSON.parse(localStorage.getItem("landingBrief") || "{}")
-    localStorage.setItem(
-      "landingBrief",
-      JSON.stringify({
-        ...existingData,
-        ...formData,
-      }),
-    )
+    const updatedData = {
+      ...existingData,
+      ...formData,
+    }
+    console.log("Step-2: Saving data before going back:", updatedData)
+    localStorage.setItem("landingBrief", JSON.stringify(updatedData))
     router.push("/landing/step-1")
   }
 

@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { useRouter } from "next/navigation"
 import BriefLayout from "@/components/brief-layout"
 import { Label } from "@/components/ui/label"
@@ -15,19 +15,38 @@ export default function LandingStep3() {
     whyBuyFromYou: "",
   })
 
+  // Load existing data on component mount
+  useEffect(() => {
+    const existingData = JSON.parse(localStorage.getItem("landingBrief") || "{}")
+    console.log("Step-3: Loading existing data:", existingData)
+    if (existingData) {
+      setFormData({
+        currentDesignLikes: existingData.currentDesignLikes || "",
+        purpose: existingData.purpose || "",
+        whyBuyFromYou: existingData.whyBuyFromYou || "",
+      })
+    }
+  }, [])
+
   const handleNext = () => {
     const existingData = JSON.parse(localStorage.getItem("landingBrief") || "{}")
-    localStorage.setItem(
-      "landingBrief",
-      JSON.stringify({
-        ...existingData,
-        ...formData,
-      }),
-    )
+    const updatedData = {
+      ...existingData,
+      ...formData,
+    }
+    console.log("Step-3: Saving data:", updatedData)
+    localStorage.setItem("landingBrief", JSON.stringify(updatedData))
     router.push("/landing/step-4")
   }
 
   const handlePrev = () => {
+    const existingData = JSON.parse(localStorage.getItem("landingBrief") || "{}")
+    const updatedData = {
+      ...existingData,
+      ...formData,
+    }
+    console.log("Step-3: Saving data before going back:", updatedData)
+    localStorage.setItem("landingBrief", JSON.stringify(updatedData))
     router.push("/landing/step-2")
   }
 

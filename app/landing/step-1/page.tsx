@@ -13,20 +13,21 @@ export default function LandingStep1() {
   const router = useRouter()
   const [formData, setFormData] = useState({
     companyName: "",
-    activityField: "",
-    companyMission: "",
-    customActivityField: "",
+    fieldOfActivity: "",
+    ideaAndMission: "",
+    customFieldOfActivity: "",
   })
 
   // Load existing data on component mount
   useEffect(() => {
     const existingData = JSON.parse(localStorage.getItem("landingBrief") || "{}")
+    console.log("Step-1: Loading existing data:", existingData)
     if (existingData) {
       setFormData({
         companyName: existingData.companyName || "",
-        activityField: existingData.activityField || "",
-        companyMission: existingData.companyMission || "",
-        customActivityField: existingData.customActivityField || "",
+        fieldOfActivity: existingData.fieldOfActivity || "",
+        ideaAndMission: existingData.ideaAndMission || "",
+        customFieldOfActivity: existingData.customFieldOfActivity || "",
       })
     }
   }, [])
@@ -35,8 +36,8 @@ export default function LandingStep1() {
   const isFormValid = () => {
     return (
       formData.companyName.trim() !== "" &&
-      formData.companyMission.trim() !== "" &&
-      (formData.activityField !== "" || formData.customActivityField.trim() !== "")
+      formData.ideaAndMission.trim() !== "" &&
+      (formData.fieldOfActivity !== "" || formData.customFieldOfActivity.trim() !== "")
     )
   }
 
@@ -44,13 +45,12 @@ export default function LandingStep1() {
     if (!isFormValid()) return
 
     const existingData = JSON.parse(localStorage.getItem("landingBrief") || "{}")
-    localStorage.setItem(
-      "landingBrief",
-      JSON.stringify({
-        ...existingData,
-        ...formData,
-      }),
-    )
+    const updatedData = {
+      ...existingData,
+      ...formData,
+    }
+    console.log("Step-1: Saving data:", updatedData)
+    localStorage.setItem("landingBrief", JSON.stringify(updatedData))
     router.push("/landing/step-2")
   }
 
@@ -87,8 +87,8 @@ export default function LandingStep1() {
               <div className="space-y-4">
                 <Label className="text-base font-medium">The company's field of activity?</Label>
                 <RadioGroup
-                  value={formData.activityField}
-                  onValueChange={(value) => setFormData({ ...formData, activityField: value })}
+                  value={formData.fieldOfActivity}
+                  onValueChange={(value) => setFormData({ ...formData, fieldOfActivity: value })}
                 >
                   <div className="flex items-center space-x-2">
                     <RadioGroupItem value="info-services" id="info-services" />
@@ -101,12 +101,12 @@ export default function LandingStep1() {
                 </RadioGroup>
                 <Input
                   placeholder="Your option"
-                  value={formData.customActivityField}
-                  onChange={(e) => setFormData({ ...formData, customActivityField: e.target.value.slice(0, 300) })}
+                  value={formData.customFieldOfActivity}
+                  onChange={(e) => setFormData({ ...formData, customFieldOfActivity: e.target.value.slice(0, 300) })}
                   className="w-full"
                   maxLength={300}
                 />
-                <div className="text-xs text-gray-500 text-right">{formData.customActivityField.length}/300</div>
+                <div className="text-xs text-gray-500 text-right">{formData.customFieldOfActivity.length}/300</div>
               </div>
             </CardContent>
           </Card>
@@ -115,18 +115,18 @@ export default function LandingStep1() {
           <Card className="bg-white border border-gray-200">
             <CardContent className="p-6">
               <div className="space-y-3">
-                <Label htmlFor="companyMission" className="text-base font-medium">
+                <Label htmlFor="ideaAndMission" className="text-base font-medium">
                   What is the idea and mission of your Company?
                 </Label>
                 <Textarea
-                  id="companyMission"
-                  value={formData.companyMission}
-                  onChange={(e) => setFormData({ ...formData, companyMission: e.target.value.slice(0, 300) })}
+                  id="ideaAndMission"
+                  value={formData.ideaAndMission}
+                  onChange={(e) => setFormData({ ...formData, ideaAndMission: e.target.value.slice(0, 300) })}
                   className="w-full min-h-[100px]"
                   placeholder="Your option"
                   maxLength={300}
                 />
-                <div className="text-xs text-gray-500 text-right">{formData.companyMission.length}/300</div>
+                <div className="text-xs text-gray-500 text-right">{formData.ideaAndMission.length}/300</div>
               </div>
             </CardContent>
           </Card>

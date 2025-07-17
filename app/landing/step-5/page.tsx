@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { useRouter } from "next/navigation"
 import BriefLayout from "@/components/brief-layout"
 import { Input } from "@/components/ui/input"
@@ -17,19 +17,39 @@ export default function LandingStep5() {
     customBlocks: "",
   })
 
+  // Load existing data on component mount
+  useEffect(() => {
+    const existingData = JSON.parse(localStorage.getItem("landingBrief") || "{}")
+    console.log("Step-5: Loading existing data:", existingData)
+    if (existingData) {
+      setFormData({
+        dislikedWebsites: existingData.dislikedWebsites || "",
+        colorScheme: existingData.colorScheme || "",
+        landingBlocks: existingData.landingBlocks || [],
+        customBlocks: existingData.customBlocks || "",
+      })
+    }
+  }, [])
+
   const handleNext = () => {
     const existingData = JSON.parse(localStorage.getItem("landingBrief") || "{}")
-    localStorage.setItem(
-      "landingBrief",
-      JSON.stringify({
-        ...existingData,
-        ...formData,
-      }),
-    )
+    const updatedData = {
+      ...existingData,
+      ...formData,
+    }
+    console.log("Step-5: Saving data:", updatedData)
+    localStorage.setItem("landingBrief", JSON.stringify(updatedData))
     router.push("/landing/step-6")
   }
 
   const handlePrev = () => {
+    const existingData = JSON.parse(localStorage.getItem("landingBrief") || "{}")
+    const updatedData = {
+      ...existingData,
+      ...formData,
+    }
+    console.log("Step-5: Saving data before going back:", updatedData)
+    localStorage.setItem("landingBrief", JSON.stringify(updatedData))
     router.push("/landing/step-4")
   }
 
