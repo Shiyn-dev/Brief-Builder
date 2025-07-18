@@ -99,7 +99,7 @@ export default function LandingStep2() {
 
   return (
       <BriefLayout currentStep={2} totalSteps={6} onNext={handleNext} onPrev={handlePrev} isNextDisabled={!isFormValid()}>
-        <style jsx>{`
+        <style jsx global>{`
           .animated-input-container {
             position: relative;
             margin: 20px 0;
@@ -107,47 +107,50 @@ export default function LandingStep2() {
           }
 
           .animated-input-container input {
-            font-size: 16px;
-            width: 100%;
-            border: none;
-            border-bottom: 2px solid #ccc;
-            padding: 8px 0;
-            background-color: transparent;
-            outline: none;
-            color: #333;
-            font-family: inherit;
+            font-size: 16px !important;
+            width: 100% !important;
+            border: none !important;
+            border-bottom: 2px solid #ccc !important;
+            padding: 12px 0 8px 0 !important;
+            background-color: transparent !important;
+            outline: none !important;
+            color: #333 !important;
+            font-family: inherit !important;
+            border-radius: 0 !important;
+            box-shadow: none !important;
           }
 
           .animated-input-container .label {
-            position: absolute;
-            top: 8px;
-            left: 0;
-            color: #999;
-            transition: all 0.3s ease;
-            pointer-events: none;
-            font-size: 16px;
+            position: absolute !important;
+            top: 12px !important;
+            left: 0 !important;
+            color: #999 !important;
+            transition: all 0.3s ease !important;
+            pointer-events: none !important;
+            font-size: 16px !important;
+            background: transparent !important;
           }
 
           .animated-input-container input:focus ~ .label,
           .animated-input-container.has-value .label {
-            top: -20px;
-            font-size: 14px;
-            color: #038196;
+            top: -16px !important;
+            font-size: 12px !important;
+            color: #68B3C0 !important;
           }
 
           .animated-input-container .underline {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            height: 2px;
-            width: 100%;
-            background-color: #038196;
-            transform: scaleX(0);
-            transition: all 0.3s ease;
+            position: absolute !important;
+            bottom: 0 !important;
+            left: 0 !important;
+            height: 2px !important;
+            width: 100% !important;
+            background-color: #68B3C0 !important;
+            transform: scaleX(0) !important;
+            transition: all 0.3s ease !important;
           }
 
           .animated-input-container input:focus ~ .underline {
-            transform: scaleX(1);
+            transform: scaleX(1) !important;
           }
 
           .char-count {
@@ -163,14 +166,14 @@ export default function LandingStep2() {
         <Card className="bg-[#F0F9FA] shadow-none border-none p-0">
           <CardContent className="p-0">
             <div className="space-y-6">
-              {/* Question 4 - USP */}
+              {/* Question 4 - USP - ЧЕКБОКСЫ ПО ГОРИЗОНТАЛИ */}
               <Card className="bg-white shadow rounded-xl border-none">
                 <CardContent className="p-6">
                   <div className="space-y-4">
                     <Label className="text-base font-medium">
                       Unique selling proposition (USP) of the company/service? <span className="text-red-500">*</span>
                     </Label>
-                    <div className="space-y-2">
+                    <div className="grid grid-cols-2 gap-3">
                       {uspOptions.map((option) => (
                           <div key={option} className="flex items-center space-x-2">
                             <Checkbox
@@ -191,6 +194,7 @@ export default function LandingStep2() {
                           value={formData.customUsp}
                           onChange={(e) => setFormData({ ...formData, customUsp: e.target.value.slice(0, 300) })}
                           maxLength={300}
+                          title="Please fill out this field"
                       />
                       <label className="label">Your option</label>
                       <div className="underline"></div>
@@ -200,12 +204,12 @@ export default function LandingStep2() {
                 </CardContent>
               </Card>
 
-              {/* Question 5 - Goal */}
+              {/* Question 5 - Goal - ЧЕКБОКСЫ ПО ГОРИЗОНТАЛИ */}
               <Card className="bg-white shadow rounded-xl border-none">
                 <CardContent className="p-6">
                   <div className="space-y-4">
                     <Label className="text-base font-medium">You want to: <span className="text-red-500">*</span></Label>
-                    <div className="space-y-2">
+                    <div className="flex flex-row gap-6 flex-wrap">
                       {goalOptions.map((option) => (
                           <div key={option} className="flex items-center space-x-2">
                             <Checkbox
@@ -226,6 +230,7 @@ export default function LandingStep2() {
                           value={formData.customGoal}
                           onChange={(e) => setFormData({ ...formData, customGoal: e.target.value.slice(0, 300) })}
                           maxLength={300}
+                          title="Please fill out this field"
                       />
                       <label className="label">Your option</label>
                       <div className="underline"></div>
@@ -235,7 +240,7 @@ export default function LandingStep2() {
                 </CardContent>
               </Card>
 
-              {/* Question 6 - Current Landing Link (ТЕПЕРЬ ОБЯЗАТЕЛЬНОЕ) */}
+              {/* Question 6 - Current Landing Link */}
               <Card className="bg-white shadow rounded-xl border-none">
                 <CardContent className="p-6">
                   <div className="space-y-4">
@@ -246,6 +251,7 @@ export default function LandingStep2() {
                           value={formData.currentLandingLink}
                           onChange={(e) => setFormData({ ...formData, currentLandingLink: e.target.value.slice(0, 300) })}
                           maxLength={300}
+                          title="Please fill out this field"
                       />
                       <label className="label">Your option</label>
                       <div className="underline"></div>

@@ -158,14 +158,15 @@ export default function PresentationStep7() {
         <Card className="bg-[#F0F9FA] shadow-none border-none p-0">
           <CardContent className="p-0">
             <div className="space-y-6">
-              {/* Slides Count */}
+              {/* Slides Count - РАДИОКНОПКИ ПО ГОРИЗОНТАЛИ */}
               <Card className="bg-white shadow rounded-xl border-none">
                 <CardContent className="p-6">
                   <div className="space-y-4">
-                    <Label className="text-base font-medium">How many slides will your presentation have?</Label>
+                    <Label className="text-base font-medium">How many slides will your presentation have? <span className="text-red-500">*</span></Label>
                     <RadioGroup
                         value={formData.slidesCount}
                         onValueChange={(value) => setFormData({ ...formData, slidesCount: value })}
+                        className="flex flex-row gap-6"
                     >
                       <div className="flex items-center space-x-2">
                         <RadioGroupItem value="up-to-5" id="slides-5" />
@@ -188,6 +189,7 @@ export default function PresentationStep7() {
                           value={formData.customSlidesCount}
                           onChange={(e) => setFormData({ ...formData, customSlidesCount: e.target.value.slice(0, 300) })}
                           maxLength={300}
+                          title="Please fill out this field"
                       />
                       <label className="label">Your option</label>
                       <div className="underline"></div>
@@ -197,14 +199,15 @@ export default function PresentationStep7() {
                 </CardContent>
               </Card>
 
-              {/* Content Help */}
+              {/* Content Help - РАДИОКНОПКИ ПО ГОРИЗОНТАЛИ */}
               <Card className="bg-white shadow rounded-xl border-none">
                 <CardContent className="p-6">
                   <div className="space-y-4">
-                    <Label className="text-base font-medium">Do you need help preparing content for your presentation?</Label>
+                    <Label className="text-base font-medium">Do you need help preparing content for your presentation? <span className="text-red-500">*</span></Label>
                     <RadioGroup
                         value={formData.needContentHelp}
                         onValueChange={(value) => setFormData({ ...formData, needContentHelp: value })}
+                        className="flex flex-row gap-6"
                     >
                       <div className="flex items-center space-x-2">
                         <RadioGroupItem value="yes" id="help-yes" />
@@ -223,6 +226,7 @@ export default function PresentationStep7() {
                           value={formData.customContentHelp}
                           onChange={(e) => setFormData({ ...formData, customContentHelp: e.target.value.slice(0, 300) })}
                           maxLength={300}
+                          title="Please fill out this field"
                       />
                       <label className="label">Your option</label>
                       <div className="underline"></div>
@@ -236,7 +240,7 @@ export default function PresentationStep7() {
               <Card className="bg-white shadow rounded-xl border-none">
                 <CardContent className="p-6">
                   <div className="space-y-4">
-                    <Label className="text-base font-medium">What visual materials can you provide?</Label>
+                    <Label className="text-base font-medium">What visual materials can you provide? <span className="text-red-500">*</span></Label>
                     <div className="grid grid-cols-2 gap-3">
                       {visualMaterialOptions.map((material) => (
                           <div key={material} className="flex items-center space-x-2">
@@ -259,6 +263,7 @@ export default function PresentationStep7() {
                           value={formData.customVisualMaterials}
                           onChange={(e) => setFormData({ ...formData, customVisualMaterials: e.target.value.slice(0, 300) })}
                           maxLength={300}
+                          title="Please fill out this field"
                       />
                       <label className="label">Your option</label>
                       <div className="underline"></div>

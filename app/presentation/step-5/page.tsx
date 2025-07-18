@@ -133,6 +133,7 @@ export default function PresentationStep5() {
                           value={formData.preferredColors}
                           onChange={(e) => setFormData({ ...formData, preferredColors: e.target.value.slice(0, 300) })}
                           maxLength={300}
+                          title="Please fill out this field"
                       />
                       <label className="label">Your option</label>
                       <div className="underline"></div>
@@ -153,6 +154,7 @@ export default function PresentationStep5() {
                           value={formData.avoidColors}
                           onChange={(e) => setFormData({ ...formData, avoidColors: e.target.value.slice(0, 300) })}
                           maxLength={300}
+                          title="Please fill out this field"
                       />
                       <label className="label">Your option</label>
                       <div className="underline"></div>
@@ -173,6 +175,7 @@ export default function PresentationStep5() {
                           value={formData.successfulExamples}
                           onChange={(e) => setFormData({ ...formData, successfulExamples: e.target.value.slice(0, 300) })}
                           maxLength={300}
+                          title="Please fill out this field"
                       />
                       <label className="label">Your option</label>
                       <div className="underline"></div>

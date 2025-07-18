@@ -138,6 +138,7 @@ export default function PresentationStep6() {
                           value={formData.unsuccessfulExamples}
                           onChange={(e) => setFormData({ ...formData, unsuccessfulExamples: e.target.value.slice(0, 300) })}
                           maxLength={300}
+                          title="Please fill out this field"
                       />
                       <label className="label">Your option</label>
                       <div className="underline"></div>
@@ -147,7 +148,7 @@ export default function PresentationStep6() {
                 </CardContent>
               </Card>
 
-              {/* Ready-made Content */}
+              {/* Ready-made Content - РАДИОКНОПКИ ПО ГОРИЗОНТАЛИ */}
               <Card className="bg-white shadow rounded-xl border-none">
                 <CardContent className="p-6">
                   <div className="space-y-4">
@@ -155,6 +156,7 @@ export default function PresentationStep6() {
                     <RadioGroup
                         value={formData.readyMadeContent}
                         onValueChange={(value) => setFormData({ ...formData, readyMadeContent: value })}
+                        className="flex flex-row gap-6"
                     >
                       <div className="flex items-center space-x-2">
                         <RadioGroupItem value="yes" id="content-yes" />
@@ -173,6 +175,7 @@ export default function PresentationStep6() {
                           value={formData.customContent}
                           onChange={(e) => setFormData({ ...formData, customContent: e.target.value.slice(0, 300) })}
                           maxLength={300}
+                          title="Please fill out this field"
                       />
                       <label className="label">Your option</label>
                       <div className="underline"></div>
@@ -182,7 +185,7 @@ export default function PresentationStep6() {
                 </CardContent>
               </Card>
 
-              {/* Ready-made Structure */}
+              {/* Ready-made Structure - РАДИОКНОПКИ ПО ГОРИЗОНТАЛИ */}
               <Card className="bg-white shadow rounded-xl border-none">
                 <CardContent className="p-6">
                   <div className="space-y-4">
@@ -190,6 +193,7 @@ export default function PresentationStep6() {
                     <RadioGroup
                         value={formData.readyMadeStructure}
                         onValueChange={(value) => setFormData({ ...formData, readyMadeStructure: value })}
+                        className="flex flex-row gap-6"
                     >
                       <div className="flex items-center space-x-2">
                         <RadioGroupItem value="yes" id="structure-yes" />
@@ -208,6 +212,7 @@ export default function PresentationStep6() {
                           value={formData.customStructure}
                           onChange={(e) => setFormData({ ...formData, customStructure: e.target.value.slice(0, 300) })}
                           maxLength={300}
+                          title="Please fill out this field"
                       />
                       <label className="label">Your option</label>
                       <div className="underline"></div>

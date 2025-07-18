@@ -32,14 +32,13 @@ export default function LogoStep1() {
     }
   }, [])
 
-  // Validation function
+  // ВАЛИДАЦИЯ - ИСПРАВЛЕННАЯ
   const isFormValid = () => {
-    return (
-        formData.companyName.trim() !== "" &&
-        formData.nameType !== "" &&
-        (formData.closestArea.length > 0 || formData.customArea.trim() !== "") &&
-        formData.logoUsage.length > 0
-    )
+    const hasNameType = formData.nameType !== "" && (formData.nameType !== "other" || formData.companyName.trim() !== "")
+    const hasArea = formData.closestArea.length > 0 || formData.customArea.trim() !== ""
+    const hasUsage = formData.logoUsage.length > 0
+
+    return hasNameType && hasArea && hasUsage
   }
 
   const handleNext = () => {
@@ -119,6 +118,11 @@ export default function LogoStep1() {
             font-family: inherit;
           }
 
+          .animated-input-container input:disabled {
+            color: #999;
+            cursor: not-allowed;
+          }
+
           .animated-input-container .label {
             position: absolute;
             top: 8px;
@@ -164,14 +168,15 @@ export default function LogoStep1() {
           <h1 className="text-2xl font-semibold text-center text-gray-900 mb-8">Brief for the Logo:</h1>
 
           <div className="space-y-6">
-            {/* Company Name */}
+            {/* Company Name - РАДИОКНОПКИ ПО ГОРИЗОНТАЛИ */}
             <Card className="bg-white border border-gray-200">
               <CardContent className="p-6">
                 <div className="space-y-4">
-                  <Label className="text-base font-medium">Company name</Label>
+                  <Label className="text-base font-medium">Company name <span className="text-red-500">*</span></Label>
                   <RadioGroup
                       value={formData.nameType}
                       onValueChange={(value) => setFormData({ ...formData, nameType: value })}
+                      className="flex flex-row gap-6"
                   >
                     <div className="flex items-center space-x-2">
                       <RadioGroupItem value="full-name" id="full-name" />
@@ -181,15 +186,23 @@ export default function LogoStep1() {
                       <RadioGroupItem value="abbreviation" id="abbreviation" />
                       <Label htmlFor="abbreviation">Abbreviation</Label>
                     </div>
+                    <div className="flex items-center space-x-2">
+                      <RadioGroupItem value="other" id="other" />
+                      <Label htmlFor="other">Other</Label>
+                    </div>
                   </RadioGroup>
 
-                  <div className={`animated-input-container ${formData.companyName ? 'has-value' : ''}`}>
+                  <div className={`animated-input-container ${formData.companyName ? 'has-value' : ''} ${formData.nameType !== 'other' ? 'opacity-50' : ''}`}>
                     <input
                         type="text"
                         value={formData.companyName}
                         onChange={(e) => setFormData({ ...formData, companyName: e.target.value.slice(0, 100) })}
                         maxLength={100}
-                        required
+                        disabled={formData.nameType !== 'other'}
+                        title="Please fill out this field"
+                        style={{
+                          color: formData.nameType !== 'other' ? '#999' : '#333'
+                        }}
                     />
                     <label className="label">Your option</label>
                     <div className="underline"></div>
@@ -199,11 +212,11 @@ export default function LogoStep1() {
               </CardContent>
             </Card>
 
-            {/* Closest Area */}
+            {/* Closest Area - ОСТАВЛЯЮ CHECKBOX КАК БЫЛО */}
             <Card className="bg-white border border-gray-200">
               <CardContent className="p-6">
                 <div className="space-y-4">
-                  <Label className="text-base font-medium">Which area is closest to your Company?</Label>
+                  <Label className="text-base font-medium">Which area is closest to your Company? <span className="text-red-500">*</span></Label>
                   <div className="grid grid-cols-2 gap-2">
                     {areaOptions.map((area) => (
                         <div key={area} className="flex items-center space-x-2">
@@ -225,6 +238,7 @@ export default function LogoStep1() {
                         value={formData.customArea}
                         onChange={(e) => setFormData({ ...formData, customArea: e.target.value.slice(0, 100) })}
                         maxLength={100}
+                        title="Please fill out this field"
                     />
                     <label className="label">Your option</label>
                     <div className="underline"></div>
@@ -238,7 +252,7 @@ export default function LogoStep1() {
             <Card className="bg-white border border-gray-200">
               <CardContent className="p-6">
                 <div className="space-y-4">
-                  <Label className="text-base font-medium">Where will the Logo be used:</Label>
+                  <Label className="text-base font-medium">Where will the Logo be used: <span className="text-red-500">*</span></Label>
                   <div className="space-y-2">
                     {usageOptions.map((usage) => (
                         <div key={usage} className="flex items-center space-x-2">

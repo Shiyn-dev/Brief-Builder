@@ -156,10 +156,11 @@ export default function PresentationStep4() {
               <Card className="bg-white shadow rounded-xl border-none">
                 <CardContent className="p-6">
                   <div className="space-y-4">
-                    <Label className="text-base font-medium">Do you need animation?</Label>
+                    <Label className="text-base font-medium">Do you need animation? <span className="text-red-500">*</span></Label>
                     <RadioGroup
                         value={formData.needAnimation}
                         onValueChange={(value) => setFormData({ ...formData, needAnimation: value })}
+                        className="flex flex-row gap-6"
                     >
                       <div className="flex items-center space-x-2">
                         <RadioGroupItem value="yes" id="animation-yes" />
@@ -178,6 +179,7 @@ export default function PresentationStep4() {
                           value={formData.customAnimation}
                           onChange={(e) => setFormData({ ...formData, customAnimation: e.target.value.slice(0, 300) })}
                           maxLength={300}
+                          title="Please fill out this field"
                       />
                       <label className="label">Your option</label>
                       <div className="underline"></div>
@@ -191,7 +193,7 @@ export default function PresentationStep4() {
               <Card className="bg-white shadow rounded-xl border-none">
                 <CardContent className="p-6">
                   <div className="space-y-4">
-                    <Label className="text-base font-medium">What design style do you prefer?</Label>
+                    <Label className="text-base font-medium">What design style do you prefer? <span className="text-red-500">*</span></Label>
                     <div className="grid grid-cols-2 gap-3">
                       {designStyles.map((style) => (
                           <div key={style} className="flex items-center space-x-2">
@@ -214,6 +216,7 @@ export default function PresentationStep4() {
                           value={formData.customDesignStyle}
                           onChange={(e) => setFormData({ ...formData, customDesignStyle: e.target.value.slice(0, 300) })}
                           maxLength={300}
+                          title="Please fill out this field"
                       />
                       <label className="label">Your option</label>
                       <div className="underline"></div>
@@ -227,10 +230,11 @@ export default function PresentationStep4() {
               <Card className="bg-white shadow rounded-xl border-none">
                 <CardContent className="p-6">
                   <div className="space-y-4">
-                    <Label className="text-base font-medium">What format of presentation do you need?</Label>
+                    <Label className="text-base font-medium">What format of presentation do you need? <span className="text-red-500">*</span></Label>
                     <RadioGroup
                         value={formData.presentationFormat}
                         onValueChange={(value) => setFormData({ ...formData, presentationFormat: value })}
+                        className="flex flex-row gap-6"
                     >
                       <div className="flex items-center space-x-2">
                         <RadioGroupItem value="16-9" id="format-16-9" />
@@ -253,6 +257,7 @@ export default function PresentationStep4() {
                           value={formData.customFormat}
                           onChange={(e) => setFormData({ ...formData, customFormat: e.target.value.slice(0, 300) })}
                           maxLength={300}
+                          title="Please fill out this field"
                       />
                       <label className="label">Your option</label>
                       <div className="underline"></div>

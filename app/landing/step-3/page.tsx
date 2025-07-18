@@ -67,69 +67,101 @@ export default function LandingStep3() {
 
   return (
       <BriefLayout currentStep={3} totalSteps={6} onNext={handleNext} onPrev={handlePrev} isNextDisabled={!isFormValid()}>
-        <style jsx>{`
+        <style jsx global>{`
           .animated-input-container {
             position: relative;
             margin: 20px 0;
             width: 100%;
           }
 
-          .animated-input-container input,
-          .animated-input-container textarea {
-            font-size: 16px;
+          .animated-input-container input {
+            font-size: 16px !important;
+            width: 100% !important;
+            border: none !important;
+            border-bottom: 2px solid #ccc !important;
+            padding: 12px 0 8px 0 !important;
+            background-color: transparent !important;
+            outline: none !important;
+            color: #333 !important;
+            font-family: inherit !important;
+            border-radius: 0 !important;
+            box-shadow: none !important;
+          }
+
+          .animated-input-container input:disabled {
+            color: #999 !important;
+            cursor: not-allowed !important;
+          }
+
+          .animated-textarea-container {
+            position: relative;
+            margin: 20px 0;
             width: 100%;
-            border: none;
             border-bottom: 2px solid #ccc;
-            padding: 8px 0;
-            background-color: transparent;
-            outline: none;
-            color: #333;
-            font-family: inherit;
-            resize: none;
           }
 
-          .animated-input-container input:disabled,
-          .animated-input-container textarea:disabled {
-            color: #999;
-            cursor: not-allowed;
+          .animated-textarea-container textarea {
+            font-size: 16px !important;
+            width: 100% !important;
+            border: none !important;
+            padding: 12px 0 8px 0 !important;
+            background-color: transparent !important;
+            outline: none !important;
+            color: #333 !important;
+            font-family: inherit !important;
+            border-radius: 0 !important;
+            box-shadow: none !important;
+            resize: none !important;
+            line-height: 1.5 !important;
+            min-height: 80px !important;
           }
 
-          .animated-input-container .label {
-            position: absolute;
-            top: 8px;
-            left: 0;
-            color: #999;
-            transition: all 0.3s ease;
-            pointer-events: none;
-            font-size: 16px;
+          .animated-input-container .label,
+          .animated-textarea-container .label {
+            position: absolute !important;
+            top: 12px !important;
+            left: 0 !important;
+            color: #999 !important;
+            transition: all 0.3s ease !important;
+            pointer-events: none !important;
+            font-size: 16px !important;
+            background: transparent !important;
           }
 
           .animated-input-container input:focus ~ .label,
-          .animated-input-container textarea:focus ~ .label,
-          .animated-input-container.has-value .label {
-            top: -20px;
-            font-size: 14px;
-            color: #038196;
+          .animated-input-container.has-value .label,
+          .animated-textarea-container textarea:focus ~ .label,
+          .animated-textarea-container.has-value .label {
+            top: -16px !important;
+            font-size: 12px !important;
+            color: #68B3C0 !important;
           }
 
           .animated-input-container .underline {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            height: 2px;
-            width: 100%;
-            background-color: #038196;
-            transform: scaleX(0);
-            transition: all 0.3s ease;
+            position: absolute !important;
+            bottom: 0 !important;
+            left: 0 !important;
+            height: 2px !important;
+            width: 100% !important;
+            background-color: #68B3C0 !important;
+            transform: scaleX(0) !important;
+            transition: all 0.3s ease !important;
           }
 
-          .animated-input-container textarea ~ .underline {
-            bottom: 8px;
+          .animated-textarea-container .underline {
+            position: absolute !important;
+            bottom: 0 !important;
+            left: 0 !important;
+            height: 2px !important;
+            width: 100% !important;
+            background-color: #68B3C0 !important;
+            transform: scaleX(0) !important;
+            transition: all 0.3s ease !important;
           }
 
           .animated-input-container input:focus ~ .underline,
-          .animated-input-container textarea:focus ~ .underline {
-            transform: scaleX(1);
+          .animated-textarea-container textarea:focus ~ .underline {
+            transform: scaleX(1) !important;
           }
 
           .char-count {
@@ -145,18 +177,18 @@ export default function LandingStep3() {
         <Card className="bg-[#F0F9FA] shadow-none border-none p-0">
           <CardContent className="p-0">
             <div className="space-y-6">
-              {/* Current Design Likes */}
+              {/* Current Design Likes - ОТДЕЛЬНЫЙ КОНТЕЙНЕР ДЛЯ TEXTAREA */}
               <Card className="bg-white shadow rounded-xl border-none">
                 <CardContent className="p-6">
                   <div className="space-y-4">
                     <Label className="text-base font-medium">What do you like about your current landing page design? <span className="text-red-500">*</span></Label>
-                    <div className={`animated-input-container ${formData.currentDesignLikes ? 'has-value' : ''}`}>
+                    <div className={`animated-textarea-container ${formData.currentDesignLikes ? 'has-value' : ''}`}>
                       <textarea
                           value={formData.currentDesignLikes}
                           onChange={(e) => setFormData({ ...formData, currentDesignLikes: e.target.value.slice(0, 300) })}
                           maxLength={300}
                           rows={4}
-                          required
+                          title="Please fill out this field"
                       />
                       <label className="label">Your option</label>
                       <div className="underline"></div>
@@ -166,7 +198,7 @@ export default function LandingStep3() {
                 </CardContent>
               </Card>
 
-              {/* Purpose */}
+              {/* Purpose - РАДИОКНОПКИ ПО ГОРИЗОНТАЛИ */}
               <Card className="bg-white shadow rounded-xl border-none">
                 <CardContent className="p-6">
                   <div className="space-y-4">
@@ -174,6 +206,7 @@ export default function LandingStep3() {
                     <RadioGroup
                         value={formData.purpose}
                         onValueChange={(value) => setFormData({ ...formData, purpose: value })}
+                        className="grid grid-cols-2 gap-3"
                     >
                       <div className="flex items-center space-x-2">
                         <RadioGroupItem value="sale-goods-services" id="sale-goods-services" />
@@ -203,7 +236,7 @@ export default function LandingStep3() {
                           style={{
                             color: formData.purpose !== 'custom' ? '#999' : '#333'
                           }}
-                          required
+                          title="Please fill out this field"
                       />
                       <label className="label">Your option</label>
                       <div className="underline"></div>
@@ -213,18 +246,18 @@ export default function LandingStep3() {
                 </CardContent>
               </Card>
 
-              {/* Why Buy From You */}
+              {/* Why Buy From You - ОТДЕЛЬНЫЙ КОНТЕЙНЕР ДЛЯ TEXTAREA */}
               <Card className="bg-white shadow rounded-xl border-none">
                 <CardContent className="p-6">
                   <div className="space-y-4">
                     <Label className="text-base font-medium">Why should a person buy from you? <span className="text-red-500">*</span></Label>
-                    <div className={`animated-input-container ${formData.whyBuyFromYou ? 'has-value' : ''}`}>
+                    <div className={`animated-textarea-container ${formData.whyBuyFromYou ? 'has-value' : ''}`}>
                       <textarea
                           value={formData.whyBuyFromYou}
                           onChange={(e) => setFormData({ ...formData, whyBuyFromYou: e.target.value.slice(0, 300) })}
                           maxLength={300}
                           rows={4}
-                          required
+                          title="Please fill out this field"
                       />
                       <label className="label">Your option</label>
                       <div className="underline"></div>

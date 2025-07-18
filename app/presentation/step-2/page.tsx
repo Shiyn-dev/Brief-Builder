@@ -181,6 +181,7 @@ export default function PresentationStep2() {
                           type="text"
                           value={formData.mainMessage}
                           onChange={(e) => setFormData({ ...formData, mainMessage: e.target.value })}
+                          title="Please fill out this field"
                       />
                       <label className="label">Your option</label>
                       <div className="underline"></div>
@@ -189,7 +190,7 @@ export default function PresentationStep2() {
                 </CardContent>
               </Card>
 
-              {/* Desired Result */}
+              {/* Desired Result - РАДИОКНОПКИ ПО ГОРИЗОНТАЛИ */}
               <Card className="bg-white shadow rounded-xl border-none">
                 <CardContent className="p-6">
                   <div className="space-y-4">
@@ -197,6 +198,7 @@ export default function PresentationStep2() {
                     <RadioGroup
                         value={formData.desiredResult}
                         onValueChange={(value) => setFormData({ ...formData, desiredResult: value })}
+                        className="flex flex-row gap-6 flex-wrap"
                     >
                       <div className="flex items-center space-x-2">
                         <RadioGroupItem value="increasing-sales" id="increasing-sales" />
@@ -221,6 +223,7 @@ export default function PresentationStep2() {
                           style={{
                             color: formData.desiredResult !== 'other' ? '#999' : '#333'
                           }}
+                          title="Please fill out this field"
                       />
                       <label className="label">Your option</label>
                       <div className="underline"></div>

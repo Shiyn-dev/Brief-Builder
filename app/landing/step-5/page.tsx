@@ -174,7 +174,7 @@ export default function LandingStep5() {
                           onChange={(e) => setFormData({ ...formData, dislikedWebsites: e.target.value.slice(0, 300) })}
                           maxLength={300}
                           rows={4}
-                          required
+                          title="Please fill out this field"
                       />
                       <label className="label">Your option</label>
                       <div className="underline"></div>
@@ -195,7 +195,7 @@ export default function LandingStep5() {
                           value={formData.colorScheme}
                           onChange={(e) => setFormData({ ...formData, colorScheme: e.target.value.slice(0, 300) })}
                           maxLength={300}
-                          required
+                          title="Please fill out this field"
                       />
                       <label className="label">Your option</label>
                       <div className="underline"></div>
@@ -231,7 +231,7 @@ export default function LandingStep5() {
                           value={formData.customBlocks}
                           onChange={(e) => setFormData({ ...formData, customBlocks: e.target.value.slice(0, 300) })}
                           maxLength={300}
-                          required
+                          title="Please fill out this field"
                       />
                       <label className="label">Your option</label>
                       <div className="underline"></div>

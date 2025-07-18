@@ -165,7 +165,7 @@ export default function LogoStep3() {
             <Card className="bg-white border border-gray-200">
               <CardContent className="p-6">
                 <div className="space-y-4">
-                  <Label className="text-base font-medium">What colors suit him best?</Label>
+                  <Label className="text-base font-medium">What colors suit him best? <span className="text-red-500">*</span></Label>
                   <div className="grid grid-cols-3 gap-3">
                     {colors.map((color) => (
                         <div key={color} className="flex items-center space-x-2">
@@ -187,6 +187,7 @@ export default function LogoStep3() {
                         value={formData.customColor}
                         onChange={(e) => setFormData({ ...formData, customColor: e.target.value.slice(0, 300) })}
                         maxLength={300}
+                        title="Please fill out this field"
                     />
                     <label className="label">Your option</label>
                     <div className="underline"></div>
@@ -200,7 +201,7 @@ export default function LogoStep3() {
             <Card className="bg-white border border-gray-200">
               <CardContent className="p-6">
                 <div className="space-y-4">
-                  <Label className="text-base font-medium">What images and solutions are unacceptable for use?</Label>
+                  <Label className="text-base font-medium">What images and solutions are unacceptable for use? <span className="text-red-500">*</span></Label>
                   <div className="grid grid-cols-2 gap-3">
                     {unacceptableItems.map((item) => (
                         <div key={item} className="flex items-center space-x-2">
@@ -222,6 +223,7 @@ export default function LogoStep3() {
                         value={formData.customUnacceptable}
                         onChange={(e) => setFormData({ ...formData, customUnacceptable: e.target.value.slice(0, 300) })}
                         maxLength={300}
+                        title="Please fill out this field"
                     />
                     <label className="label">Your option</label>
                     <div className="underline"></div>

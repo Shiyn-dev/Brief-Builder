@@ -198,7 +198,7 @@ export default function PresentationStep3() {
               <Card className="bg-white shadow rounded-xl border-none">
                 <CardContent className="p-6">
                   <div className="space-y-4">
-                    <Label className="text-base font-medium">Who is the presentation being created for?</Label>
+                    <Label className="text-base font-medium">Who is the presentation being created for? <span className="text-red-500">*</span></Label>
                     <div className="grid grid-cols-2 gap-3">
                       {audiences.map((audience) => (
                           <div key={audience} className="flex items-center space-x-2">
@@ -221,6 +221,7 @@ export default function PresentationStep3() {
                           value={formData.customAudience}
                           onChange={(e) => setFormData({ ...formData, customAudience: e.target.value.slice(0, 300) })}
                           maxLength={300}
+                          title="Please fill out this field"
                       />
                       <label className="label">Your option</label>
                       <div className="underline"></div>
@@ -234,7 +235,7 @@ export default function PresentationStep3() {
               <Card className="bg-white shadow rounded-xl border-none">
                 <CardContent className="p-6">
                   <div className="space-y-4">
-                    <Label className="text-base font-medium">How will the presentation be used?</Label>
+                    <Label className="text-base font-medium">How will the presentation be used? <span className="text-red-500">*</span></Label>
                     <div className="grid grid-cols-2 gap-3">
                       {usageOptions.map((usage) => (
                           <div key={usage} className="flex items-center space-x-2">
@@ -257,6 +258,7 @@ export default function PresentationStep3() {
                           value={formData.customUsage}
                           onChange={(e) => setFormData({ ...formData, customUsage: e.target.value.slice(0, 300) })}
                           maxLength={300}
+                          title="Please fill out this field"
                       />
                       <label className="label">Your option</label>
                       <div className="underline"></div>
@@ -270,7 +272,7 @@ export default function PresentationStep3() {
               <Card className="bg-white shadow rounded-xl border-none">
                 <CardContent className="p-6">
                   <div className="space-y-4">
-                    <Label className="text-base font-medium">What format of presentation do you need?</Label>
+                    <Label className="text-base font-medium">What format of presentation do you need? <span className="text-red-500">*</span></Label>
                     <div className="grid grid-cols-2 gap-3">
                       {formatOptions.map((format) => (
                           <div key={format} className="flex items-center space-x-2">
@@ -293,6 +295,7 @@ export default function PresentationStep3() {
                           value={formData.customFormat}
                           onChange={(e) => setFormData({ ...formData, customFormat: e.target.value.slice(0, 300) })}
                           maxLength={300}
+                          title="Please fill out this field"
                       />
                       <label className="label">Your option</label>
                       <div className="underline"></div>

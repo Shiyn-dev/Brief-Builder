@@ -186,7 +186,7 @@ export default function LogoStep2() {
             <Card className="bg-white border border-gray-200">
               <CardContent className="p-6">
                 <div className="space-y-4">
-                  <Label className="text-base font-medium">What emotions can it evoke?</Label>
+                  <Label className="text-base font-medium">What emotions can it evoke? <span className="text-red-500">*</span></Label>
                   <div className="space-y-2">
                     {emotionOptions.map((emotion) => (
                         <div key={emotion} className="flex items-center space-x-2">
@@ -208,6 +208,7 @@ export default function LogoStep2() {
                         value={formData.customEmotion}
                         onChange={(e) => setFormData({ ...formData, customEmotion: e.target.value.slice(0, 300) })}
                         maxLength={300}
+                        title="Please fill out this field"
                     />
                     <label className="label">Your option</label>
                     <div className="underline"></div>
@@ -221,7 +222,7 @@ export default function LogoStep2() {
             <Card className="bg-white border border-gray-200">
               <CardContent className="p-6">
                 <div className="space-y-4">
-                  <Label className="text-base font-medium">What sensations does it cause?</Label>
+                  <Label className="text-base font-medium">What sensations does it cause? <span className="text-red-500">*</span></Label>
                   <div className="grid grid-cols-3 gap-2">
                     {sensationOptions.map((sensation) => (
                         <div key={sensation} className="flex items-center space-x-2">
@@ -243,6 +244,7 @@ export default function LogoStep2() {
                         value={formData.customSensation}
                         onChange={(e) => setFormData({ ...formData, customSensation: e.target.value.slice(0, 300) })}
                         maxLength={300}
+                        title="Please fill out this field"
                     />
                     <label className="label">Your option</label>
                     <div className="underline"></div>
@@ -256,7 +258,7 @@ export default function LogoStep2() {
             <Card className="bg-white border border-gray-200">
               <CardContent className="p-6">
                 <div className="space-y-4">
-                  <Label className="text-base font-medium">If it were a geometric figure, what would it be?</Label>
+                  <Label className="text-base font-medium">If it were a geometric figure, what would it be? <span className="text-red-500">*</span></Label>
                   <div className="grid grid-cols-2 gap-2">
                     {figureOptions.map((figure) => (
                         <div key={figure} className="flex items-center space-x-2">
@@ -278,6 +280,7 @@ export default function LogoStep2() {
                         value={formData.customFigure}
                         onChange={(e) => setFormData({ ...formData, customFigure: e.target.value.slice(0, 300) })}
                         maxLength={300}
+                        title="Please fill out this field"
                     />
                     <label className="label">Your option</label>
                     <div className="underline"></div>
