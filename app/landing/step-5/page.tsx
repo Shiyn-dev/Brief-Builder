@@ -49,7 +49,7 @@ export default function LandingStep5() {
           ...formData,
         }),
     )
-    router.push("/landing/complete")
+    router.push("/landing/step-6")
   }
 
   const handlePrev = () => {
@@ -141,6 +141,10 @@ export default function LandingStep5() {
             transition: all 0.3s ease;
           }
 
+          .animated-input-container textarea ~ .underline {
+            bottom: 8px;
+          }
+
           .animated-input-container input:focus ~ .underline,
           .animated-input-container textarea:focus ~ .underline {
             transform: scaleX(1);
@@ -162,17 +166,20 @@ export default function LandingStep5() {
               {/* Disliked Websites */}
               <Card className="bg-white shadow rounded-xl border-none">
                 <CardContent className="p-6">
-                  <div className={`animated-input-container ${formData.dislikedWebsites ? 'has-value' : ''}`}>
-                  <textarea
-                      value={formData.dislikedWebsites}
-                      onChange={(e) => setFormData({ ...formData, dislikedWebsites: e.target.value.slice(0, 300) })}
-                      maxLength={300}
-                      rows={4}
-                      required
-                  />
-                    <label className="label">Are there any examples of websites that you don't like? Why?</label>
-                    <div className="underline"></div>
-                    <div className="char-count">{formData.dislikedWebsites.length}/300</div>
+                  <div className="space-y-4">
+                    <Label className="text-base font-medium">Are there any examples of websites that you don't like? Why? <span className="text-red-500">*</span></Label>
+                    <div className={`animated-input-container ${formData.dislikedWebsites ? 'has-value' : ''}`}>
+                      <textarea
+                          value={formData.dislikedWebsites}
+                          onChange={(e) => setFormData({ ...formData, dislikedWebsites: e.target.value.slice(0, 300) })}
+                          maxLength={300}
+                          rows={4}
+                          required
+                      />
+                      <label className="label">Your option</label>
+                      <div className="underline"></div>
+                      <div className="char-count">{formData.dislikedWebsites.length}/300</div>
+                    </div>
                   </div>
                 </CardContent>
               </Card>
@@ -180,17 +187,20 @@ export default function LandingStep5() {
               {/* Color Scheme */}
               <Card className="bg-white shadow rounded-xl border-none">
                 <CardContent className="p-6">
-                  <div className={`animated-input-container ${formData.colorScheme ? 'has-value' : ''}`}>
-                    <input
-                        type="text"
-                        value={formData.colorScheme}
-                        onChange={(e) => setFormData({ ...formData, colorScheme: e.target.value.slice(0, 300) })}
-                        maxLength={300}
-                        required
-                    />
-                    <label className="label">Is there a preferred color scheme or code for the landing page?</label>
-                    <div className="underline"></div>
-                    <div className="char-count">{formData.colorScheme.length}/300</div>
+                  <div className="space-y-4">
+                    <Label className="text-base font-medium">Is there a preferred color scheme or code for the landing page? <span className="text-red-500">*</span></Label>
+                    <div className={`animated-input-container ${formData.colorScheme ? 'has-value' : ''}`}>
+                      <input
+                          type="text"
+                          value={formData.colorScheme}
+                          onChange={(e) => setFormData({ ...formData, colorScheme: e.target.value.slice(0, 300) })}
+                          maxLength={300}
+                          required
+                      />
+                      <label className="label">Your option</label>
+                      <div className="underline"></div>
+                      <div className="char-count">{formData.colorScheme.length}/300</div>
+                    </div>
                   </div>
                 </CardContent>
               </Card>
@@ -199,7 +209,7 @@ export default function LandingStep5() {
               <Card className="bg-white shadow rounded-xl border-none">
                 <CardContent className="p-6">
                   <div className="space-y-4">
-                    <Label className="text-base font-medium">What blocks should your landing page consist of?</Label>
+                    <Label className="text-base font-medium">What blocks should your landing page consist of? <span className="text-red-500">*</span></Label>
                     <div className="grid grid-cols-2 gap-3">
                       {blocks.map((block) => (
                           <div key={block} className="flex items-center space-x-2">

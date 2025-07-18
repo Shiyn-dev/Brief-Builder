@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react"
 import { useRouter } from "next/navigation"
 import BriefLayout from "@/components/brief-layout"
+import { Label } from "@/components/ui/label"
 import { Card, CardContent } from "@/components/ui/card"
 
 export default function PresentationStep5() {
@@ -124,16 +125,19 @@ export default function PresentationStep5() {
               {/* Preferred Colors */}
               <Card className="bg-white shadow rounded-xl border-none">
                 <CardContent className="p-6">
-                  <div className={`animated-input-container ${formData.preferredColors ? 'has-value' : ''}`}>
-                    <input
-                        type="text"
-                        value={formData.preferredColors}
-                        onChange={(e) => setFormData({ ...formData, preferredColors: e.target.value.slice(0, 300) })}
-                        maxLength={300}
-                    />
-                    <label className="label">What colors do you want to see in the presentation?</label>
-                    <div className="underline"></div>
-                    <div className="char-count">{formData.preferredColors.length}/300</div>
+                  <div className="space-y-4">
+                    <Label className="text-base font-medium">What colors do you want to see in the presentation? <span className="text-red-500">*</span></Label>
+                    <div className={`animated-input-container ${formData.preferredColors ? 'has-value' : ''}`}>
+                      <input
+                          type="text"
+                          value={formData.preferredColors}
+                          onChange={(e) => setFormData({ ...formData, preferredColors: e.target.value.slice(0, 300) })}
+                          maxLength={300}
+                      />
+                      <label className="label">Your option</label>
+                      <div className="underline"></div>
+                      <div className="char-count">{formData.preferredColors.length}/300</div>
+                    </div>
                   </div>
                 </CardContent>
               </Card>
@@ -141,16 +145,19 @@ export default function PresentationStep5() {
               {/* Colors to Avoid */}
               <Card className="bg-white shadow rounded-xl border-none">
                 <CardContent className="p-6">
-                  <div className={`animated-input-container ${formData.avoidColors ? 'has-value' : ''}`}>
-                    <input
-                        type="text"
-                        value={formData.avoidColors}
-                        onChange={(e) => setFormData({ ...formData, avoidColors: e.target.value.slice(0, 300) })}
-                        maxLength={300}
-                    />
-                    <label className="label">What colors should absolutely not be used?</label>
-                    <div className="underline"></div>
-                    <div className="char-count">{formData.avoidColors.length}/300</div>
+                  <div className="space-y-4">
+                    <Label className="text-base font-medium">What colors should absolutely not be used? <span className="text-red-500">*</span></Label>
+                    <div className={`animated-input-container ${formData.avoidColors ? 'has-value' : ''}`}>
+                      <input
+                          type="text"
+                          value={formData.avoidColors}
+                          onChange={(e) => setFormData({ ...formData, avoidColors: e.target.value.slice(0, 300) })}
+                          maxLength={300}
+                      />
+                      <label className="label">Your option</label>
+                      <div className="underline"></div>
+                      <div className="char-count">{formData.avoidColors.length}/300</div>
+                    </div>
                   </div>
                 </CardContent>
               </Card>
@@ -158,16 +165,19 @@ export default function PresentationStep5() {
               {/* Successful Examples */}
               <Card className="bg-white shadow rounded-xl border-none">
                 <CardContent className="p-6">
-                  <div className={`animated-input-container ${formData.successfulExamples ? 'has-value' : ''}`}>
-                    <input
-                        type="text"
-                        value={formData.successfulExamples}
-                        onChange={(e) => setFormData({ ...formData, successfulExamples: e.target.value.slice(0, 300) })}
-                        maxLength={300}
-                    />
-                    <label className="label">Examples of successful presentations, if any:</label>
-                    <div className="underline"></div>
-                    <div className="char-count">{formData.successfulExamples.length}/300</div>
+                  <div className="space-y-4">
+                    <Label className="text-base font-medium">Examples of successful presentations, if any: <span className="text-red-500">*</span></Label>
+                    <div className={`animated-input-container ${formData.successfulExamples ? 'has-value' : ''}`}>
+                      <input
+                          type="text"
+                          value={formData.successfulExamples}
+                          onChange={(e) => setFormData({ ...formData, successfulExamples: e.target.value.slice(0, 300) })}
+                          maxLength={300}
+                      />
+                      <label className="label">Your option</label>
+                      <div className="underline"></div>
+                      <div className="char-count">{formData.successfulExamples.length}/300</div>
+                    </div>
                   </div>
                 </CardContent>
               </Card>

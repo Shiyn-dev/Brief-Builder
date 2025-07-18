@@ -63,7 +63,6 @@ export default function LandingStep1() {
     setFormData({
       ...formData,
       fieldOfActivity: value,
-      // НЕ СТИРАЕМ customFieldOfActivity! Просто меняем fieldOfActivity
     })
   }
 
@@ -125,6 +124,10 @@ export default function LandingStep1() {
             transition: all 0.3s ease;
           }
 
+          .animated-input-container textarea ~ .underline {
+            bottom: 8px;
+          }
+
           .animated-input-container input:focus ~ .underline,
           .animated-input-container textarea:focus ~ .underline {
             transform: scaleX(1);
@@ -146,17 +149,20 @@ export default function LandingStep1() {
               {/* Company Name */}
               <Card className="bg-white shadow rounded-xl border-none">
                 <CardContent className="p-6">
-                  <div className={`animated-input-container ${formData.companyName ? 'has-value' : ''}`}>
-                    <input
-                        type="text"
-                        value={formData.companyName}
-                        onChange={(e) => setFormData({ ...formData, companyName: e.target.value.slice(0, 100) })}
-                        maxLength={100}
-                        required
-                    />
-                    <label className="label">Company name</label>
-                    <div className="underline"></div>
-                    <div className="char-count">{formData.companyName.length}/100</div>
+                  <div className="space-y-4">
+                    <Label className="text-base font-medium">Company name <span className="text-red-500">*</span></Label>
+                    <div className={`animated-input-container ${formData.companyName ? 'has-value' : ''}`}>
+                      <input
+                          type="text"
+                          value={formData.companyName}
+                          onChange={(e) => setFormData({ ...formData, companyName: e.target.value.slice(0, 300) })}
+                          maxLength={300}
+                          required
+                      />
+                      <label className="label">Your option</label>
+                      <div className="underline"></div>
+                      <div className="char-count">{formData.companyName.length}/300</div>
+                    </div>
                   </div>
                 </CardContent>
               </Card>
@@ -165,7 +171,7 @@ export default function LandingStep1() {
               <Card className="bg-white shadow rounded-xl border-none">
                 <CardContent className="p-6">
                   <div className="space-y-4">
-                    <Label className="text-base font-medium">The company's field of activity:</Label>
+                    <Label className="text-base font-medium">The company's field of activity: <span className="text-red-500">*</span></Label>
                     <RadioGroup
                         value={formData.fieldOfActivity}
                         onValueChange={handleFieldOfActivityChange}
@@ -184,13 +190,12 @@ export default function LandingStep1() {
                       </div>
                     </RadioGroup>
 
-                    {/* ИСПРАВЛЕНО: НЕ стираем текст, просто делаем серым когда disabled */}
                     <div className={`animated-input-container ${formData.customFieldOfActivity ? 'has-value' : ''} ${formData.fieldOfActivity !== 'other' ? 'opacity-50' : ''}`}>
                       <input
                           type="text"
                           value={formData.customFieldOfActivity}
-                          onChange={(e) => setFormData({ ...formData, customFieldOfActivity: e.target.value.slice(0, 100) })}
-                          maxLength={100}
+                          onChange={(e) => setFormData({ ...formData, customFieldOfActivity: e.target.value.slice(0, 300) })}
+                          maxLength={300}
                           disabled={formData.fieldOfActivity !== 'other'}
                           style={{
                             color: formData.fieldOfActivity !== 'other' ? '#999' : '#333'
@@ -198,7 +203,7 @@ export default function LandingStep1() {
                       />
                       <label className="label">Your option</label>
                       <div className="underline"></div>
-                      <div className="char-count">{formData.customFieldOfActivity.length}/100</div>
+                      <div className="char-count">{formData.customFieldOfActivity.length}/300</div>
                     </div>
                   </div>
                 </CardContent>
@@ -207,17 +212,20 @@ export default function LandingStep1() {
               {/* Idea and Mission */}
               <Card className="bg-white shadow rounded-xl border-none">
                 <CardContent className="p-6">
-                  <div className={`animated-input-container ${formData.ideaAndMission ? 'has-value' : ''}`}>
-                  <textarea
-                      value={formData.ideaAndMission}
-                      onChange={(e) => setFormData({ ...formData, ideaAndMission: e.target.value.slice(0, 500) })}
-                      maxLength={500}
-                      rows={4}
-                      required
-                  />
-                    <label className="label">What is the idea and mission of your Company?</label>
-                    <div className="underline"></div>
-                    <div className="char-count">{formData.ideaAndMission.length}/500</div>
+                  <div className="space-y-4">
+                    <Label className="text-base font-medium">What is the idea and mission of your Company? <span className="text-red-500">*</span></Label>
+                    <div className={`animated-input-container ${formData.ideaAndMission ? 'has-value' : ''}`}>
+                      <textarea
+                          value={formData.ideaAndMission}
+                          onChange={(e) => setFormData({ ...formData, ideaAndMission: e.target.value.slice(0, 300) })}
+                          maxLength={300}
+                          rows={4}
+                          required
+                      />
+                      <label className="label">Your option</label>
+                      <div className="underline"></div>
+                      <div className="char-count">{formData.ideaAndMission.length}/300</div>
+                    </div>
                   </div>
                 </CardContent>
               </Card>

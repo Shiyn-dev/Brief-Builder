@@ -12,6 +12,7 @@ export default function PresentationStep1() {
   const [formData, setFormData] = useState({
     companyName: "",
     companyActivity: "",
+    customCompanyActivity: "",
     companyValue: "",
   })
 
@@ -22,6 +23,7 @@ export default function PresentationStep1() {
       setFormData({
         companyName: existingData.companyName || "",
         companyActivity: existingData.companyActivity || "",
+        customCompanyActivity: existingData.customCompanyActivity || "",
         companyValue: existingData.companyValue || "",
       })
     }
@@ -133,17 +135,20 @@ export default function PresentationStep1() {
               {/* Company Name */}
               <Card className="bg-white shadow rounded-xl border-none">
                 <CardContent className="p-6">
-                  <div className={`animated-input-container ${formData.companyName ? 'has-value' : ''}`}>
-                    <input
-                        type="text"
-                        value={formData.companyName}
-                        onChange={(e) => setFormData({ ...formData, companyName: e.target.value.slice(0, 300) })}
-                        maxLength={300}
-                        required
-                    />
-                    <label className="label">Company name *</label>
-                    <div className="underline"></div>
-                    <div className="char-count">{formData.companyName.length}/300</div>
+                  <div className="space-y-4">
+                    <Label className="text-base font-medium">Company name <span className="text-red-500">*</span></Label>
+                    <div className={`animated-input-container ${formData.companyName ? 'has-value' : ''}`}>
+                      <input
+                          type="text"
+                          value={formData.companyName}
+                          onChange={(e) => setFormData({ ...formData, companyName: e.target.value.slice(0, 300) })}
+                          maxLength={300}
+                          required
+                      />
+                      <label className="label">Your option</label>
+                      <div className="underline"></div>
+                      <div className="char-count">{formData.companyName.length}/300</div>
+                    </div>
                   </div>
                 </CardContent>
               </Card>
@@ -169,7 +174,24 @@ export default function PresentationStep1() {
                         <RadioGroupItem value="retail" id="retail" />
                         <Label htmlFor="retail">Retail</Label>
                       </div>
+                      <div className="flex items-center space-x-2">
+                        <RadioGroupItem value="other" id="other" />
+                        <Label htmlFor="other">Other</Label>
+                      </div>
                     </RadioGroup>
+
+                    {/* Your option для company activity */}
+                    <div className={`animated-input-container ${formData.customCompanyActivity ? 'has-value' : ''}`}>
+                      <input
+                          type="text"
+                          value={formData.customCompanyActivity}
+                          onChange={(e) => setFormData({ ...formData, customCompanyActivity: e.target.value.slice(0, 300) })}
+                          maxLength={300}
+                      />
+                      <label className="label">Your option</label>
+                      <div className="underline"></div>
+                      <div className="char-count">{formData.customCompanyActivity.length}/300</div>
+                    </div>
                   </div>
                 </CardContent>
               </Card>

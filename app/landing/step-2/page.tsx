@@ -167,7 +167,7 @@ export default function LandingStep2() {
                 <CardContent className="p-6">
                   <div className="space-y-4">
                     <Label className="text-base font-medium">
-                      Unique selling proposition (USP) of the company/service?
+                      Unique selling proposition (USP) of the company/service? <span className="text-red-500">*</span>
                     </Label>
                     <div className="space-y-2">
                       {uspOptions.map((option) => (
@@ -204,7 +204,7 @@ export default function LandingStep2() {
               <Card className="bg-white shadow rounded-xl border-none">
                 <CardContent className="p-6">
                   <div className="space-y-4">
-                    <Label className="text-base font-medium">You want to:</Label>
+                    <Label className="text-base font-medium">You want to: <span className="text-red-500">*</span></Label>
                     <div className="space-y-2">
                       {goalOptions.map((option) => (
                           <div key={option} className="flex items-center space-x-2">
@@ -239,17 +239,20 @@ export default function LandingStep2() {
               {/* Question 6 - Current Landing Link */}
               <Card className="bg-white shadow rounded-xl border-none">
                 <CardContent className="p-6">
-                  <div className={`animated-input-container ${formData.currentLandingLink ? 'has-value' : ''}`}>
-                    <input
-                        type="text"
-                        value={formData.currentLandingLink}
-                        onChange={(e) => setFormData({ ...formData, currentLandingLink: e.target.value.slice(0, 300) })}
-                        maxLength={300}
-                        required
-                    />
-                    <label className="label">If you have a landing page, provide a link to it:</label>
-                    <div className="underline"></div>
-                    <div className="char-count">{formData.currentLandingLink.length}/300</div>
+                  <div className="space-y-4">
+                    <Label className="text-base font-medium">If you have a landing page, provide a link to it:</Label>
+                    <div className={`animated-input-container ${formData.currentLandingLink ? 'has-value' : ''}`}>
+                      <input
+                          type="text"
+                          value={formData.currentLandingLink}
+                          onChange={(e) => setFormData({ ...formData, currentLandingLink: e.target.value.slice(0, 300) })}
+                          maxLength={300}
+                          required
+                      />
+                      <label className="label">Your option</label>
+                      <div className="underline"></div>
+                      <div className="char-count">{formData.currentLandingLink.length}/300</div>
+                    </div>
                   </div>
                 </CardContent>
               </Card>

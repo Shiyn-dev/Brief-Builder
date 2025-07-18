@@ -123,6 +123,10 @@ export default function LandingStep3() {
             transition: all 0.3s ease;
           }
 
+          .animated-input-container textarea ~ .underline {
+            bottom: 8px;
+          }
+
           .animated-input-container input:focus ~ .underline,
           .animated-input-container textarea:focus ~ .underline {
             transform: scaleX(1);
@@ -144,17 +148,20 @@ export default function LandingStep3() {
               {/* Current Design Likes */}
               <Card className="bg-white shadow rounded-xl border-none">
                 <CardContent className="p-6">
-                  <div className={`animated-input-container ${formData.currentDesignLikes ? 'has-value' : ''}`}>
-                  <textarea
-                      value={formData.currentDesignLikes}
-                      onChange={(e) => setFormData({ ...formData, currentDesignLikes: e.target.value.slice(0, 300) })}
-                      maxLength={300}
-                      rows={4}
-                      required
-                  />
-                    <label className="label">What do you like about your current landing page design?</label>
-                    <div className="underline"></div>
-                    <div className="char-count">{formData.currentDesignLikes.length}/300</div>
+                  <div className="space-y-4">
+                    <Label className="text-base font-medium">What do you like about your current landing page design? <span className="text-red-500">*</span></Label>
+                    <div className={`animated-input-container ${formData.currentDesignLikes ? 'has-value' : ''}`}>
+                      <textarea
+                          value={formData.currentDesignLikes}
+                          onChange={(e) => setFormData({ ...formData, currentDesignLikes: e.target.value.slice(0, 300) })}
+                          maxLength={300}
+                          rows={4}
+                          required
+                      />
+                      <label className="label">Your option</label>
+                      <div className="underline"></div>
+                      <div className="char-count">{formData.currentDesignLikes.length}/300</div>
+                    </div>
                   </div>
                 </CardContent>
               </Card>
@@ -163,7 +170,7 @@ export default function LandingStep3() {
               <Card className="bg-white shadow rounded-xl border-none">
                 <CardContent className="p-6">
                   <div className="space-y-4">
-                    <Label className="text-base font-medium">What is the purpose of developing a landing page:</Label>
+                    <Label className="text-base font-medium">What is the purpose of developing a landing page: <span className="text-red-500">*</span></Label>
                     <RadioGroup
                         value={formData.purpose}
                         onValueChange={(value) => setFormData({ ...formData, purpose: value })}
@@ -193,6 +200,9 @@ export default function LandingStep3() {
                           onChange={(e) => setFormData({ ...formData, customPurpose: e.target.value.slice(0, 300) })}
                           maxLength={300}
                           disabled={formData.purpose !== 'custom'}
+                          style={{
+                            color: formData.purpose !== 'custom' ? '#999' : '#333'
+                          }}
                           required
                       />
                       <label className="label">Your option</label>
@@ -206,17 +216,20 @@ export default function LandingStep3() {
               {/* Why Buy From You */}
               <Card className="bg-white shadow rounded-xl border-none">
                 <CardContent className="p-6">
-                  <div className={`animated-input-container ${formData.whyBuyFromYou ? 'has-value' : ''}`}>
-                  <textarea
-                      value={formData.whyBuyFromYou}
-                      onChange={(e) => setFormData({ ...formData, whyBuyFromYou: e.target.value.slice(0, 300) })}
-                      maxLength={300}
-                      rows={4}
-                      required
-                  />
-                    <label className="label">Why should a person buy from you?</label>
-                    <div className="underline"></div>
-                    <div className="char-count">{formData.whyBuyFromYou.length}/300</div>
+                  <div className="space-y-4">
+                    <Label className="text-base font-medium">Why should a person buy from you? <span className="text-red-500">*</span></Label>
+                    <div className={`animated-input-container ${formData.whyBuyFromYou ? 'has-value' : ''}`}>
+                      <textarea
+                          value={formData.whyBuyFromYou}
+                          onChange={(e) => setFormData({ ...formData, whyBuyFromYou: e.target.value.slice(0, 300) })}
+                          maxLength={300}
+                          rows={4}
+                          required
+                      />
+                      <label className="label">Your option</label>
+                      <div className="underline"></div>
+                      <div className="char-count">{formData.whyBuyFromYou.length}/300</div>
+                    </div>
                   </div>
                 </CardContent>
               </Card>

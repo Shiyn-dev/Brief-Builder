@@ -123,6 +123,10 @@ export default function LandingStep4() {
             transition: all 0.3s ease;
           }
 
+          .animated-input-container textarea ~ .underline {
+            bottom: 8px;
+          }
+
           .animated-input-container input:focus ~ .underline,
           .animated-input-container textarea:focus ~ .underline {
             transform: scaleX(1);
@@ -145,7 +149,7 @@ export default function LandingStep4() {
               <Card className="bg-white shadow rounded-xl border-none">
                 <CardContent className="p-6">
                   <div className="space-y-4">
-                    <Label className="text-base font-medium">Who is your main audience?</Label>
+                    <Label className="text-base font-medium">Who is your main audience? <span className="text-red-500">*</span></Label>
                     <RadioGroup
                         value={formData.audience}
                         onValueChange={(value) => setFormData({ ...formData, audience: value })}
@@ -171,6 +175,9 @@ export default function LandingStep4() {
                           onChange={(e) => setFormData({ ...formData, customAudience: e.target.value.slice(0, 300) })}
                           maxLength={300}
                           disabled={formData.audience !== 'custom'}
+                          style={{
+                            color: formData.audience !== 'custom' ? '#999' : '#333'
+                          }}
                           required
                       />
                       <label className="label">Your option</label>
@@ -184,17 +191,20 @@ export default function LandingStep4() {
               {/* Main Competitor */}
               <Card className="bg-white shadow rounded-xl border-none">
                 <CardContent className="p-6">
-                  <div className={`animated-input-container ${formData.mainCompetitor ? 'has-value' : ''}`}>
-                    <input
-                        type="text"
-                        value={formData.mainCompetitor}
-                        onChange={(e) => setFormData({ ...formData, mainCompetitor: e.target.value.slice(0, 300) })}
-                        maxLength={300}
-                        required
-                    />
-                    <label className="label">Who is your main competitor? Provide a name or link</label>
-                    <div className="underline"></div>
-                    <div className="char-count">{formData.mainCompetitor.length}/300</div>
+                  <div className="space-y-4">
+                    <Label className="text-base font-medium">Who is your main competitor? Provide a name or link <span className="text-red-500">*</span></Label>
+                    <div className={`animated-input-container ${formData.mainCompetitor ? 'has-value' : ''}`}>
+                      <input
+                          type="text"
+                          value={formData.mainCompetitor}
+                          onChange={(e) => setFormData({ ...formData, mainCompetitor: e.target.value.slice(0, 300) })}
+                          maxLength={300}
+                          required
+                      />
+                      <label className="label">Your option</label>
+                      <div className="underline"></div>
+                      <div className="char-count">{formData.mainCompetitor.length}/300</div>
+                    </div>
                   </div>
                 </CardContent>
               </Card>
@@ -202,17 +212,20 @@ export default function LandingStep4() {
               {/* Successful Competitors */}
               <Card className="bg-white shadow rounded-xl border-none">
                 <CardContent className="p-6">
-                  <div className={`animated-input-container ${formData.successfulCompetitors ? 'has-value' : ''}`}>
-                  <textarea
-                      value={formData.successfulCompetitors}
-                      onChange={(e) => setFormData({ ...formData, successfulCompetitors: e.target.value.slice(0, 300) })}
-                      maxLength={300}
-                      rows={4}
-                      required
-                  />
-                    <label className="label">What competitors' websites do you consider successful? Why?</label>
-                    <div className="underline"></div>
-                    <div className="char-count">{formData.successfulCompetitors.length}/300</div>
+                  <div className="space-y-4">
+                    <Label className="text-base font-medium">What competitors' websites do you consider successful? Why? <span className="text-red-500">*</span></Label>
+                    <div className={`animated-input-container ${formData.successfulCompetitors ? 'has-value' : ''}`}>
+                      <textarea
+                          value={formData.successfulCompetitors}
+                          onChange={(e) => setFormData({ ...formData, successfulCompetitors: e.target.value.slice(0, 300) })}
+                          maxLength={300}
+                          rows={4}
+                          required
+                      />
+                      <label className="label">Your option</label>
+                      <div className="underline"></div>
+                      <div className="char-count">{formData.successfulCompetitors.length}/300</div>
+                    </div>
                   </div>
                 </CardContent>
               </Card>

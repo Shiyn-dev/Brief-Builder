@@ -152,7 +152,7 @@ export default function PresentationStep2() {
               <Card className="bg-white shadow rounded-xl border-none">
                 <CardContent className="p-6">
                   <div className="space-y-4">
-                    <Label className="text-base font-medium">What is the purpose of creating a presentation?</Label>
+                    <Label className="text-base font-medium">What is the purpose of creating a presentation? <span className="text-red-500">*</span></Label>
                     <div className="grid grid-cols-2 gap-3">
                       {purposes.map((purpose) => (
                           <div key={purpose} className="flex items-center space-x-2">
@@ -174,14 +174,17 @@ export default function PresentationStep2() {
               {/* Main Message */}
               <Card className="bg-white shadow rounded-xl border-none">
                 <CardContent className="p-6">
-                  <div className={`animated-input-container ${formData.mainMessage.trim() !== '' ? 'has-value' : ''}`}>
-                    <input
-                        type="text"
-                        value={formData.mainMessage}
-                        onChange={(e) => setFormData({ ...formData, mainMessage: e.target.value })}
-                    />
-                    <label className="label">What is the main message of the presentation?</label>
-                    <div className="underline"></div>
+                  <div className="space-y-4">
+                    <Label className="text-base font-medium">What is the main message of the presentation? <span className="text-red-500">*</span></Label>
+                    <div className={`animated-input-container ${formData.mainMessage.trim() !== '' ? 'has-value' : ''}`}>
+                      <input
+                          type="text"
+                          value={formData.mainMessage}
+                          onChange={(e) => setFormData({ ...formData, mainMessage: e.target.value })}
+                      />
+                      <label className="label">Your option</label>
+                      <div className="underline"></div>
+                    </div>
                   </div>
                 </CardContent>
               </Card>
@@ -190,7 +193,7 @@ export default function PresentationStep2() {
               <Card className="bg-white shadow rounded-xl border-none">
                 <CardContent className="p-6">
                   <div className="space-y-4">
-                    <Label className="text-base font-medium">What kind of result do you want to get from the presentation?</Label>
+                    <Label className="text-base font-medium">What kind of result do you want to get from the presentation? <span className="text-red-500">*</span></Label>
                     <RadioGroup
                         value={formData.desiredResult}
                         onValueChange={(value) => setFormData({ ...formData, desiredResult: value })}
@@ -209,7 +212,6 @@ export default function PresentationStep2() {
                       </div>
                     </RadioGroup>
 
-                    {/* ИСПРАВЛЕНО: просто Your option без вопроса */}
                     <div className={`animated-input-container ${formData.customResult.trim() !== '' ? 'has-value' : ''} ${formData.desiredResult !== 'other' ? 'opacity-50' : ''}`}>
                       <input
                           type="text"

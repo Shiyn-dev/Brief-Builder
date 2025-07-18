@@ -130,16 +130,19 @@ export default function PresentationStep6() {
               {/* Unsuccessful Examples */}
               <Card className="bg-white shadow rounded-xl border-none">
                 <CardContent className="p-6">
-                  <div className={`animated-input-container ${formData.unsuccessfulExamples ? 'has-value' : ''}`}>
-                    <input
-                        type="text"
-                        value={formData.unsuccessfulExamples}
-                        onChange={(e) => setFormData({ ...formData, unsuccessfulExamples: e.target.value.slice(0, 300) })}
-                        maxLength={300}
-                    />
-                    <label className="label">Examples of unsuccessful presentations, if you know:</label>
-                    <div className="underline"></div>
-                    <div className="char-count">{formData.unsuccessfulExamples.length}/300</div>
+                  <div className="space-y-4">
+                    <Label className="text-base font-medium">Examples of unsuccessful presentations, if you know: <span className="text-red-500">*</span></Label>
+                    <div className={`animated-input-container ${formData.unsuccessfulExamples ? 'has-value' : ''}`}>
+                      <input
+                          type="text"
+                          value={formData.unsuccessfulExamples}
+                          onChange={(e) => setFormData({ ...formData, unsuccessfulExamples: e.target.value.slice(0, 300) })}
+                          maxLength={300}
+                      />
+                      <label className="label">Your option</label>
+                      <div className="underline"></div>
+                      <div className="char-count">{formData.unsuccessfulExamples.length}/300</div>
+                    </div>
                   </div>
                 </CardContent>
               </Card>
@@ -148,7 +151,7 @@ export default function PresentationStep6() {
               <Card className="bg-white shadow rounded-xl border-none">
                 <CardContent className="p-6">
                   <div className="space-y-4">
-                    <Label className="text-base font-medium">Is there ready-made content for the presentation?</Label>
+                    <Label className="text-base font-medium">Is there ready-made content for the presentation? <span className="text-red-500">*</span></Label>
                     <RadioGroup
                         value={formData.readyMadeContent}
                         onValueChange={(value) => setFormData({ ...formData, readyMadeContent: value })}
@@ -183,7 +186,7 @@ export default function PresentationStep6() {
               <Card className="bg-white shadow rounded-xl border-none">
                 <CardContent className="p-6">
                   <div className="space-y-4">
-                    <Label className="text-base font-medium">Is there a ready-made presentation structure?</Label>
+                    <Label className="text-base font-medium">Is there a ready-made presentation structure? <span className="text-red-500">*</span></Label>
                     <RadioGroup
                         value={formData.readyMadeStructure}
                         onValueChange={(value) => setFormData({ ...formData, readyMadeStructure: value })}
