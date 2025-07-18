@@ -35,7 +35,8 @@ export default function LandingStep2() {
   const isFormValid = () => {
     return (
         (formData.usp.length > 0 || formData.customUsp.trim() !== "") &&
-        (formData.goal.length > 0 || formData.customGoal.trim() !== "")
+        (formData.goal.length > 0 || formData.customGoal.trim() !== "") &&
+        formData.currentLandingLink.trim() !== ""
     )
   }
 
@@ -190,7 +191,6 @@ export default function LandingStep2() {
                           value={formData.customUsp}
                           onChange={(e) => setFormData({ ...formData, customUsp: e.target.value.slice(0, 300) })}
                           maxLength={300}
-                          required
                       />
                       <label className="label">Your option</label>
                       <div className="underline"></div>
@@ -226,7 +226,6 @@ export default function LandingStep2() {
                           value={formData.customGoal}
                           onChange={(e) => setFormData({ ...formData, customGoal: e.target.value.slice(0, 300) })}
                           maxLength={300}
-                          required
                       />
                       <label className="label">Your option</label>
                       <div className="underline"></div>
@@ -236,18 +235,17 @@ export default function LandingStep2() {
                 </CardContent>
               </Card>
 
-              {/* Question 6 - Current Landing Link */}
+              {/* Question 6 - Current Landing Link (ТЕПЕРЬ ОБЯЗАТЕЛЬНОЕ) */}
               <Card className="bg-white shadow rounded-xl border-none">
                 <CardContent className="p-6">
                   <div className="space-y-4">
-                    <Label className="text-base font-medium">If you have a landing page, provide a link to it:</Label>
+                    <Label className="text-base font-medium">If you have a landing page, provide a link to it: <span className="text-red-500">*</span></Label>
                     <div className={`animated-input-container ${formData.currentLandingLink ? 'has-value' : ''}`}>
                       <input
                           type="text"
                           value={formData.currentLandingLink}
                           onChange={(e) => setFormData({ ...formData, currentLandingLink: e.target.value.slice(0, 300) })}
                           maxLength={300}
-                          required
                       />
                       <label className="label">Your option</label>
                       <div className="underline"></div>
