@@ -3,7 +3,6 @@
 import { useState, useEffect } from "react"
 import { useRouter } from "next/navigation"
 import BriefLayout from "@/components/brief-layout"
-import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Checkbox } from "@/components/ui/checkbox"
 import { Card, CardContent } from "@/components/ui/card"
@@ -35,9 +34,8 @@ export default function LandingStep2() {
   // Validation function
   const isFormValid = () => {
     return (
-      (formData.usp.length > 0 || formData.customUsp.trim() !== "") &&
-      (formData.goal.length > 0 || formData.customGoal.trim() !== "")
-      // currentLandingLink is optional
+        (formData.usp.length > 0 || formData.customUsp.trim() !== "") &&
+        (formData.goal.length > 0 || formData.customGoal.trim() !== "")
     )
   }
 
@@ -45,25 +43,19 @@ export default function LandingStep2() {
     if (!isFormValid()) return
 
     const existingData = JSON.parse(localStorage.getItem("landingBrief") || "{}")
-    localStorage.setItem(
-      "landingBrief",
-      JSON.stringify({
-        ...existingData,
-        ...formData,
-      }),
-    )
+    localStorage.setItem("landingBrief", JSON.stringify({
+      ...existingData,
+      ...formData
+    }))
     router.push("/landing/step-3")
   }
 
   const handlePrev = () => {
     const existingData = JSON.parse(localStorage.getItem("landingBrief") || "{}")
-    localStorage.setItem(
-      "landingBrief",
-      JSON.stringify({
-        ...existingData,
-        ...formData,
-      }),
-    )
+    localStorage.setItem("landingBrief", JSON.stringify({
+      ...existingData,
+      ...formData
+    }))
     router.push("/landing/step-1")
   }
 
@@ -105,97 +97,165 @@ export default function LandingStep2() {
   const goalOptions = ["Develop a new landing page", "Redesign the old one", "Improve the existing"]
 
   return (
-    <BriefLayout currentStep={2} totalSteps={6} onNext={handleNext} onPrev={handlePrev} isNextDisabled={!isFormValid()}>
-      <div className="space-y-8">
-        {/* Заголовок отдельно по центру */}
+      <BriefLayout currentStep={2} totalSteps={6} onNext={handleNext} onPrev={handlePrev} isNextDisabled={!isFormValid()}>
+        <style jsx>{`
+          .animated-input-container {
+            position: relative;
+            margin: 20px 0;
+            width: 100%;
+          }
+
+          .animated-input-container input {
+            font-size: 16px;
+            width: 100%;
+            border: none;
+            border-bottom: 2px solid #ccc;
+            padding: 8px 0;
+            background-color: transparent;
+            outline: none;
+            color: #333;
+            font-family: inherit;
+          }
+
+          .animated-input-container .label {
+            position: absolute;
+            top: 8px;
+            left: 0;
+            color: #999;
+            transition: all 0.3s ease;
+            pointer-events: none;
+            font-size: 16px;
+          }
+
+          .animated-input-container input:focus ~ .label,
+          .animated-input-container.has-value .label {
+            top: -20px;
+            font-size: 14px;
+            color: #038196;
+          }
+
+          .animated-input-container .underline {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            height: 2px;
+            width: 100%;
+            background-color: #038196;
+            transform: scaleX(0);
+            transition: all 0.3s ease;
+          }
+
+          .animated-input-container input:focus ~ .underline {
+            transform: scaleX(1);
+          }
+
+          .char-count {
+            position: absolute;
+            bottom: -20px;
+            right: 0;
+            font-size: 12px;
+            color: #999;
+          }
+        `}</style>
+
         <h1 className="text-2xl font-semibold text-center text-gray-900 mb-8">Brief for the Landing:</h1>
-
-        <div className="space-y-6">
-          {/* Question 4 - USP */}
-          <Card className="bg-white border border-gray-200">
-            <CardContent className="p-6">
-              <div className="space-y-4">
-                <Label className="text-base font-medium">
-                  Unique selling proposition (USP) of the company/service?
-                </Label>
-                <div className="space-y-2">
-                  {uspOptions.map((option) => (
-                    <div key={option} className="flex items-center space-x-2">
-                      <Checkbox
-                        id={option}
-                        checked={formData.usp.includes(option)}
-                        onCheckedChange={(checked) => handleUspChange(option, checked as boolean)}
-                      />
-                      <Label htmlFor={option} className="text-sm">
-                        {option}
-                      </Label>
+        <Card className="bg-[#F0F9FA] shadow-none border-none p-0">
+          <CardContent className="p-0">
+            <div className="space-y-6">
+              {/* Question 4 - USP */}
+              <Card className="bg-white shadow rounded-xl border-none">
+                <CardContent className="p-6">
+                  <div className="space-y-4">
+                    <Label className="text-base font-medium">
+                      Unique selling proposition (USP) of the company/service?
+                    </Label>
+                    <div className="space-y-2">
+                      {uspOptions.map((option) => (
+                          <div key={option} className="flex items-center space-x-2">
+                            <Checkbox
+                                id={option}
+                                checked={formData.usp.includes(option)}
+                                onCheckedChange={(checked) => handleUspChange(option, checked as boolean)}
+                            />
+                            <Label htmlFor={option} className="text-sm">
+                              {option}
+                            </Label>
+                          </div>
+                      ))}
                     </div>
-                  ))}
-                </div>
-                <Input
-                  placeholder="Your option"
-                  value={formData.customUsp}
-                  onChange={(e) => setFormData({ ...formData, customUsp: e.target.value.slice(0, 300) })}
-                  className="w-full"
-                  maxLength={300}
-                />
-                <div className="text-xs text-gray-500 text-right">{formData.customUsp.length}/300</div>
-              </div>
-            </CardContent>
-          </Card>
 
-          {/* Question 5 - Goal */}
-          <Card className="bg-white border border-gray-200">
-            <CardContent className="p-6">
-              <div className="space-y-4">
-                <Label className="text-base font-medium">You want to:</Label>
-                <div className="space-y-2">
-                  {goalOptions.map((option) => (
-                    <div key={option} className="flex items-center space-x-2">
-                      <Checkbox
-                        id={option}
-                        checked={formData.goal.includes(option)}
-                        onCheckedChange={(checked) => handleGoalChange(option, checked as boolean)}
+                    <div className={`animated-input-container ${formData.customUsp ? 'has-value' : ''}`}>
+                      <input
+                          type="text"
+                          value={formData.customUsp}
+                          onChange={(e) => setFormData({ ...formData, customUsp: e.target.value.slice(0, 300) })}
+                          maxLength={300}
+                          required
                       />
-                      <Label htmlFor={option} className="text-sm">
-                        {option}
-                      </Label>
+                      <label className="label">Your option</label>
+                      <div className="underline"></div>
+                      <div className="char-count">{formData.customUsp.length}/300</div>
                     </div>
-                  ))}
-                </div>
-                <Input
-                  placeholder="Your option"
-                  value={formData.customGoal}
-                  onChange={(e) => setFormData({ ...formData, customGoal: e.target.value.slice(0, 300) })}
-                  className="w-full"
-                  maxLength={300}
-                />
-                <div className="text-xs text-gray-500 text-right">{formData.customGoal.length}/300</div>
-              </div>
-            </CardContent>
-          </Card>
+                  </div>
+                </CardContent>
+              </Card>
 
-          {/* Question 6 - Current Landing Link */}
-          <Card className="bg-white border border-gray-200">
-            <CardContent className="p-6">
-              <div className="space-y-3">
-                <Label htmlFor="currentLandingLink" className="text-base font-medium">
-                  If you have a landing page, provide a link to it:
-                </Label>
-                <Input
-                  id="currentLandingLink"
-                  value={formData.currentLandingLink}
-                  onChange={(e) => setFormData({ ...formData, currentLandingLink: e.target.value.slice(0, 300) })}
-                  className="w-full"
-                  placeholder="Your option"
-                  maxLength={300}
-                />
-                <div className="text-xs text-gray-500 text-right">{formData.currentLandingLink.length}/300</div>
-              </div>
-            </CardContent>
-          </Card>
-        </div>
-      </div>
-    </BriefLayout>
+              {/* Question 5 - Goal */}
+              <Card className="bg-white shadow rounded-xl border-none">
+                <CardContent className="p-6">
+                  <div className="space-y-4">
+                    <Label className="text-base font-medium">You want to:</Label>
+                    <div className="space-y-2">
+                      {goalOptions.map((option) => (
+                          <div key={option} className="flex items-center space-x-2">
+                            <Checkbox
+                                id={option}
+                                checked={formData.goal.includes(option)}
+                                onCheckedChange={(checked) => handleGoalChange(option, checked as boolean)}
+                            />
+                            <Label htmlFor={option} className="text-sm">
+                              {option}
+                            </Label>
+                          </div>
+                      ))}
+                    </div>
+
+                    <div className={`animated-input-container ${formData.customGoal ? 'has-value' : ''}`}>
+                      <input
+                          type="text"
+                          value={formData.customGoal}
+                          onChange={(e) => setFormData({ ...formData, customGoal: e.target.value.slice(0, 300) })}
+                          maxLength={300}
+                          required
+                      />
+                      <label className="label">Your option</label>
+                      <div className="underline"></div>
+                      <div className="char-count">{formData.customGoal.length}/300</div>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+
+              {/* Question 6 - Current Landing Link */}
+              <Card className="bg-white shadow rounded-xl border-none">
+                <CardContent className="p-6">
+                  <div className={`animated-input-container ${formData.currentLandingLink ? 'has-value' : ''}`}>
+                    <input
+                        type="text"
+                        value={formData.currentLandingLink}
+                        onChange={(e) => setFormData({ ...formData, currentLandingLink: e.target.value.slice(0, 300) })}
+                        maxLength={300}
+                        required
+                    />
+                    <label className="label">If you have a landing page, provide a link to it:</label>
+                    <div className="underline"></div>
+                    <div className="char-count">{formData.currentLandingLink.length}/300</div>
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
+          </CardContent>
+        </Card>
+      </BriefLayout>
   )
 }

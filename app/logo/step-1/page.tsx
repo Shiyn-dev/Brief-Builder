@@ -3,7 +3,6 @@
 import { useState, useEffect } from "react"
 import { useRouter } from "next/navigation"
 import BriefLayout from "@/components/brief-layout"
-import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 import { Checkbox } from "@/components/ui/checkbox"
@@ -12,9 +11,9 @@ import { Card, CardContent } from "@/components/ui/card"
 export default function LogoStep1() {
   const router = useRouter()
   const [formData, setFormData] = useState({
-    companyNameType: "",
-    customCompanyName: "",
-    companyArea: [] as string[],
+    companyName: "",
+    nameType: "",
+    closestArea: [] as string[],
     customArea: "",
     logoUsage: [] as string[],
   })
@@ -24,9 +23,9 @@ export default function LogoStep1() {
     const existingData = JSON.parse(localStorage.getItem("logoBrief") || "{}")
     if (existingData) {
       setFormData({
-        companyNameType: existingData.companyNameType || "",
-        customCompanyName: existingData.customCompanyName || "",
-        companyArea: existingData.companyArea || [],
+        companyName: existingData.companyName || "",
+        nameType: existingData.nameType || "",
+        closestArea: existingData.closestArea || [],
         customArea: existingData.customArea || "",
         logoUsage: existingData.logoUsage || [],
       })
@@ -36,9 +35,10 @@ export default function LogoStep1() {
   // Validation function
   const isFormValid = () => {
     return (
-      (formData.companyNameType !== "" || formData.customCompanyName.trim() !== "") &&
-      (formData.companyArea.length > 0 || formData.customArea.trim() !== "") &&
-      formData.logoUsage.length > 0
+        formData.companyName.trim() !== "" &&
+        formData.nameType !== "" &&
+        (formData.closestArea.length > 0 || formData.customArea.trim() !== "") &&
+        formData.logoUsage.length > 0
     )
   }
 
@@ -46,26 +46,32 @@ export default function LogoStep1() {
     if (!isFormValid()) return
 
     const existingData = JSON.parse(localStorage.getItem("logoBrief") || "{}")
-    localStorage.setItem(
-      "logoBrief",
-      JSON.stringify({
-        ...existingData,
-        ...formData,
-      }),
-    )
+    localStorage.setItem("logoBrief", JSON.stringify({
+      ...existingData,
+      ...formData
+    }))
     router.push("/logo/step-2")
+  }
+
+  const handlePrev = () => {
+    const existingData = JSON.parse(localStorage.getItem("logoBrief") || "{}")
+    localStorage.setItem("logoBrief", JSON.stringify({
+      ...existingData,
+      ...formData
+    }))
+    router.push("/")
   }
 
   const handleAreaChange = (area: string, checked: boolean) => {
     if (checked) {
       setFormData({
         ...formData,
-        companyArea: [...formData.companyArea, area],
+        closestArea: [...formData.closestArea, area],
       })
     } else {
       setFormData({
         ...formData,
-        companyArea: formData.companyArea.filter((a) => a !== area),
+        closestArea: formData.closestArea.filter((item) => item !== area),
       })
     }
   }
@@ -79,105 +85,179 @@ export default function LogoStep1() {
     } else {
       setFormData({
         ...formData,
-        logoUsage: formData.logoUsage.filter((u) => u !== usage),
+        logoUsage: formData.logoUsage.filter((item) => item !== usage),
       })
     }
   }
 
-  const areas = ["Game", "Food", "Health", "Nature", "Technology", "Travel", "Sport"]
+  const areaOptions = [
+    "Game", "Food", "Health", "Nature", "Technology", "Travel", "Sport"
+  ]
+
+  const usageOptions = [
+    "In the digital space", "On the packaging", "In printing"
+  ]
 
   return (
-    <BriefLayout currentStep={1} totalSteps={3} onNext={handleNext} showPrev={false} isNextDisabled={!isFormValid()}>
-      <div className="space-y-8">
-        {/* Заголовок отдельно по центру */}
-        <h1 className="text-2xl font-semibold text-center text-gray-900 mb-8">Brief for the Logo:</h1>
+      <BriefLayout currentStep={1} totalSteps={3} onNext={handleNext} onPrev={handlePrev} isNextDisabled={!isFormValid()}>
+        <style jsx>{`
+          .animated-input-container {
+            position: relative;
+            margin: 20px 0;
+            width: 100%;
+          }
 
-        <div className="space-y-6">
-          {/* Question 1 - Company Name */}
-          <Card className="bg-white border border-gray-200">
-            <CardContent className="p-6">
-              <div className="space-y-4">
-                <Label className="text-base font-medium">Company name</Label>
-                <RadioGroup
-                  value={formData.companyNameType}
-                  onValueChange={(value) => setFormData({ ...formData, companyNameType: value })}
-                >
-                  <div className="flex items-center space-x-2">
-                    <RadioGroupItem value="full-name" id="full-name" />
-                    <Label htmlFor="full-name">Full name</Label>
-                  </div>
-                  <div className="flex items-center space-x-2">
-                    <RadioGroupItem value="abbreviation" id="abbreviation" />
-                    <Label htmlFor="abbreviation">Abbreviation</Label>
-                  </div>
-                </RadioGroup>
-                <Input
-                  placeholder="Your option"
-                  value={formData.customCompanyName}
-                  onChange={(e) => setFormData({ ...formData, customCompanyName: e.target.value.slice(0, 300) })}
-                  className="w-full"
-                  maxLength={300}
-                />
-                <div className="text-xs text-gray-500 text-right">{formData.customCompanyName.length}/300</div>
-              </div>
-            </CardContent>
-          </Card>
+          .animated-input-container input {
+            font-size: 16px;
+            width: 100%;
+            border: none;
+            border-bottom: 2px solid #ccc;
+            padding: 8px 0;
+            background-color: transparent;
+            outline: none;
+            color: #333;
+            font-family: inherit;
+          }
 
-          {/* Question 2 - Company Area */}
-          <Card className="bg-white border border-gray-200">
-            <CardContent className="p-6">
-              <div className="space-y-4">
-                <Label className="text-base font-medium">Which area is closest to your company?</Label>
-                <div className="grid grid-cols-4 gap-3">
-                  {areas.map((area) => (
-                    <div key={area} className="flex items-center space-x-2">
-                      <Checkbox
-                        id={area}
-                        checked={formData.companyArea.includes(area)}
-                        onCheckedChange={(checked) => handleAreaChange(area, checked as boolean)}
-                      />
-                      <Label htmlFor={area} className="text-sm">
-                        {area}
-                      </Label>
+          .animated-input-container .label {
+            position: absolute;
+            top: 8px;
+            left: 0;
+            color: #999;
+            transition: all 0.3s ease;
+            pointer-events: none;
+            font-size: 16px;
+          }
+
+          .animated-input-container input:focus ~ .label,
+          .animated-input-container.has-value .label {
+            top: -20px;
+            font-size: 14px;
+            color: #038196;
+          }
+
+          .animated-input-container .underline {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            height: 2px;
+            width: 100%;
+            background-color: #038196;
+            transform: scaleX(0);
+            transition: all 0.3s ease;
+          }
+
+          .animated-input-container input:focus ~ .underline {
+            transform: scaleX(1);
+          }
+
+          .char-count {
+            position: absolute;
+            bottom: -20px;
+            right: 0;
+            font-size: 12px;
+            color: #999;
+          }
+        `}</style>
+
+        <div className="space-y-8">
+          <h1 className="text-2xl font-semibold text-center text-gray-900 mb-8">Brief for the Logo:</h1>
+
+          <div className="space-y-6">
+            {/* Company Name */}
+            <Card className="bg-white border border-gray-200">
+              <CardContent className="p-6">
+                <div className="space-y-4">
+                  <Label className="text-base font-medium">Company name</Label>
+                  <RadioGroup
+                      value={formData.nameType}
+                      onValueChange={(value) => setFormData({ ...formData, nameType: value })}
+                  >
+                    <div className="flex items-center space-x-2">
+                      <RadioGroupItem value="full-name" id="full-name" />
+                      <Label htmlFor="full-name">Full name</Label>
                     </div>
-                  ))}
-                </div>
-                <Input
-                  placeholder="Your option"
-                  value={formData.customArea}
-                  onChange={(e) => setFormData({ ...formData, customArea: e.target.value.slice(0, 300) })}
-                  className="w-full"
-                  maxLength={300}
-                />
-                <div className="text-xs text-gray-500 text-right">{formData.customArea.length}/300</div>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Question 3 - Logo Usage */}
-          <Card className="bg-white border border-gray-200">
-            <CardContent className="p-6">
-              <div className="space-y-4">
-                <Label className="text-base font-medium">Where will the Logo be used:</Label>
-                <div className="space-y-2">
-                  {["In the digital space", "On the packaging", "In printing"].map((usage) => (
-                    <div key={usage} className="flex items-center space-x-2">
-                      <Checkbox
-                        id={usage}
-                        checked={formData.logoUsage.includes(usage)}
-                        onCheckedChange={(checked) => handleUsageChange(usage, checked as boolean)}
-                      />
-                      <Label htmlFor={usage} className="text-sm">
-                        {usage}
-                      </Label>
+                    <div className="flex items-center space-x-2">
+                      <RadioGroupItem value="abbreviation" id="abbreviation" />
+                      <Label htmlFor="abbreviation">Abbreviation</Label>
                     </div>
-                  ))}
+                  </RadioGroup>
+
+                  <div className={`animated-input-container ${formData.companyName ? 'has-value' : ''}`}>
+                    <input
+                        type="text"
+                        value={formData.companyName}
+                        onChange={(e) => setFormData({ ...formData, companyName: e.target.value.slice(0, 100) })}
+                        maxLength={100}
+                        required
+                    />
+                    <label className="label">Your option</label>
+                    <div className="underline"></div>
+                    <div className="char-count">{formData.companyName.length}/100</div>
+                  </div>
                 </div>
-              </div>
-            </CardContent>
-          </Card>
+              </CardContent>
+            </Card>
+
+            {/* Closest Area */}
+            <Card className="bg-white border border-gray-200">
+              <CardContent className="p-6">
+                <div className="space-y-4">
+                  <Label className="text-base font-medium">Which area is closest to your Company?</Label>
+                  <div className="grid grid-cols-2 gap-2">
+                    {areaOptions.map((area) => (
+                        <div key={area} className="flex items-center space-x-2">
+                          <Checkbox
+                              id={area}
+                              checked={formData.closestArea.includes(area)}
+                              onCheckedChange={(checked) => handleAreaChange(area, checked as boolean)}
+                          />
+                          <Label htmlFor={area} className="text-sm">
+                            {area}
+                          </Label>
+                        </div>
+                    ))}
+                  </div>
+
+                  <div className={`animated-input-container ${formData.customArea ? 'has-value' : ''}`}>
+                    <input
+                        type="text"
+                        value={formData.customArea}
+                        onChange={(e) => setFormData({ ...formData, customArea: e.target.value.slice(0, 100) })}
+                        maxLength={100}
+                    />
+                    <label className="label">Your option</label>
+                    <div className="underline"></div>
+                    <div className="char-count">{formData.customArea.length}/100</div>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* Logo Usage */}
+            <Card className="bg-white border border-gray-200">
+              <CardContent className="p-6">
+                <div className="space-y-4">
+                  <Label className="text-base font-medium">Where will the Logo be used:</Label>
+                  <div className="space-y-2">
+                    {usageOptions.map((usage) => (
+                        <div key={usage} className="flex items-center space-x-2">
+                          <Checkbox
+                              id={usage}
+                              checked={formData.logoUsage.includes(usage)}
+                              onCheckedChange={(checked) => handleUsageChange(usage, checked as boolean)}
+                          />
+                          <Label htmlFor={usage} className="text-sm">
+                            {usage}
+                          </Label>
+                        </div>
+                    ))}
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
         </div>
-      </div>
-    </BriefLayout>
+      </BriefLayout>
   )
 }

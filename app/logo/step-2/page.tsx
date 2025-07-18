@@ -3,10 +3,9 @@
 import { useState, useEffect } from "react"
 import { useRouter } from "next/navigation"
 import BriefLayout from "@/components/brief-layout"
-import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 import { Checkbox } from "@/components/ui/checkbox"
+import { Card, CardContent } from "@/components/ui/card"
 
 export default function LogoStep2() {
   const router = useRouter()
@@ -15,7 +14,7 @@ export default function LogoStep2() {
     customEmotion: "",
     sensations: [] as string[],
     customSensation: "",
-    geometricFigure: "",
+    geometricFigure: [] as string[],
     customFigure: "",
   })
 
@@ -28,33 +27,38 @@ export default function LogoStep2() {
         customEmotion: existingData.customEmotion || "",
         sensations: existingData.sensations || [],
         customSensation: existingData.customSensation || "",
-        geometricFigure: existingData.geometricFigure || "",
+        geometricFigure: existingData.geometricFigure || [],
         customFigure: existingData.customFigure || "",
       })
     }
   }, [])
 
-  const handleNext = () => {
-    const existingData = JSON.parse(localStorage.getItem("logoBrief") || "{}")
-    localStorage.setItem(
-      "logoBrief",
-      JSON.stringify({
-        ...existingData,
-        ...formData,
-      }),
+  // Validation function
+  const isFormValid = () => {
+    return (
+        (formData.emotions.length > 0 || formData.customEmotion.trim() !== "") &&
+        (formData.sensations.length > 0 || formData.customSensation.trim() !== "") &&
+        (formData.geometricFigure.length > 0 || formData.customFigure.trim() !== "")
     )
+  }
+
+  const handleNext = () => {
+    if (!isFormValid()) return
+
+    const existingData = JSON.parse(localStorage.getItem("logoBrief") || "{}")
+    localStorage.setItem("logoBrief", JSON.stringify({
+      ...existingData,
+      ...formData
+    }))
     router.push("/logo/step-3")
   }
 
   const handlePrev = () => {
     const existingData = JSON.parse(localStorage.getItem("logoBrief") || "{}")
-    localStorage.setItem(
-      "logoBrief",
-      JSON.stringify({
-        ...existingData,
-        ...formData,
-      }),
-    )
+    localStorage.setItem("logoBrief", JSON.stringify({
+      ...existingData,
+      ...formData
+    }))
     router.push("/logo/step-1")
   }
 
@@ -86,116 +90,204 @@ export default function LogoStep2() {
     }
   }
 
-  const emotions = ["Reliable and caring", "Modern and innovative", "Approachable and friendly"]
-  const sensations = [
-    "Fun",
-    "Pleasure",
-    "Call",
-    "Dedication",
-    "Drive",
-    "Achievement",
-    "Confidence",
-    "Safety",
-    "Calmness",
+  const handleFigureChange = (figure: string, checked: boolean) => {
+    if (checked) {
+      setFormData({
+        ...formData,
+        geometricFigure: [...formData.geometricFigure, figure],
+      })
+    } else {
+      setFormData({
+        ...formData,
+        geometricFigure: formData.geometricFigure.filter((f) => f !== figure),
+      })
+    }
+  }
+
+  const emotionOptions = [
+    "Reliable and caring", "Modern and innovative", "Approachable and friendly"
+  ]
+
+  const sensationOptions = [
+    "Fun", "Pleasure", "Call", "Dedication", "Drive", "Achievement", "Confidence", "Safety", "Calmness"
+  ]
+
+  const figureOptions = [
+    "Circle", "Square", "Triangle", "Polyhedron"
   ]
 
   return (
-    <BriefLayout currentStep={2} totalSteps={4} onNext={handleNext} onPrev={handlePrev}>
-      <div className="space-y-8">
-        <h1 className="text-xl font-semibold text-gray-900 border-b border-dotted border-gray-400 pb-2">
-          Brief for the Logo:
-        </h1>
+      <BriefLayout currentStep={2} totalSteps={3} onNext={handleNext} onPrev={handlePrev} isNextDisabled={!isFormValid()}>
+        <style jsx>{`
+          .animated-input-container {
+            position: relative;
+            margin: 20px 0;
+            width: 100%;
+          }
 
-        <div className="space-y-6">
-          {/* Emotions */}
-          <div className="space-y-3">
-            <Label className="text-base font-medium">What emotions can it evoke?</Label>
-            <div className="space-y-2">
-              {emotions.map((emotion) => (
-                <div key={emotion} className="flex items-center space-x-2">
-                  <Checkbox
-                    id={emotion}
-                    checked={formData.emotions.includes(emotion)}
-                    onCheckedChange={(checked) => handleEmotionChange(emotion, checked as boolean)}
-                  />
-                  <Label htmlFor={emotion} className="text-sm">
-                    {emotion}
-                  </Label>
+          .animated-input-container input {
+            font-size: 16px;
+            width: 100%;
+            border: none;
+            border-bottom: 2px solid #ccc;
+            padding: 8px 0;
+            background-color: transparent;
+            outline: none;
+            color: #333;
+            font-family: inherit;
+          }
+
+          .animated-input-container .label {
+            position: absolute;
+            top: 8px;
+            left: 0;
+            color: #999;
+            transition: all 0.3s ease;
+            pointer-events: none;
+            font-size: 16px;
+          }
+
+          .animated-input-container input:focus ~ .label,
+          .animated-input-container.has-value .label {
+            top: -20px;
+            font-size: 14px;
+            color: #038196;
+          }
+
+          .animated-input-container .underline {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            height: 2px;
+            width: 100%;
+            background-color: #038196;
+            transform: scaleX(0);
+            transition: all 0.3s ease;
+          }
+
+          .animated-input-container input:focus ~ .underline {
+            transform: scaleX(1);
+          }
+
+          .char-count {
+            position: absolute;
+            bottom: -20px;
+            right: 0;
+            font-size: 12px;
+            color: #999;
+          }
+        `}</style>
+
+        <div className="space-y-8">
+          <h1 className="text-2xl font-semibold text-center text-gray-900 mb-8">Brief for the Logo:</h1>
+
+          <div className="space-y-6">
+            {/* Emotions */}
+            <Card className="bg-white border border-gray-200">
+              <CardContent className="p-6">
+                <div className="space-y-4">
+                  <Label className="text-base font-medium">What emotions can it evoke?</Label>
+                  <div className="space-y-2">
+                    {emotionOptions.map((emotion) => (
+                        <div key={emotion} className="flex items-center space-x-2">
+                          <Checkbox
+                              id={emotion}
+                              checked={formData.emotions.includes(emotion)}
+                              onCheckedChange={(checked) => handleEmotionChange(emotion, checked as boolean)}
+                          />
+                          <Label htmlFor={emotion} className="text-sm">
+                            {emotion}
+                          </Label>
+                        </div>
+                    ))}
+                  </div>
+
+                  <div className={`animated-input-container ${formData.customEmotion ? 'has-value' : ''}`}>
+                    <input
+                        type="text"
+                        value={formData.customEmotion}
+                        onChange={(e) => setFormData({ ...formData, customEmotion: e.target.value.slice(0, 300) })}
+                        maxLength={300}
+                    />
+                    <label className="label">Your option</label>
+                    <div className="underline"></div>
+                    <div className="char-count">{formData.customEmotion.length}/300</div>
+                  </div>
                 </div>
-              ))}
-            </div>
-            <Input
-              placeholder="Your option"
-              value={formData.customEmotion}
-              onChange={(e) => setFormData({ ...formData, customEmotion: e.target.value.slice(0, 300) })}
-              className="w-full"
-              maxLength={300}
-            />
-            <div className="text-xs text-gray-500 text-right">{formData.customEmotion.length}/300</div>
-          </div>
+              </CardContent>
+            </Card>
 
-          {/* Sensations */}
-          <div className="space-y-3">
-            <Label className="text-base font-medium">What sensations does it cause?</Label>
-            <div className="grid grid-cols-3 gap-3">
-              {sensations.map((sensation) => (
-                <div key={sensation} className="flex items-center space-x-2">
-                  <Checkbox
-                    id={sensation}
-                    checked={formData.sensations.includes(sensation)}
-                    onCheckedChange={(checked) => handleSensationChange(sensation, checked as boolean)}
-                  />
-                  <Label htmlFor={sensation} className="text-sm">
-                    {sensation}
-                  </Label>
+            {/* Sensations */}
+            <Card className="bg-white border border-gray-200">
+              <CardContent className="p-6">
+                <div className="space-y-4">
+                  <Label className="text-base font-medium">What sensations does it cause?</Label>
+                  <div className="grid grid-cols-3 gap-2">
+                    {sensationOptions.map((sensation) => (
+                        <div key={sensation} className="flex items-center space-x-2">
+                          <Checkbox
+                              id={sensation}
+                              checked={formData.sensations.includes(sensation)}
+                              onCheckedChange={(checked) => handleSensationChange(sensation, checked as boolean)}
+                          />
+                          <Label htmlFor={sensation} className="text-sm">
+                            {sensation}
+                          </Label>
+                        </div>
+                    ))}
+                  </div>
+
+                  <div className={`animated-input-container ${formData.customSensation ? 'has-value' : ''}`}>
+                    <input
+                        type="text"
+                        value={formData.customSensation}
+                        onChange={(e) => setFormData({ ...formData, customSensation: e.target.value.slice(0, 300) })}
+                        maxLength={300}
+                    />
+                    <label className="label">Your option</label>
+                    <div className="underline"></div>
+                    <div className="char-count">{formData.customSensation.length}/300</div>
+                  </div>
                 </div>
-              ))}
-            </div>
-            <Input
-              placeholder="Your option"
-              value={formData.customSensation}
-              onChange={(e) => setFormData({ ...formData, customSensation: e.target.value.slice(0, 300) })}
-              className="w-full"
-              maxLength={300}
-            />
-            <div className="text-xs text-gray-500 text-right">{formData.customSensation.length}/300</div>
-          </div>
+              </CardContent>
+            </Card>
 
-          {/* Geometric Figure */}
-          <div className="space-y-3">
-            <Label className="text-base font-medium">If he were a geometric figure, what would he be?</Label>
-            <RadioGroup
-              value={formData.geometricFigure}
-              onValueChange={(value) => setFormData({ ...formData, geometricFigure: value })}
-            >
-              <div className="flex items-center space-x-2">
-                <RadioGroupItem value="circle" id="circle" />
-                <Label htmlFor="circle">Circle</Label>
-              </div>
-              <div className="flex items-center space-x-2">
-                <RadioGroupItem value="triangle" id="triangle" />
-                <Label htmlFor="triangle">Triangle</Label>
-              </div>
-              <div className="flex items-center space-x-2">
-                <RadioGroupItem value="square" id="square" />
-                <Label htmlFor="square">Square</Label>
-              </div>
-              <div className="flex items-center space-x-2">
-                <RadioGroupItem value="polyhedron" id="polyhedron" />
-                <Label htmlFor="polyhedron">Polyhedron</Label>
-              </div>
-            </RadioGroup>
-            <Input
-              placeholder="Your option"
-              value={formData.customFigure}
-              onChange={(e) => setFormData({ ...formData, customFigure: e.target.value.slice(0, 300) })}
-              className="w-full"
-              maxLength={300}
-            />
-            <div className="text-xs text-gray-500 text-right">{formData.customFigure.length}/300</div>
+            {/* Geometric Figure */}
+            <Card className="bg-white border border-gray-200">
+              <CardContent className="p-6">
+                <div className="space-y-4">
+                  <Label className="text-base font-medium">If it were a geometric figure, what would it be?</Label>
+                  <div className="grid grid-cols-2 gap-2">
+                    {figureOptions.map((figure) => (
+                        <div key={figure} className="flex items-center space-x-2">
+                          <Checkbox
+                              id={figure}
+                              checked={formData.geometricFigure.includes(figure)}
+                              onCheckedChange={(checked) => handleFigureChange(figure, checked as boolean)}
+                          />
+                          <Label htmlFor={figure} className="text-sm">
+                            {figure}
+                          </Label>
+                        </div>
+                    ))}
+                  </div>
+
+                  <div className={`animated-input-container ${formData.customFigure ? 'has-value' : ''}`}>
+                    <input
+                        type="text"
+                        value={formData.customFigure}
+                        onChange={(e) => setFormData({ ...formData, customFigure: e.target.value.slice(0, 300) })}
+                        maxLength={300}
+                    />
+                    <label className="label">Your option</label>
+                    <div className="underline"></div>
+                    <div className="char-count">{formData.customFigure.length}/300</div>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
           </div>
         </div>
-      </div>
-    </BriefLayout>
+      </BriefLayout>
   )
 }
