@@ -69,6 +69,29 @@ export default function LandingStep1() {
   return (
       <BriefLayout currentStep={1} totalSteps={6} onNext={handleNext} onPrev={handlePrev} isNextDisabled={!isFormValid()}>
         <style jsx global>{`
+          /* ГЛОБАЛЬНОЕ ОТКЛЮЧЕНИЕ ВСЕХ ПОДЧЕРКИВАНИЙ */
+          * {
+            text-decoration: none !important;
+            -webkit-text-decoration: none !important;
+            -moz-text-decoration: none !important;
+            -ms-text-decoration: none !important;
+          }
+
+          input {
+            text-decoration: none !important;
+            -webkit-text-decoration: none !important;
+            -moz-text-decoration: none !important;
+            -ms-text-decoration: none !important;
+            text-decoration-line: none !important;
+            -webkit-text-decoration-line: none !important;
+            text-decoration-style: none !important;
+            -webkit-text-decoration-style: none !important;
+            text-decoration-color: transparent !important;
+            -webkit-text-decoration-color: transparent !important;
+            text-underline-offset: unset !important;
+            -webkit-text-underline-offset: unset !important;
+          }
+
           .animated-input-container {
             position: relative;
             margin: 20px 0;
@@ -87,6 +110,18 @@ export default function LandingStep1() {
             font-family: inherit !important;
             border-radius: 0 !important;
             box-shadow: none !important;
+            text-decoration: none !important;
+            -webkit-text-decoration: none !important;
+            -moz-text-decoration: none !important;
+            -ms-text-decoration: none !important;
+            text-decoration-line: none !important;
+            -webkit-text-decoration-line: none !important;
+            text-decoration-style: none !important;
+            -webkit-text-decoration-style: none !important;
+            text-decoration-color: transparent !important;
+            -webkit-text-decoration-color: transparent !important;
+            text-underline-offset: unset !important;
+            -webkit-text-underline-offset: unset !important;
           }
 
           .animated-input-container input:disabled {
@@ -94,31 +129,7 @@ export default function LandingStep1() {
             cursor: not-allowed !important;
           }
 
-          .animated-textarea-container {
-            position: relative;
-            margin: 20px 0;
-            width: 100%;
-            border-bottom: 2px solid #ccc;
-          }
-
-          .animated-textarea-container textarea {
-            font-size: 16px !important;
-            width: 100% !important;
-            border: none !important;
-            padding: 12px 0 8px 0 !important;
-            background-color: transparent !important;
-            outline: none !important;
-            color: #333 !important;
-            font-family: inherit !important;
-            border-radius: 0 !important;
-            box-shadow: none !important;
-            resize: none !important;
-            line-height: 1.5 !important;
-            min-height: 80px !important;
-          }
-
-          .animated-input-container .label,
-          .animated-textarea-container .label {
+          .animated-input-container .label {
             position: absolute !important;
             top: 12px !important;
             left: 0 !important;
@@ -130,9 +141,7 @@ export default function LandingStep1() {
           }
 
           .animated-input-container input:focus ~ .label,
-          .animated-input-container.has-value .label,
-          .animated-textarea-container textarea:focus ~ .label,
-          .animated-textarea-container.has-value .label {
+          .animated-input-container.has-value .label {
             top: -16px !important;
             font-size: 12px !important;
             color: #68B3C0 !important;
@@ -149,19 +158,7 @@ export default function LandingStep1() {
             transition: all 0.3s ease !important;
           }
 
-          .animated-textarea-container .underline {
-            position: absolute !important;
-            bottom: 0 !important;
-            left: 0 !important;
-            height: 2px !important;
-            width: 100% !important;
-            background-color: #68B3C0 !important;
-            transform: scaleX(0) !important;
-            transition: all 0.3s ease !important;
-          }
-
-          .animated-input-container input:focus ~ .underline,
-          .animated-textarea-container textarea:focus ~ .underline {
+          .animated-input-container input:focus ~ .underline {
             transform: scaleX(1) !important;
           }
 
@@ -243,17 +240,17 @@ export default function LandingStep1() {
                 </CardContent>
               </Card>
 
-              {/* Idea and Mission - ОТДЕЛЬНЫЙ КОНТЕЙНЕР ДЛЯ TEXTAREA */}
+              {/* Idea and Mission - ТЕПЕРЬ ТОЖЕ INPUT! */}
               <Card className="bg-white shadow rounded-xl border-none">
                 <CardContent className="p-6">
                   <div className="space-y-4">
                     <Label className="text-base font-medium">What is the idea and mission of your Company? <span className="text-red-500">*</span></Label>
-                    <div className={`animated-textarea-container ${formData.ideaAndMission ? 'has-value' : ''}`}>
-                      <textarea
+                    <div className={`animated-input-container ${formData.ideaAndMission ? 'has-value' : ''}`}>
+                      <input
+                          type="text"
                           value={formData.ideaAndMission}
                           onChange={(e) => setFormData({ ...formData, ideaAndMission: e.target.value.slice(0, 300) })}
                           maxLength={300}
-                          rows={4}
                           title="Please fill out this field"
                       />
                       <label className="label">Your option</label>

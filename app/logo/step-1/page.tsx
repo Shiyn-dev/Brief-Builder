@@ -16,6 +16,7 @@ export default function LogoStep1() {
     closestArea: [] as string[],
     customArea: "",
     logoUsage: [] as string[],
+    customUsage: "",
   })
 
   // Load existing data on component mount
@@ -28,6 +29,7 @@ export default function LogoStep1() {
         closestArea: existingData.closestArea || [],
         customArea: existingData.customArea || "",
         logoUsage: existingData.logoUsage || [],
+        customUsage: existingData.customUsage || "",
       })
     }
   }, [])
@@ -36,7 +38,7 @@ export default function LogoStep1() {
   const isFormValid = () => {
     const hasNameType = formData.nameType !== "" && (formData.nameType !== "other" || formData.companyName.trim() !== "")
     const hasArea = formData.closestArea.length > 0 || formData.customArea.trim() !== ""
-    const hasUsage = formData.logoUsage.length > 0
+    const hasUsage = formData.logoUsage.length > 0 || formData.customUsage.trim() !== ""
 
     return hasNameType && hasArea && hasUsage
   }
@@ -196,8 +198,8 @@ export default function LogoStep1() {
                     <input
                         type="text"
                         value={formData.companyName}
-                        onChange={(e) => setFormData({ ...formData, companyName: e.target.value.slice(0, 100) })}
-                        maxLength={100}
+                        onChange={(e) => setFormData({ ...formData, companyName: e.target.value.slice(0, 300) })}
+                        maxLength={300}
                         disabled={formData.nameType !== 'other'}
                         title="Please fill out this field"
                         style={{
@@ -206,18 +208,18 @@ export default function LogoStep1() {
                     />
                     <label className="label">Your option</label>
                     <div className="underline"></div>
-                    <div className="char-count">{formData.companyName.length}/100</div>
+                    <div className="char-count">{formData.companyName.length}/300</div>
                   </div>
                 </div>
               </CardContent>
             </Card>
 
-            {/* Closest Area - ОСТАВЛЯЮ CHECKBOX КАК БЫЛО */}
+            {/* Closest Area - ВСЕ ЧЕКБОКСЫ В ОДНУ ЛИНИЮ */}
             <Card className="bg-white border border-gray-200">
               <CardContent className="p-6">
                 <div className="space-y-4">
                   <Label className="text-base font-medium">Which area is closest to your Company? <span className="text-red-500">*</span></Label>
-                  <div className="grid grid-cols-2 gap-2">
+                  <div className="flex flex-wrap gap-x-4 gap-y-2">
                     {areaOptions.map((area) => (
                         <div key={area} className="flex items-center space-x-2">
                           <Checkbox
@@ -225,7 +227,7 @@ export default function LogoStep1() {
                               checked={formData.closestArea.includes(area)}
                               onCheckedChange={(checked) => handleAreaChange(area, checked as boolean)}
                           />
-                          <Label htmlFor={area} className="text-sm">
+                          <Label htmlFor={area} className="text-sm whitespace-nowrap">
                             {area}
                           </Label>
                         </div>
@@ -236,24 +238,24 @@ export default function LogoStep1() {
                     <input
                         type="text"
                         value={formData.customArea}
-                        onChange={(e) => setFormData({ ...formData, customArea: e.target.value.slice(0, 100) })}
-                        maxLength={100}
+                        onChange={(e) => setFormData({ ...formData, customArea: e.target.value.slice(0, 300) })}
+                        maxLength={300}
                         title="Please fill out this field"
                     />
                     <label className="label">Your option</label>
                     <div className="underline"></div>
-                    <div className="char-count">{formData.customArea.length}/100</div>
+                    <div className="char-count">{formData.customArea.length}/300</div>
                   </div>
                 </div>
               </CardContent>
             </Card>
 
-            {/* Logo Usage */}
+            {/* Logo Usage - ВСЕ ЧЕКБОКСЫ В ОДНУ ЛИНИЮ */}
             <Card className="bg-white border border-gray-200">
               <CardContent className="p-6">
                 <div className="space-y-4">
                   <Label className="text-base font-medium">Where will the Logo be used: <span className="text-red-500">*</span></Label>
-                  <div className="space-y-2">
+                  <div className="flex flex-wrap gap-x-4 gap-y-2">
                     {usageOptions.map((usage) => (
                         <div key={usage} className="flex items-center space-x-2">
                           <Checkbox
@@ -261,11 +263,24 @@ export default function LogoStep1() {
                               checked={formData.logoUsage.includes(usage)}
                               onCheckedChange={(checked) => handleUsageChange(usage, checked as boolean)}
                           />
-                          <Label htmlFor={usage} className="text-sm">
+                          <Label htmlFor={usage} className="text-sm whitespace-nowrap">
                             {usage}
                           </Label>
                         </div>
                     ))}
+                  </div>
+
+                  <div className={`animated-input-container ${formData.customUsage ? 'has-value' : ''}`}>
+                    <input
+                        type="text"
+                        value={formData.customUsage}
+                        onChange={(e) => setFormData({ ...formData, customUsage: e.target.value.slice(0, 300) })}
+                        maxLength={300}
+                        title="Please fill out this field"
+                    />
+                    <label className="label">Your option</label>
+                    <div className="underline"></div>
+                    <div className="char-count">{formData.customUsage.length}/300</div>
                   </div>
                 </div>
               </CardContent>

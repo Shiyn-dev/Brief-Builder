@@ -74,11 +74,21 @@ export default function LandingStep4() {
             width: 100%;
           }
 
+          .animated-input-container::after {
+            content: '';
+            position: absolute;
+            bottom: 0px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background-color: #ccc;
+            z-index: 0;
+          }
+
           .animated-input-container input {
             font-size: 16px !important;
             width: 100% !important;
             border: none !important;
-            border-bottom: 2px solid #ccc !important;
             padding: 12px 0 8px 0 !important;
             background-color: transparent !important;
             outline: none !important;
@@ -86,6 +96,7 @@ export default function LandingStep4() {
             font-family: inherit !important;
             border-radius: 0 !important;
             box-shadow: none !important;
+            text-decoration: none !important;
           }
 
           .animated-input-container input:disabled {
@@ -93,31 +104,7 @@ export default function LandingStep4() {
             cursor: not-allowed !important;
           }
 
-          .animated-textarea-container {
-            position: relative;
-            margin: 20px 0;
-            width: 100%;
-            border-bottom: 2px solid #ccc;
-          }
-
-          .animated-textarea-container textarea {
-            font-size: 16px !important;
-            width: 100% !important;
-            border: none !important;
-            padding: 12px 0 8px 0 !important;
-            background-color: transparent !important;
-            outline: none !important;
-            color: #333 !important;
-            font-family: inherit !important;
-            border-radius: 0 !important;
-            box-shadow: none !important;
-            resize: none !important;
-            line-height: 1.5 !important;
-            min-height: 80px !important;
-          }
-
-          .animated-input-container .label,
-          .animated-textarea-container .label {
+          .animated-input-container .label {
             position: absolute !important;
             top: 12px !important;
             left: 0 !important;
@@ -129,9 +116,7 @@ export default function LandingStep4() {
           }
 
           .animated-input-container input:focus ~ .label,
-          .animated-input-container.has-value .label,
-          .animated-textarea-container textarea:focus ~ .label,
-          .animated-textarea-container.has-value .label {
+          .animated-input-container.has-value .label {
             top: -16px !important;
             font-size: 12px !important;
             color: #68B3C0 !important;
@@ -139,28 +124,17 @@ export default function LandingStep4() {
 
           .animated-input-container .underline {
             position: absolute !important;
-            bottom: 0 !important;
+            bottom: 0px !important;
             left: 0 !important;
             height: 2px !important;
             width: 100% !important;
             background-color: #68B3C0 !important;
             transform: scaleX(0) !important;
             transition: all 0.3s ease !important;
+            z-index: 1 !important;
           }
 
-          .animated-textarea-container .underline {
-            position: absolute !important;
-            bottom: 0 !important;
-            left: 0 !important;
-            height: 2px !important;
-            width: 100% !important;
-            background-color: #68B3C0 !important;
-            transform: scaleX(0) !important;
-            transition: all 0.3s ease !important;
-          }
-
-          .animated-input-container input:focus ~ .underline,
-          .animated-textarea-container textarea:focus ~ .underline {
+          .animated-input-container input:focus ~ .underline {
             transform: scaleX(1) !important;
           }
 
@@ -242,17 +216,17 @@ export default function LandingStep4() {
                 </CardContent>
               </Card>
 
-              {/* Successful Competitors - ОТДЕЛЬНЫЙ КОНТЕЙНЕР ДЛЯ TEXTAREA */}
+              {/* Successful Competitors */}
               <Card className="bg-white shadow rounded-xl border-none">
                 <CardContent className="p-6">
                   <div className="space-y-4">
                     <Label className="text-base font-medium">What competitors' websites do you consider successful? Why? <span className="text-red-500">*</span></Label>
-                    <div className={`animated-textarea-container ${formData.successfulCompetitors ? 'has-value' : ''}`}>
-                      <textarea
+                    <div className={`animated-input-container ${formData.successfulCompetitors ? 'has-value' : ''}`}>
+                      <input
+                          type="text"
                           value={formData.successfulCompetitors}
                           onChange={(e) => setFormData({ ...formData, successfulCompetitors: e.target.value.slice(0, 300) })}
                           maxLength={300}
-                          rows={4}
                           title="Please fill out this field"
                       />
                       <label className="label">Your option</label>

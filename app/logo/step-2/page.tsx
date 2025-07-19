@@ -182,12 +182,12 @@ export default function LogoStep2() {
           <h1 className="text-2xl font-semibold text-center text-gray-900 mb-8">Brief for the Logo:</h1>
 
           <div className="space-y-6">
-            {/* Emotions */}
+            {/* Emotions - В ОДНУ ЛИНИЮ */}
             <Card className="bg-white border border-gray-200">
               <CardContent className="p-6">
                 <div className="space-y-4">
                   <Label className="text-base font-medium">What emotions can it evoke? <span className="text-red-500">*</span></Label>
-                  <div className="space-y-2">
+                  <div className="flex flex-wrap gap-x-4 gap-y-2">
                     {emotionOptions.map((emotion) => (
                         <div key={emotion} className="flex items-center space-x-2">
                           <Checkbox
@@ -195,7 +195,7 @@ export default function LogoStep2() {
                               checked={formData.emotions.includes(emotion)}
                               onCheckedChange={(checked) => handleEmotionChange(emotion, checked as boolean)}
                           />
-                          <Label htmlFor={emotion} className="text-sm">
+                          <Label htmlFor={emotion} className="text-sm whitespace-nowrap">
                             {emotion}
                           </Label>
                         </div>
@@ -218,24 +218,42 @@ export default function LogoStep2() {
               </CardContent>
             </Card>
 
-            {/* Sensations */}
+            {/* Sensations - НА 2 ЛИНИИ: 6 + 3 */}
             <Card className="bg-white border border-gray-200">
               <CardContent className="p-6">
                 <div className="space-y-4">
                   <Label className="text-base font-medium">What sensations does it cause? <span className="text-red-500">*</span></Label>
-                  <div className="grid grid-cols-3 gap-2">
-                    {sensationOptions.map((sensation) => (
-                        <div key={sensation} className="flex items-center space-x-2">
-                          <Checkbox
-                              id={sensation}
-                              checked={formData.sensations.includes(sensation)}
-                              onCheckedChange={(checked) => handleSensationChange(sensation, checked as boolean)}
-                          />
-                          <Label htmlFor={sensation} className="text-sm">
-                            {sensation}
-                          </Label>
-                        </div>
-                    ))}
+                  <div className="space-y-2">
+                    {/* ПЕРВАЯ ЛИНИЯ - 6 ЧЕКБОКСОВ */}
+                    <div className="flex flex-wrap gap-x-4 gap-y-2">
+                      {sensationOptions.slice(0, 6).map((sensation) => (
+                          <div key={sensation} className="flex items-center space-x-2">
+                            <Checkbox
+                                id={sensation}
+                                checked={formData.sensations.includes(sensation)}
+                                onCheckedChange={(checked) => handleSensationChange(sensation, checked as boolean)}
+                            />
+                            <Label htmlFor={sensation} className="text-sm whitespace-nowrap">
+                              {sensation}
+                            </Label>
+                          </div>
+                      ))}
+                    </div>
+                    {/* ВТОРАЯ ЛИНИЯ - 3 ЧЕКБОКСА */}
+                    <div className="flex flex-wrap gap-x-4 gap-y-2">
+                      {sensationOptions.slice(6).map((sensation) => (
+                          <div key={sensation} className="flex items-center space-x-2">
+                            <Checkbox
+                                id={sensation}
+                                checked={formData.sensations.includes(sensation)}
+                                onCheckedChange={(checked) => handleSensationChange(sensation, checked as boolean)}
+                            />
+                            <Label htmlFor={sensation} className="text-sm whitespace-nowrap">
+                              {sensation}
+                            </Label>
+                          </div>
+                      ))}
+                    </div>
                   </div>
 
                   <div className={`animated-input-container ${formData.customSensation ? 'has-value' : ''}`}>
@@ -254,12 +272,12 @@ export default function LogoStep2() {
               </CardContent>
             </Card>
 
-            {/* Geometric Figure */}
+            {/* Geometric Figure - В ОДНУ ЛИНИЮ */}
             <Card className="bg-white border border-gray-200">
               <CardContent className="p-6">
                 <div className="space-y-4">
                   <Label className="text-base font-medium">If it were a geometric figure, what would it be? <span className="text-red-500">*</span></Label>
-                  <div className="grid grid-cols-2 gap-2">
+                  <div className="flex flex-wrap gap-x-4 gap-y-2">
                     {figureOptions.map((figure) => (
                         <div key={figure} className="flex items-center space-x-2">
                           <Checkbox
@@ -267,7 +285,7 @@ export default function LogoStep2() {
                               checked={formData.geometricFigure.includes(figure)}
                               onCheckedChange={(checked) => handleFigureChange(figure, checked as boolean)}
                           />
-                          <Label htmlFor={figure} className="text-sm">
+                          <Label htmlFor={figure} className="text-sm whitespace-nowrap">
                             {figure}
                           </Label>
                         </div>
