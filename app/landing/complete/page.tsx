@@ -175,16 +175,16 @@ export default function LandingComplete() {
                     <hr className="mt-3 border-gray-200" />
                   </div>
 
-                  {/* Purpose */}
+                  {/* Purpose - FIXED: Updated to match the actual values from LandingStep3 */}
                   <div>
                     <h3 className="font-medium text-gray-900 mb-2">What is the purpose of developing a landing page:</h3>
                     <div className="flex items-start">
                       <div className="w-2 h-2 rounded-full mr-3 mt-2 flex-shrink-0" style={{ backgroundColor: "#68B3C0" }}></div>
                       <span className="text-gray-700">
-                        {briefData.purpose === "sale-goods-services" ? "Sale of goods/services/training" :
-                            briefData.purpose === "event-registration" ? "Registration for the event" :
-                                briefData.purpose === "business-card" ? "Landing page business card" :
-                                    briefData.purpose === "other" && briefData.customPurpose ? briefData.customPurpose :
+                        {briefData.purpose === "sale" ? "Sale of goods/services/training" :
+                            briefData.purpose === "registration" ? "Registration for the event" :
+                                briefData.purpose === "business_card" ? "Landing page - business card" :
+                                    briefData.purpose === "custom" && briefData.customPurpose ? briefData.customPurpose :
                                         (briefData.purpose || "Not specified")}
                       </span>
                     </div>

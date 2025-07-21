@@ -143,7 +143,7 @@ export default function LogoStep3() {
           <Card>
             <CardContent className="p-6 space-y-4">
               <Label className="text-base font-medium">
-                What logo style do you prefer? <span className="text-red-500">*</span>
+                What Logos do you like? <span className="text-red-500">*</span>
               </Label>
               <RadioGroup
                   value={formData.logoStyle}

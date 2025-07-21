@@ -79,17 +79,11 @@ export default function PresentationStep1() {
                     box-shadow: none !important;
                 }
 
-                .animated-textarea-container {
-                    position: relative;
-                    margin: 20px 0;
-                    width: 100%;
-                    border-bottom: 2px solid #ccc;
-                }
-
-                .animated-textarea-container textarea {
+                .animated-input-container input {
                     font-size: 16px !important;
                     width: 100% !important;
                     border: none !important;
+                    border-bottom: 2px solid #ccc !important;
                     padding: 12px 0 8px 0 !important;
                     background-color: transparent !important;
                     outline: none !important;
@@ -97,13 +91,11 @@ export default function PresentationStep1() {
                     font-family: inherit !important;
                     border-radius: 0 !important;
                     box-shadow: none !important;
-                    resize: none !important;
                     line-height: 1.5 !important;
-                    min-height: 80px !important;
+                    min-height: 40px !important;
                 }
 
-                .animated-input-container .label,
-                .animated-textarea-container .label {
+                .animated-input-container .label {
                     position: absolute !important;
                     top: 12px !important;
                     left: 0 !important;
@@ -115,9 +107,7 @@ export default function PresentationStep1() {
                 }
 
                 .animated-input-container input:focus ~ .label,
-                .animated-input-container.has-value .label,
-                .animated-textarea-container textarea:focus ~ .label,
-                .animated-textarea-container.has-value .label {
+                .animated-input-container.has-value .label {
                     top: -16px !important;
                     font-size: 12px !important;
                     color: #68B3C0 !important;
@@ -134,19 +124,7 @@ export default function PresentationStep1() {
                     transition: all 0.3s ease !important;
                 }
 
-                .animated-textarea-container .underline {
-                    position: absolute !important;
-                    bottom: 0 !important;
-                    left: 0 !important;
-                    height: 2px !important;
-                    width: 100% !important;
-                    background-color: #68B3C0 !important;
-                    transform: scaleX(0) !important;
-                    transition: all 0.3s ease !important;
-                }
-
-                .animated-input-container input:focus ~ .underline,
-                .animated-textarea-container textarea:focus ~ .underline {
+                .animated-input-container input:focus ~ .underline {
                     transform: scaleX(1) !important;
                 }
 
@@ -229,18 +207,18 @@ export default function PresentationStep1() {
                             </CardContent>
                         </Card>
 
-                        {/* Company Value - ОТДЕЛЬНЫЙ КОНТЕЙНЕР ДЛЯ TEXTAREA */}
+                        {/* Company Value - CHANGED FROM TEXTAREA TO INPUT */}
                         <Card className="bg-white shadow rounded-xl border-none">
                             <CardContent className="p-6">
                                 <div className="space-y-4">
                                     <Label className="text-base font-medium">What is your company's value? <span className="text-red-500">*</span></Label>
                                     <p className="text-sm text-gray-600">Briefly formulate your company's mission and values.</p>
-                                    <div className={`animated-textarea-container ${formData.companyValue ? 'has-value' : ''}`}>
-                                        <textarea
+                                    <div className={`animated-input-container ${formData.companyValue ? 'has-value' : ''}`}>
+                                        <input
+                                            type="text"
                                             value={formData.companyValue}
                                             onChange={(e) => setFormData({ ...formData, companyValue: e.target.value.slice(0, 300) })}
                                             maxLength={300}
-                                            rows={4}
                                             title="Please fill out this field"
                                         />
                                         <label className="label">Your option</label>

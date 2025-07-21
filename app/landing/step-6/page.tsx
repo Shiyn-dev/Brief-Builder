@@ -13,7 +13,6 @@ export default function LandingStep6() {
     style: "",
     customStyle: "",
     content: "",
-    email: "",
   })
 
   // Load existing data on component mount
@@ -24,7 +23,6 @@ export default function LandingStep6() {
         style: existingData.style || "",
         customStyle: existingData.customStyle || "",
         content: existingData.content || "",
-        email: existingData.email || "",
       })
     }
   }, [])
@@ -34,8 +32,7 @@ export default function LandingStep6() {
     return (
         (formData.style !== "" && formData.style !== "custom" ||
             formData.style === "custom" && formData.customStyle.trim() !== "") &&
-        formData.content.trim() !== "" &&
-        formData.email.trim() !== ""
+        formData.content.trim() !== ""
     )
   }
 
@@ -255,27 +252,6 @@ export default function LandingStep6() {
                       <div className="char-count">{formData.content.length}/300</div>
                     </div>
                     <div className="text-sm text-gray-500 mt-1">Возможность прикрепить файл с контентом</div>
-                  </div>
-                </CardContent>
-              </Card>
-
-              {/* Email */}
-              <Card className="bg-white shadow rounded-xl border-none">
-                <CardContent className="p-6">
-                  <div className="space-y-4">
-                    <Label className="text-base font-medium">Please provide your email address to receive the brief <span className="text-red-500">*</span></Label>
-                    <div className={`animated-input-container ${formData.email ? 'has-value' : ''}`}>
-                      <input
-                          type="email"
-                          value={formData.email}
-                          onChange={(e) => setFormData({ ...formData, email: e.target.value.slice(0, 300) })}
-                          maxLength={300}
-                          title="Please fill out this field"
-                      />
-                      <label className="label">Your option</label>
-                      <div className="underline"></div>
-                      <div className="char-count">{formData.email.length}/300</div>
-                    </div>
                   </div>
                 </CardContent>
               </Card>
