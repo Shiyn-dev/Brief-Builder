@@ -19,7 +19,6 @@ export default function PresentationStep7() {
     customVisualMaterials: "",
   })
 
-  // Load existing data on component mount
   useEffect(() => {
     const existingData = JSON.parse(localStorage.getItem("presentationBrief") || "{}")
     if (existingData) {
@@ -34,10 +33,9 @@ export default function PresentationStep7() {
     }
   }, [])
 
-  // ВАЛИДАЦИЯ - ВСЕ ПОЛЯ ОБЯЗАТЕЛЬНЫЕ!
   const isFormValid = () => {
-    return formData.slidesCount !== "" &&
-        formData.needContentHelp !== "" &&
+    return (formData.slidesCount !== "" || formData.customSlidesCount.trim() !== "") &&
+        (formData.needContentHelp !== "" || formData.customContentHelp.trim() !== "") &&
         (formData.visualMaterials.length > 0 || formData.customVisualMaterials.trim() !== "")
   }
 
@@ -158,7 +156,7 @@ export default function PresentationStep7() {
         <Card className="bg-[#F0F9FA] shadow-none border-none p-0">
           <CardContent className="p-0">
             <div className="space-y-6">
-              {/* Slides Count - РАДИОКНОПКИ ПО ГОРИЗОНТАЛИ */}
+              {/* Slides Count */}
               <Card className="bg-white shadow rounded-xl border-none">
                 <CardContent className="p-6">
                   <div className="space-y-4">
@@ -177,18 +175,21 @@ export default function PresentationStep7() {
                         <Label htmlFor="slides-10">Up to 10</Label>
                       </div>
                       <div className="flex items-center space-x-2">
-                        <RadioGroupItem value="more" id="slides-more" />
-                        <Label htmlFor="slides-more">More</Label>
+                        <RadioGroupItem value="other" id="slides-other" />
+                        <Label htmlFor="slides-other">Other</Label>
                       </div>
                     </RadioGroup>
 
-                    {/* Your option для slides count */}
-                    <div className={`animated-input-container ${formData.customSlidesCount ? 'has-value' : ''}`}>
+                    <div className={`animated-input-container ${formData.customSlidesCount ? 'has-value' : ''} ${formData.slidesCount !== 'other' ? 'opacity-50' : ''}`}>
                       <input
                           type="text"
                           value={formData.customSlidesCount}
                           onChange={(e) => setFormData({ ...formData, customSlidesCount: e.target.value.slice(0, 300) })}
                           maxLength={300}
+                          disabled={formData.slidesCount !== 'other'}
+                          style={{
+                            color: formData.slidesCount !== 'other' ? '#999' : '#333'
+                          }}
                           title="Please fill out this field"
                       />
                       <label className="label">Your option</label>
@@ -199,7 +200,7 @@ export default function PresentationStep7() {
                 </CardContent>
               </Card>
 
-              {/* Content Help - РАДИОКНОПКИ ПО ГОРИЗОНТАЛИ */}
+              {/* Content Help */}
               <Card className="bg-white shadow rounded-xl border-none">
                 <CardContent className="p-6">
                   <div className="space-y-4">
@@ -217,15 +218,22 @@ export default function PresentationStep7() {
                         <RadioGroupItem value="no" id="help-no" />
                         <Label htmlFor="help-no">No</Label>
                       </div>
+                      <div className="flex items-center space-x-2">
+                        <RadioGroupItem value="other" id="help-other" />
+                        <Label htmlFor="help-other">Other</Label>
+                      </div>
                     </RadioGroup>
 
-                    {/* Your option для content help */}
-                    <div className={`animated-input-container ${formData.customContentHelp ? 'has-value' : ''}`}>
+                    <div className={`animated-input-container ${formData.customContentHelp ? 'has-value' : ''} ${formData.needContentHelp !== 'other' ? 'opacity-50' : ''}`}>
                       <input
                           type="text"
                           value={formData.customContentHelp}
                           onChange={(e) => setFormData({ ...formData, customContentHelp: e.target.value.slice(0, 300) })}
                           maxLength={300}
+                          disabled={formData.needContentHelp !== 'other'}
+                          style={{
+                            color: formData.needContentHelp !== 'other' ? '#999' : '#333'
+                          }}
                           title="Please fill out this field"
                       />
                       <label className="label">Your option</label>
@@ -256,7 +264,6 @@ export default function PresentationStep7() {
                       ))}
                     </div>
 
-                    {/* Your option для visual materials */}
                     <div className={`animated-input-container ${formData.customVisualMaterials ? 'has-value' : ''}`}>
                       <input
                           type="text"

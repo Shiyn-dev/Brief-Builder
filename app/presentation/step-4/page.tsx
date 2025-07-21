@@ -36,9 +36,9 @@ export default function PresentationStep4() {
 
   // Validation function
   const isFormValid = () => {
-    return formData.needAnimation !== "" &&
+    return (formData.needAnimation !== "" || formData.customAnimation.trim() !== "") &&
         (formData.designStyle.length > 0 || formData.customDesignStyle.trim() !== "") &&
-        formData.presentationFormat !== ""
+        (formData.presentationFormat !== "" || formData.customFormat.trim() !== "")
   }
 
   const handleNext = () => {
@@ -170,15 +170,22 @@ export default function PresentationStep4() {
                         <RadioGroupItem value="no" id="animation-no" />
                         <Label htmlFor="animation-no">No</Label>
                       </div>
+                      <div className="flex items-center space-x-2">
+                        <RadioGroupItem value="other" id="animation-other" />
+                        <Label htmlFor="animation-other">Other</Label>
+                      </div>
                     </RadioGroup>
 
-                    {/* Your option для animation */}
-                    <div className={`animated-input-container ${formData.customAnimation ? 'has-value' : ''}`}>
+                    <div className={`animated-input-container ${formData.customAnimation ? 'has-value' : ''} ${formData.needAnimation !== 'other' ? 'opacity-50' : ''}`}>
                       <input
                           type="text"
                           value={formData.customAnimation}
                           onChange={(e) => setFormData({ ...formData, customAnimation: e.target.value.slice(0, 300) })}
                           maxLength={300}
+                          disabled={formData.needAnimation !== 'other'}
+                          style={{
+                            color: formData.needAnimation !== 'other' ? '#999' : '#333'
+                          }}
                           title="Please fill out this field"
                       />
                       <label className="label">Your option</label>
@@ -209,7 +216,6 @@ export default function PresentationStep4() {
                       ))}
                     </div>
 
-                    {/* Your option для design style */}
                     <div className={`animated-input-container ${formData.customDesignStyle ? 'has-value' : ''}`}>
                       <input
                           type="text"
@@ -248,15 +254,22 @@ export default function PresentationStep4() {
                         <RadioGroupItem value="4-3" id="format-4-3" />
                         <Label htmlFor="format-4-3">4:3</Label>
                       </div>
+                      <div className="flex items-center space-x-2">
+                        <RadioGroupItem value="other" id="format-other" />
+                        <Label htmlFor="format-other">Other</Label>
+                      </div>
                     </RadioGroup>
 
-                    {/* Your option для format */}
-                    <div className={`animated-input-container ${formData.customFormat ? 'has-value' : ''}`}>
+                    <div className={`animated-input-container ${formData.customFormat ? 'has-value' : ''} ${formData.presentationFormat !== 'other' ? 'opacity-50' : ''}`}>
                       <input
                           type="text"
                           value={formData.customFormat}
                           onChange={(e) => setFormData({ ...formData, customFormat: e.target.value.slice(0, 300) })}
                           maxLength={300}
+                          disabled={formData.presentationFormat !== 'other'}
+                          style={{
+                            color: formData.presentationFormat !== 'other' ? '#999' : '#333'
+                          }}
                           title="Please fill out this field"
                       />
                       <label className="label">Your option</label>

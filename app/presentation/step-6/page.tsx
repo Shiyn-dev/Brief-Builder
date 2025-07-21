@@ -31,11 +31,10 @@ export default function PresentationStep6() {
     }
   }, [])
 
-  // ВАЛИДАЦИЯ - ВСЕ ПОЛЯ ОБЯЗАТЕЛЬНЫЕ! ИСПРАВЛЕНО!
   const isFormValid = () => {
     return formData.unsuccessfulExamples.trim() !== "" &&
-        formData.readyMadeContent !== "" &&
-        formData.readyMadeStructure !== ""
+        (formData.readyMadeContent !== "" || formData.customContent.trim() !== "") &&
+        (formData.readyMadeStructure !== "" || formData.customStructure.trim() !== "")
   }
 
   const handleNext = () => {
@@ -148,7 +147,7 @@ export default function PresentationStep6() {
                 </CardContent>
               </Card>
 
-              {/* Ready-made Content - РАДИОКНОПКИ ПО ГОРИЗОНТАЛИ */}
+              {/* Ready-made Content */}
               <Card className="bg-white shadow rounded-xl border-none">
                 <CardContent className="p-6">
                   <div className="space-y-4">
@@ -166,15 +165,22 @@ export default function PresentationStep6() {
                         <RadioGroupItem value="no" id="content-no" />
                         <Label htmlFor="content-no">No</Label>
                       </div>
+                      <div className="flex items-center space-x-2">
+                        <RadioGroupItem value="other" id="content-other" />
+                        <Label htmlFor="content-other">Other</Label>
+                      </div>
                     </RadioGroup>
 
-                    {/* Your option для content */}
-                    <div className={`animated-input-container ${formData.customContent ? 'has-value' : ''}`}>
+                    <div className={`animated-input-container ${formData.customContent ? 'has-value' : ''} ${formData.readyMadeContent !== 'other' ? 'opacity-50' : ''}`}>
                       <input
                           type="text"
                           value={formData.customContent}
                           onChange={(e) => setFormData({ ...formData, customContent: e.target.value.slice(0, 300) })}
                           maxLength={300}
+                          disabled={formData.readyMadeContent !== 'other'}
+                          style={{
+                            color: formData.readyMadeContent !== 'other' ? '#999' : '#333'
+                          }}
                           title="Please fill out this field"
                       />
                       <label className="label">Your option</label>
@@ -185,7 +191,7 @@ export default function PresentationStep6() {
                 </CardContent>
               </Card>
 
-              {/* Ready-made Structure - РАДИОКНОПКИ ПО ГОРИЗОНТАЛИ */}
+              {/* Ready-made Structure */}
               <Card className="bg-white shadow rounded-xl border-none">
                 <CardContent className="p-6">
                   <div className="space-y-4">
@@ -203,15 +209,22 @@ export default function PresentationStep6() {
                         <RadioGroupItem value="no" id="structure-no" />
                         <Label htmlFor="structure-no">No</Label>
                       </div>
+                      <div className="flex items-center space-x-2">
+                        <RadioGroupItem value="other" id="structure-other" />
+                        <Label htmlFor="structure-other">Other</Label>
+                      </div>
                     </RadioGroup>
 
-                    {/* Your option для structure */}
-                    <div className={`animated-input-container ${formData.customStructure ? 'has-value' : ''}`}>
+                    <div className={`animated-input-container ${formData.customStructure ? 'has-value' : ''} ${formData.readyMadeStructure !== 'other' ? 'opacity-50' : ''}`}>
                       <input
                           type="text"
                           value={formData.customStructure}
                           onChange={(e) => setFormData({ ...formData, customStructure: e.target.value.slice(0, 300) })}
                           maxLength={300}
+                          disabled={formData.readyMadeStructure !== 'other'}
+                          style={{
+                            color: formData.readyMadeStructure !== 'other' ? '#999' : '#333'
+                          }}
                           title="Please fill out this field"
                       />
                       <label className="label">Your option</label>
