@@ -255,11 +255,6 @@ export default function LandingStep6() {
                   </div>
                 </CardContent>
               </Card>
-
-              <div className="text-center pt-4">
-                <p className="text-sm text-gray-600 mb-2">Our social media</p>
-                <div className="flex justify-center space-x-4">{/* Social media icons would go here */}</div>
-              </div>
             </div>
           </CardContent>
         </Card>
