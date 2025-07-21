@@ -120,7 +120,10 @@ export default function BriefLayout({
                                         <Button
                                             size="lg"
                                             className="text-white px-10 py-3"
-                                            style={{backgroundColor: "#038196"}}
+                                            style={{
+                                                backgroundColor: isNextDisabled ? "#D9D9D9" : "#038196",
+                                                cursor: isNextDisabled ? "not-allowed" : "pointer"
+                                            }}
                                             disabled={isNextDisabled}
                                         >
                                             {nextText}
@@ -131,7 +134,10 @@ export default function BriefLayout({
                                         size="lg"
                                         onClick={onNext}
                                         className="text-white px-10 py-3"
-                                        style={{backgroundColor: "#038196"}}
+                                        style={{
+                                            backgroundColor: isNextDisabled ? "#D9D9D9" : "#038196",
+                                            cursor: isNextDisabled ? "not-allowed" : "pointer"
+                                        }}
                                         disabled={isNextDisabled}
                                     >
                                         {nextText}
