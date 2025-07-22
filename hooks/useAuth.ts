@@ -29,7 +29,8 @@ export function useAuth() {
       setLoading(false)
     })
 
-    // Обработка результата перенаправления после входа
+    // Обработка результата перенаправления после входа через Google
+    // Firebase автоматически перенаправляет на /__/auth/handler и возвращает результат
     const handleRedirectResult = async () => {
       try {
         const result = await getRedirectResult(auth)
@@ -56,6 +57,9 @@ export function useAuth() {
     return unsubscribe
   }, []) // Пустой массив зависимостей, чтобы эффект запускался только один раз при монтировании
 
+  // Функция входа через Google с использованием стандартного Firebase flow
+  // ВАЖНО: используем signInWithRedirect без дополнительных параметров
+  // Firebase автоматически настроит redirect_uri как https://ваш-домен.com/__/auth/handler
   const signInWithGoogle = async () => {
     const auth = getFirebaseAuth()
     if (!auth) {
@@ -64,7 +68,9 @@ export function useAuth() {
     }
     try {
       setLoading(true) // Начинаем загрузку перед перенаправлением
-      await signInWithRedirect(auth, googleProvider) // Используем signInWithRedirect
+      // Используем стандартный Firebase signInWithRedirect без custom параметров
+      // Это автоматически настроит правильный redirect_uri
+      await signInWithRedirect(auth, googleProvider)
       // После этого вызова страница будет перенаправлена, и результат будет обработан в useEffect
     } catch (error) {
       console.error("Error signing in with Google:", error)

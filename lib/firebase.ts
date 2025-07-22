@@ -4,13 +4,20 @@ import { initializeApp, getApps, type FirebaseApp } from "firebase/app"
 import { getAuth, type Auth, GoogleAuthProvider } from "firebase/auth"
 import { getFirestore, type Firestore, doc, getDoc, setDoc } from "firebase/firestore"
 
+// Firebase configuration
+// ВАЖНО: Для правильной работы Google Sign-In убедитесь, что в Google Console настроены правильные redirect_uri:
+// - Для разработки: http://localhost:3000/__/auth/handler
+// - Для продакшена: https://ваш-домен.com/__/auth/handler
+// Firebase автоматически использует /__/auth/handler для redirect_uri при использовании signInWithRedirect
 const firebaseConfig = {
-  apiKey: "AIzaSyDRBkz7iyJ-BAR-pqQuO4oV67rSOBrm3ss",
-  authDomain: "brief-builder.firebaseapp.com",
-  projectId: "brief-builder",
-  storageBucket: "brief-builder.appspot.com",
-  messagingSenderId: "743757028708",
-  appId: "1:743757028708:web:your-app-id", // <-- ПОЖАЛУЙСТА, ЗАМЕНИ "your-app-id" НА ТВОЙ РЕАЛЬНЫЙ appId ИЗ КОНСОЛИ FIREBASE!
+  apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY || "AIzaSyDRBkz7iyJ-BAR-pqQuO4oV67rSOBrm3ss",
+  authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN || "brief-builder.firebaseapp.com",
+  projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID || "brief-builder",
+  storageBucket: process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET || "brief-builder.appspot.com",
+  messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID || "743757028708",
+  // ВАЖНО: Замените на реальный appId из Firebase Console или используйте переменную окружения
+  // Можно найти в настройках проекта Firebase -> General -> Your apps
+  appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID || "1:743757028708:web:your-app-id", // TODO: Заменить на реальный appId
 }
 
 let firebaseAppInstance: FirebaseApp | null = null
@@ -64,7 +71,17 @@ export function getFirebaseFirestore(): Firestore | null {
   return firebaseFirestoreInstance
 }
 
+// Конфигурация Google Auth Provider для стандартного Firebase flow
+// ВАЖНО: НЕ добавляйте custom_parameters или redirect_uri вручную!
+// Firebase автоматически управляет redirect_uri при использовании signInWithRedirect
 export const googleProvider = new GoogleAuthProvider()
+
+// Опционально: можно настроить дополнительные scopes, если нужно
+// googleProvider.addScope('email')
+// googleProvider.addScope('profile')
+
+// НЕ ДЕЛАЙТЕ ТАК - это вызовет redirect_uri_mismatch:
+// googleProvider.setCustomParameters({ redirect_uri: 'custom-uri' })
 
 // Check if user is admin via Firestore
 export const isAdminEmail = async (email: string): Promise<boolean> => {
