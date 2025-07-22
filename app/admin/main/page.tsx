@@ -6,15 +6,15 @@ import { useRouter } from "next/navigation"
 import { useEffect } from "react"
 
 export default function AdminMainPage() {
-    const { user, logout } = useAuth()
+    const { user, logout, loading } = useAuth()
     const router = useRouter()
 
-    // Если нет юзера — редирект на главную
     useEffect(() => {
-        if (!user) {
+        // Сначала дождись окончания загрузки, потом делай редирект
+        if (!loading && !user) {
             router.push("/")
         }
-    }, [user, router])
+    }, [user, loading, router])
 
     return (
         <div style={{ padding: '2rem' }}>
