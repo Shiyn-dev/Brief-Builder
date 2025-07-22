@@ -6,12 +6,13 @@ import { getFirestore, type Firestore, doc, getDoc, setDoc } from "firebase/fire
 
 const firebaseConfig = {
   apiKey: "AIzaSyDRBkz7iyJ-BAR-pqQuO4oV67rSOBrm3ss",
-  authDomain: "brief-builder.firebaseapp.com",
-  projectId: "brief-builder",
-  storageBucket: "brief-builder.appspot.com",
+  authDomain: "brief-bulder.firebaseapp.com",
+  projectId: "brief-bulder",
+  storageBucket: "brief-bulder.firebasestorage.app",
   messagingSenderId: "743757028708",
-  appId: "1:743757028708:web:your-app-id", // <-- ПОЖАЛУЙСТА, ЗАМЕНИ "your-app-id" НА ТВОЙ РЕАЛЬНЫЙ appId ИЗ КОНСОЛИ FIREBASE!
-}
+  appId: "1:743757028708:web:28de590dca34eaca552e71",
+  measurementId: "G-J0C2H2M9JW"
+};
 
 let firebaseAppInstance: FirebaseApp | null = null
 let firebaseAuthInstance: Auth | null = null
@@ -82,19 +83,3 @@ export const isAdminEmail = async (email: string): Promise<boolean> => {
   }
 }
 
-// Function to add an email to the admin whitelist in Firestore
-export const addAdminToWhitelist = async (email: string): Promise<void> => {
-  const db = getFirebaseFirestore()
-  if (!db) {
-    console.error("Firestore not initialized for adding admin.")
-    return
-  }
-  try {
-    await setDoc(doc(db, "admins", email.toLowerCase()), {
-      addedAt: new Date(),
-    })
-    console.log(`Email ${email} added to admin whitelist.`)
-  } catch (error) {
-    console.error("Error adding admin to whitelist:", error)
-  }
-}
