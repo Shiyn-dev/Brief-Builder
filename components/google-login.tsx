@@ -2,29 +2,39 @@
 
 import { useAuth } from "@/hooks/useAuth"
 import { Button } from "@/components/ui/button"
+import { useRouter } from "next/navigation"
+import { useEffect } from "react"
 
 export function GoogleLogin() {
-  const { user, loading, signInWithGoogle, logout } = useAuth()
+    const { user, loading, signInWithGoogle, logout } = useAuth()
+    const router = useRouter()
 
-  if (loading) {
-    return (
-      <div className="flex items-center space-x-2">
-        <span className="text-sm text-gray-600">Loading...</span>
-      </div>
-    )
-  }
+    // Только переход на админку после входа
+    useEffect(() => {
+        if (user) {
+            router.push("/admin/main")
+        }
+    }, [user, router])
 
-  if (user) {
-    return (
-      <div className="flex items-center space-x-3">
-        <img src={user.photoURL || ""} alt={user.displayName || ""} className="w-8 h-8 rounded-full" />
-        <span className="text-sm text-gray-600">{user.displayName}</span>
-        <Button variant="ghost" size="sm" onClick={logout}>
-          Logout
-        </Button>
-      </div>
-    )
-  }
+    if (loading) {
+        return (
+            <div className="flex items-center space-x-2">
+                <span className="text-sm text-gray-600">Loading...</span>
+            </div>
+        )
+    }
+
+    if (user) {
+        return (
+            <div className="flex items-center space-x-3">
+                <img src={user.photoURL || ""} alt={user.displayName || ""} className="w-8 h-8 rounded-full" />
+                <span className="text-sm text-gray-600">{user.displayName}</span>
+                <Button variant="ghost" size="sm" onClick={logout}>
+                    Logout
+                </Button>
+            </div>
+        )
+    }
 
   return (
     <div className="flex items-center space-x-2 cursor-pointer" onClick={signInWithGoogle}>
