@@ -21,7 +21,7 @@ export default function HomePage() {
   useEffect(() => {
     const fetchBriefs = async () => {
       try {
-        const res = await fetch("/api/briefs")
+        const res = await fetch("https://brief-builder.onrender.com/api/briefs")
         const json = await res.json()
 
         if (!Array.isArray(json)) {
@@ -63,7 +63,12 @@ export default function HomePage() {
           </div>
 
           {loading ? (
-              <p>Loading Briefs...</p>
+              <div className="flex justify-center items-center py-12">
+                <div className="text-center">
+                  <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-[#038196] mx-auto mb-4"></div>
+                  <div className="text-lg text-gray-600">Загрузка брифов...</div>
+                </div>
+              </div>
           ) : (
               <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                 {briefs.map((brief) => (
@@ -79,13 +84,24 @@ export default function HomePage() {
                     >
                       <CardContent className="p-6 text-center">
                         <div className="bg-gray-100 rounded-lg p-6 mb-6 h-48 flex items-center justify-center">
-                          <Image
-                              src={brief.logoUrl || "/images/default-illustration.png"}
-                              alt={brief.name + " illustration"}
-                              width={200}
-                              height={150}
-                              className="max-w-full max-h-full object-contain"
-                          />
+                          {brief.logoUrl ? (
+                              <img
+                                  src={`https://brief-builder.onrender.com${brief.logoUrl}`}
+                                  alt={brief.name + " illustration"}
+                                  className="max-w-full max-h-full object-contain"
+                                  onError={(e) => {
+                                    e.currentTarget.src = "/images/default-illustration.png";
+                                  }}
+                              />
+                          ) : (
+                              <Image
+                                  src="/images/default-illustration.png"
+                                  alt={brief.name + " illustration"}
+                                  width={200}
+                                  height={150}
+                                  className="max-w-full max-h-full object-contain"
+                              />
+                          )}
                         </div>
                         <Link href={`/brief/${brief.id}`}>
                           <Button className="w-full text-white" style={{ backgroundColor: "#038196" }}>
