@@ -1,119 +1,103 @@
 "use client"
 
+import { useEffect, useState } from "react"
 import Link from "next/link"
+import Image from "next/image"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
-import Image from "next/image"
 import { GoogleLogin } from "@/components/google-login"
 import { Logo } from "@/components/logo"
 
+interface Brief {
+  id: number
+  name: string
+  logoUrl?: string
+}
+
 export default function HomePage() {
+  const [briefs, setBriefs] = useState<Brief[]>([])
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    const fetchBriefs = async () => {
+      try {
+        const res = await fetch("/api/briefs")
+        const json = await res.json()
+
+        if (!Array.isArray(json)) {
+          throw new Error("Ответ от сервера не является массивом брифов")
+        }
+
+        setBriefs(json)
+      } catch (err) {
+        console.error("❌ Ошибка загрузки брифов:", err)
+        setBriefs([])
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    fetchBriefs()
+  }, [])
+
   return (
-    <div className="min-h-screen" style={{ backgroundColor: "#F0F9FA" }}>
-      {/* Header */}
-      <header className="px-6 py-4" style={{ backgroundColor: "#F0F9FA" }}>
-        <div className="max-w-7xl mx-auto flex items-center justify-between">
-          <Logo />
-          <GoogleLogin />
-        </div>
-      </header>
+      <div className="min-h-screen bg-[#F0F9FA]">
+        {/* Header */}
+        <header className="px-6 py-4 bg-[#F0F9FA]">
+          <div className="max-w-7xl mx-auto flex items-center justify-between">
+            <Logo />
+            <GoogleLogin />
+          </div>
+        </header>
 
-      {/* Main Content */}
-      <main className="max-w-4xl mx-auto px-6 py-16">
-        <div className="mb-16">
-          <h1 className="text-3xl text-gray-900 mb-8 max-w-2xl text-left">
-            I can frame what you share. In the form of a Landing page, Logo and Presentation. Shape them in different
-            ways and in different colors.
-          </h1>
-          <h2 className="text-xl font-bold text-gray-900 mb-12 text-left">What are you interested in?</h2>
-        </div>
+        {/* Main */}
+        <main className="max-w-4xl mx-auto px-6 py-16">
+          <div className="mb-16">
+            <h1 className="text-3xl text-gray-900 mb-8 max-w-2xl text-left">
+              I can frame what you share. In the form of a Landing page, Logo and Presentation. Shape them in different
+              ways and in different colors.
+            </h1>
+            <h2 className="text-xl font-bold text-gray-900 mb-12 text-left">
+              What are you interested in?
+            </h2>
+          </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {/* Landing Page Card */}
-          <Card
-            className="bg-white border border-gray-200 hover:shadow-lg transition-all duration-200"
-            onMouseEnter={(e) => {
-              e.currentTarget.style.backgroundColor = "#F0F9FA"
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.backgroundColor = "white"
-            }}
-          >
-            <CardContent className="p-6 text-center">
-              <div className="bg-gray-100 rounded-lg p-6 mb-6 h-48 flex items-center justify-center">
-                <Image
-                  src="/images/landing-illustration.png"
-                  alt="Landing Page illustration"
-                  width={200}
-                  height={150}
-                  className="max-w-full max-h-full object-contain"
-                />
+          {loading ? (
+              <p>Loading Briefs...</p>
+          ) : (
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                {briefs.map((brief) => (
+                    <Card
+                        key={brief.id}
+                        className="bg-white border border-gray-200 hover:shadow-lg transition-all duration-200"
+                        onMouseEnter={(e) => {
+                          e.currentTarget.style.backgroundColor = "#F0F9FA"
+                        }}
+                        onMouseLeave={(e) => {
+                          e.currentTarget.style.backgroundColor = "white"
+                        }}
+                    >
+                      <CardContent className="p-6 text-center">
+                        <div className="bg-gray-100 rounded-lg p-6 mb-6 h-48 flex items-center justify-center">
+                          <Image
+                              src={brief.logoUrl || "/images/default-illustration.png"}
+                              alt={brief.name + " illustration"}
+                              width={200}
+                              height={150}
+                              className="max-w-full max-h-full object-contain"
+                          />
+                        </div>
+                        <Link href={`/brief/${brief.id}`}>
+                          <Button className="w-full text-white" style={{ backgroundColor: "#038196" }}>
+                            {brief.name}
+                          </Button>
+                        </Link>
+                      </CardContent>
+                    </Card>
+                ))}
               </div>
-              <Link href="/landing/step-1">
-                <Button className="w-full text-white" style={{ backgroundColor: "#038196" }}>
-                  Landing Page
-                </Button>
-              </Link>
-            </CardContent>
-          </Card>
-
-          {/* Logo Card */}
-          <Card
-            className="bg-white border border-gray-200 hover:shadow-lg transition-all duration-200"
-            onMouseEnter={(e) => {
-              e.currentTarget.style.backgroundColor = "#F0F9FA"
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.backgroundColor = "white"
-            }}
-          >
-            <CardContent className="p-6 text-center">
-              <div className="bg-gray-100 rounded-lg p-6 mb-6 h-48 flex items-center justify-center">
-                <Image
-                  src="/images/logo-illustration.png"
-                  alt="Logo illustration"
-                  width={200}
-                  height={150}
-                  className="max-w-full max-h-full object-contain"
-                />
-              </div>
-              <Link href="/logo/step-1">
-                <Button className="w-full text-white" style={{ backgroundColor: "#038196" }}>
-                  Logo
-                </Button>
-              </Link>
-            </CardContent>
-          </Card>
-
-          {/* Presentation Card */}
-          <Card
-            className="bg-white border border-gray-200 hover:shadow-lg transition-all duration-200"
-            onMouseEnter={(e) => {
-              e.currentTarget.style.backgroundColor = "#F0F9FA"
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.backgroundColor = "white"
-            }}
-          >
-            <CardContent className="p-6 text-center">
-              <div className="bg-gray-100 rounded-lg p-6 mb-6 h-48 flex items-center justify-center">
-                <Image
-                  src="/images/presentation-illustration.png"
-                  alt="Presentation illustration"
-                  width={200}
-                  height={150}
-                  className="max-w-full max-h-full object-contain"
-                />
-              </div>
-              <Link href="/presentation/step-1">
-                <Button className="w-full text-white" style={{ backgroundColor: "#038196" }}>
-                  Presentation
-                </Button>
-              </Link>
-            </CardContent>
-          </Card>
-        </div>
-      </main>
-    </div>
+          )}
+        </main>
+      </div>
   )
 }
